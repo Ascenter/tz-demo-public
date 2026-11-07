@@ -1,0 +1,82 @@
+/* Design tokens from Figma variables (get_variable_defs on node 1:3556, file ihcteWxkN7OtuBaC3Q4RVA). */
+@theme {
+  --font-sans: -apple-system, 'SF Pro Text', 'SF Pro Display', system-ui, 'Segoe UI', Roboto, sans-serif;
+  --font-display: -apple-system, 'SF Pro Display', 'SF Pro Text', system-ui, 'Segoe UI', Roboto, sans-serif;
+
+  /* base */
+  --color-primary: #000000; /* base/onBackgroundPrimary */
+  --color-secondary: #00000080; /* base/onBackgroundSecondary, Black 50% */
+  --color-icon30: #0000004d; /* icon/Icon_30% */
+  --color-sticky-header: #00000059; /* base/stickyHeader */
+  --color-tertiary-bg: #0000000f; /* base/onBackgroundTertiary, textfield/defaultBg */
+  --color-surface: #ffffff; /* background/Surface, background/Screen */
+  --color-black-card: #1a1a1a; /* Card/blackCard_BG */
+  --color-button: #000000; /* button/primaryBgEnabled */
+  --color-tab-selection: #ededed; /* tabBarLiquidGlass/SelectionBg */
+  --color-tab-active: #a983fb; /* IconColor / TextColor */
+  --color-light-gray: #f0f3f7; /* background/lightGray (receipt) */
+  --color-chip-bg: #0974ff1f; /* chips/background */
+  --color-chip-text: #0974ff; /* chips/text */
+  --color-error: #ff3b30; /* red line */
+  --color-highlight: #7a80ff33; /* 20% slate blue banner */
+  --color-white20: #ffffff33; /* Dark mode/White 20% */
+  --color-modal-bg: #00000080; /* background/modalBg */
+  --color-keyboard: #e6e9ed;
+  --color-turquoise: #39cc7e;
+
+  /* radius */
+  --radius-full: 9999px;
+  --radius-container: 32px;
+  --radius-component: 20px;
+  --radius-field: 16px;
+
+  /* type scale: size / line-height / tracking / weight */
+  --text-main-amount: 48px; /* mainAmount — SF Pro Display Semibold 48/56 */
+  --text-main-amount--line-height: 56px;
+  --text-main-amount--letter-spacing: 0.38px;
+  --text-amount-input: 40px; /* textInput/textInputAmount 40/48 */
+  --text-amount-input--line-height: 48px;
+  --text-amount-input--letter-spacing: 0.4px;
+  --text-toolbar-expanded: 26px; /* toolbar/toolbarTitleExpanded 26/34 */
+  --text-toolbar-expanded--line-height: 34px;
+  --text-toolbar-expanded--letter-spacing: 0.35px;
+  --text-fraction: 23px; /* mainAmountFraction, content/contentTitle 23/30 */
+  --text-fraction--line-height: 30px;
+  --text-fraction--letter-spacing: 0.35px;
+  --text-header: 20px; /* header/headerTitle 20/28 */
+  --text-header--line-height: 28px;
+  --text-header--letter-spacing: 0.38px;
+  --text-xl-body: 18px; /* body/extraLarge 18/24 */
+  --text-xl-body--line-height: 24px;
+  --text-xl-body--letter-spacing: -0.45px;
+  --text-body-l: 16px; /* body/large 16/22 */
+  --text-body-l--line-height: 22px;
+  --text-body-l--letter-spacing: -0.32px;
+  --text-body-mp: 15px; /* body/mediumPlus 15/20 */
+  --text-body-mp--line-height: 20px;
+  --text-body-mp--letter-spacing: -0.23px;
+  --text-body-m: 14px; /* body/medium 14/20 */
+  --text-body-m--line-height: 20px;
+  --text-body-m--letter-spacing: -0.15px;
+  --text-caption: 13px; /* caption/mini 13/18 */
+  --text-caption--line-height: 18px;
+  --text-caption--letter-spacing: -0.08px;
+  --text-sticky: 12px; /* header/stickyHeader semibold 12/16 caps */
+  --text-sticky--line-height: 16px;
+  --text-nano: 11px; /* caption/nano semibold 11/14 */
+  --text-nano--line-height: 14px;
+  --text-nano--letter-spacing: 0.07px;
+  --text-tab: 9px; /* caption/atom medium 9/13 */
+  --text-tab--line-height: 13px;
+  --text-tab--letter-spacing: 0.12px;
+
+  /* gradients (Figma "background gradients/1:4/…") */
+  --gradient-home: linear-gradient(to bottom, #feffd6 0%, #ffc3ad 25%);
+  --gradient-payments: linear-gradient(to bottom, #efffcc 0%, #a7f5ac 25%);
+  --gradient-transfer: linear-gradient(to bottom, #e5ecff 0%, #b8b8ff 25%);
+  --gradient-fund: linear-gradient(to bottom, #f3ffe0 0%, #c9f2a6 25%);
+  --gradient-cash: linear-gradient(to bottom, #f1ffe5 0%, #b9e88f 25%);
+  --gradient-bills: linear-gradient(to bottom, #e6fbff 0%, #a9e6f5 25%);
+  --gradient-gov: linear-gradient(to bottom, #fbffe0 0%, #e2e59a 25%);
+  --gradient-airtime: linear-gradient(to bottom, #e9fff2 0%, #a6ebc4 25%);
+}

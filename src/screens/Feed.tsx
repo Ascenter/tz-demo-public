@@ -1,0 +1,81 @@
+import { useMemo } from 'react'
+import { useDemo } from '../app/store'
+import { groupByDay, type Category, type Operation } from '../engine/money'
+import { formatFeedAmount, formatNumber } from '../engine/format'
+import { startOfDay, now, DAY_MS } from '../engine/clock'
+import { CapsHeader, ListRow } from '../components/ListRow'
+import { Icon, type IconName } from '../components/icons'
+import { t } from '../mock/texts'
+
+// Category icon and colour as in the Figma "Transaction_list_item" rows.
+const CATEGORY: Record<Category, { icon: IconName; color: string }> = {
+  transfer: { icon: 'arrowRight', color: '#7a80ff' },
+  topup: { icon: 'plus', color: '#000000' },
+  cash: { icon: 'wallet', color: '#88c758' },
+  bills: { icon: 'flash', color: '#18ccb4' },
+  water: { icon: 'drop', color: '#4bc5eb' },
+  gov: { icon: 'gov', color: '#c7c758' },
+  card: { icon: 'apple', color: '#ff9d57' },
+  qr: { icon: 'qr', color: '#39cc7e' },
+  airtime: { icon: 'phone', color: '#39cc7e' },
+}
+
+function dayHeader(day: number, sum: number): string {
+  const today = startOfDay(now())
+  const s = formatNumber(sum)
+  if (day === today) return t('home.history_today', { sum: s })
+  if (day === today - DAY_MS || Math.round((today - day) / DAY_MS) === 1) return t('home.history_yesterday', { sum: s })
+  const label = new Date(day).toLocaleDateString('en-GB', { day: 'numeric', month: 'long' })
+  return t('home.history_day', { day: label, sum: s })
+}
+
+/** Home feed: grouped by day, newest first; header sum counts only money going out (parent BR-17). */
+export function Feed() {
+  const history = useDemo((s) => s.history)
+  const groups = useMemo(() => groupByDay(history, now()), [history])
+  return (
+    <div className="flex flex-col gap-6" data-testid="feed">
+      {groups.map((g, i) => (
+        <section key={g.day} data-testid={i === 0 ? 'feed-group-first' : undefined}>
+          <CapsHeader
+            testId={startOfDay(now()) === g.day ? 'today-header' : undefined}
+            right={
+              i === 0 ? (
+                <span className="flex gap-5 text-icon30">
+                  <Icon name="diagram" />
+                  <Icon name="search" />
+                </span>
+              ) : undefined
+            }
+          >
+            {dayHeader(g.day, g.outSum)}
+          </CapsHeader>
+          {g.items.map((op) => (
+            <FeedRow key={op.id} op={op} />
+          ))}
+        </section>
+      ))}
+      {groups.length === 0 && <p className="px-5 py-10 text-center text-body-m text-secondary">{t('home.history_empty')}</p>}
+    </div>
+  )
+}
+
+function FeedRow({ op }: { op: Operation }) {
+  const c = CATEGORY[op.category]
+  return (
+    <div data-testid="feed-row">
+      <ListRow
+        title={op.title}
+        subtitle={op.subtitle}
+        icon={op.initials ? undefined : c.icon}
+        initials={op.initials}
+        avatarColor={c.color}
+        right={
+          <span data-testid="feed-amount" className="text-xl-body whitespace-nowrap">
+            {formatFeedAmount(op.amount, op.direction)}
+          </span>
+        }
+      />
+    </div>
+  )
+}

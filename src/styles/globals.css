@@ -1,0 +1,121 @@
+@import 'tailwindcss';
+@import './tokens.css';
+
+:root {
+  /* Safe areas: device frame uses Figma's 44/34 px; the installed PWA uses the real insets. */
+  --safe-top: 44px;
+  --safe-bottom: 34px;
+  color-scheme: light;
+}
+html.standalone {
+  --safe-top: max(env(safe-area-inset-top), 20px);
+  --safe-bottom: env(safe-area-inset-bottom);
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+  overscroll-behavior: none; /* no pull-to-refresh / rubber band on the page */
+}
+body {
+  font-family: var(--font-sans);
+  background: #e9e9ee;
+  color: var(--color-primary);
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-text-size-adjust: 100%;
+  touch-action: manipulation; /* no double-tap zoom */
+}
+html.standalone body {
+  background: #feffd6;
+}
+
+/* UI chrome is not selectable; inputs stay editable. */
+.app-chrome,
+.app-chrome * {
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+}
+.app-chrome input,
+.app-chrome textarea {
+  -webkit-user-select: text;
+  user-select: text;
+}
+/* iOS zooms inputs below 16 px: keep every input at 16 px or more. */
+input,
+textarea {
+  font-size: 16px;
+  font-family: inherit;
+}
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+button:disabled {
+  cursor: default;
+}
+
+.scroll-y {
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.scroll-y::-webkit-scrollbar {
+  display: none;
+}
+
+/* Fake liquid glass: blur + saturate + translucent white + inner highlight. */
+.liquid-glass {
+  background: rgba(255, 255, 255, 0.62);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  backdrop-filter: blur(16px) saturate(180%);
+  box-shadow:
+    0 8px 40px rgba(0, 0, 0, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.04);
+}
+
+/* Receipt paper: zig-zag top edge as in Figma "receipt bg". */
+.receipt-paper {
+  background: var(--color-light-gray);
+  -webkit-mask:
+    conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg) top / 16px 51% repeat-x,
+    linear-gradient(#000 0 0) bottom / 100% 50% no-repeat;
+  mask:
+    conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg) top / 16px 51% repeat-x,
+    linear-gradient(#000 0 0) bottom / 100% 50% no-repeat;
+  padding-top: 8px;
+}
+
+.pressable {
+  transition: opacity 120ms ease, transform 120ms ease;
+}
+.pressable:active:not(:disabled) {
+  opacity: 0.6;
+}
+.row-pressable:active {
+  background: rgba(0, 0, 0, 0.04);
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes caret {
+  0%,
+  45% {
+    opacity: 1;
+  }
+  50%,
+  100% {
+    opacity: 0;
+  }
+}
+.caret {
+  animation: caret 1s step-end infinite;
+}
