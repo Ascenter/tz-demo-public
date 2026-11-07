@@ -33,15 +33,16 @@ export function AmountEntry({ value, onChange, hints, error, comment, chips = []
   return (
     <div className="flex min-h-0 flex-1 flex-col">
       <div className="flex min-h-[150px] flex-1 flex-col items-center justify-center px-5">
+        {/* Figma layout: amount, caret, then the currency (text lines elsewhere use "TZS 25,000", BR-14). */}
         <div className="flex items-center gap-[2px]" data-testid="amount-display">
-          <span className="font-display text-amount-input font-semibold">TZS</span>
           <span
             data-testid="amount-value"
             className={`font-display text-amount-input font-semibold ${value ? 'text-primary' : 'text-black/25'}`}
           >
-            &nbsp;{value ? formatNumber(amount) : '0'}
+            {value ? formatNumber(amount) : '0'}
           </span>
-          <span className="caret ml-[1px] h-9 w-[2px] rounded bg-[#0974ff]" />
+          <span className="caret h-9 w-[2px] rounded bg-black" />
+          <span className="font-display text-amount-input font-semibold">&nbsp;TZS</span>
         </div>
         <div className="mt-[2px] flex flex-col items-center">
           {error ? (

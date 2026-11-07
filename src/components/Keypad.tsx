@@ -37,7 +37,7 @@ export function Keypad({ onDigit, onDelete, keyboard = true }: Props) {
   return (
     <div
       className="flex shrink-0 flex-col gap-[6px] rounded-t-[27px] bg-keyboard px-[7.5px] pt-6"
-      style={{ paddingBottom: 'calc(var(--safe-bottom) + 12px)' }}
+      style={{ paddingBottom: 'calc(var(--safe-bottom) + 42px)' }}
     >
       {[['1', '2', '3'], ['4', '5', '6'], ['7', '8', '9']].map((row) => (
         <div key={row[0]} className="flex gap-[6px]">

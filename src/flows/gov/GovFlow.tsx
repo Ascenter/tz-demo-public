@@ -7,8 +7,8 @@ import { HeaderItem, LargeTitle, NavBar } from '../../components/NavBar'
 import { CapsHeader, ListRow } from '../../components/ListRow'
 import { SearchField, RedLine } from '../../components/Fields'
 import { Avatar } from '../../components/Avatar'
-import { DetailRows, SheetTitle } from '../../components/BottomSheet'
-import { ButtonBar, MiniButton, PrimaryButton } from '../../components/PrimaryButton'
+import { BottomSheet, DetailRows, SheetTitle } from '../../components/BottomSheet'
+import { ButtonBar, PrimaryButton } from '../../components/PrimaryButton'
 import { ConfirmButton } from '../../components/ConfirmButton'
 import { OtpScreen } from '../../components/OtpScreen'
 import { Receipt } from '../../components/Receipt'
@@ -19,14 +19,14 @@ import { useDemo, useAvailable } from '../../app/store'
 import { simulate } from '../../engine/delay'
 import { digitsOnly, formatNumber, formatTZS, groupDigits } from '../../engine/format'
 import { GOV } from '../../mock/scripted'
-import { INSTITUTIONS } from '../../mock/institutions'
+import { INSTITUTIONS, TRA } from '../../mock/institutions'
 import { govOp } from '../../mock/operations'
 import { t, type TextKey } from '../../mock/texts'
 
-type Step = { name: 'institutions' } | { name: 'control' } | { name: 'bill' } | { name: 'otp' } | { name: 'receipt' }
+type Step = { name: 'institutions' } | { name: 'control' } | { name: 'otp' } | { name: 'receipt' }
 
-const GRADIENT = 'var(--gradient-gov)'
-const GovAvatar = () => <Avatar icon="gov" color="#c7c758" />
+const GRADIENT = 'var(--gradient-transfer)' // Figma: same lilac header as transfers
+const GovAvatar = () => <Avatar icon={TRA.icon} color={TRA.color} />
 
 /** Government bill via GePG (child BRD 3447390224). Done on the receipt opens Home (BR-09). */
 export function GovFlow() {
@@ -35,6 +35,7 @@ export function GovFlow() {
   const nav = useSteps<Step>({ name: 'institutions' })
   const [control, setControl] = useState('')
   const [date, setDate] = useState('')
+  const [bill, setBill] = useState(false)
   const once = useOnce()
 
   const afterOtp = async () => {
@@ -68,10 +69,7 @@ export function GovFlow() {
       )
       break
     case 'control':
-      screen = <ControlNumber value={control} onChange={setControl} onBack={nav.pop} onContinue={() => nav.push({ name: 'bill' })} />
-      break
-    case 'bill':
-      screen = <BillCheck control={control} onBack={nav.pop} onPay={() => nav.push({ name: 'otp' })} />
+      screen = <ControlNumber value={control} onChange={setControl} onBack={nav.pop} onContinue={() => setBill(true)} />
       break
     case 'otp':
       screen = <OtpScreen onSuccess={() => once.run(afterOtp)} onCancel={nav.pop} />
@@ -88,23 +86,14 @@ export function GovFlow() {
               [t('payments.gov.bill'), GOV.bill],
               [t('payments.gov.control_number_label'), groupDigits(control, [4, 4, 4])],
             ],
-            [
-              [
-                t('payments.gov.gepg_receipt'),
-                <span className="flex flex-col items-start gap-2">
-                  <span data-testid="gepg-receipt">{GOV.receipt}</span>
-                  <MiniButton testId="copy-receipt" onClick={() => void copyReceipt()}>
-                    {t('payments.gov.copy_receipt')}
-                  </MiniButton>
-                </span>,
-              ],
-            ],
+            [[t('payments.gov.gepg_receipt'), <span data-testid="gepg-receipt">{GOV.receipt}</span>]],
             [
               [t('payments.gov.paid_from'), paidFromValue()],
               [t('payments.gov.date'), date],
             ],
           ]}
           doneLabel={t('payments.gov.done')}
+          secondary={{ label: t('payments.gov.copy_receipt'), onClick: () => void copyReceipt(), testId: 'copy-receipt' }}
           onDone={toHome}
         />
       )
@@ -116,6 +105,15 @@ export function GovFlow() {
       <StepHost stepKey={nav.stepKey} dir={nav.dir}>
         {screen}
       </StepHost>
+      <BillCheck
+        open={bill}
+        control={control}
+        onCancel={() => setBill(false)} // Cancel → control number screen, number kept
+        onPay={() => {
+          setBill(false)
+          nav.push({ name: 'otp' })
+        }}
+      />
     </div>
   )
 }
@@ -141,7 +139,8 @@ function Institutions({ onBack, onTra }: { onBack: () => void; onTra: () => void
         <ListRow
           key={i.id}
           testId={`inst-${i.id}`}
-          leading={<GovAvatar />}
+          icon={i.icon}
+          avatarColor={i.color}
           title={t(`payments.gov.inst.${i.id}` as TextKey)}
           subtitle={t(`payments.gov.inst.${i.id}_subtitle` as TextKey)}
           onClick={i.active ? onTra : undefined} // Gov BR-02: only TRA tax opens
@@ -199,42 +198,34 @@ function ControlNumber({ value, onChange, onBack, onContinue }: { value: string;
   )
 }
 
-/** "Pay this bill" (Figma 239:5938): amount is read-only (Gov BR-06). Cancel → control number, kept. */
-function BillCheck({ control, onBack, onPay }: { control: string; onBack: () => void; onPay: () => void }) {
-  useBack(onBack)
+/** "Pay this bill" sheet (Figma 239:5938): amount is read-only (Gov BR-06). */
+function BillCheck({ open, control, onCancel, onPay }: { open: boolean; control: string; onCancel: () => void; onPay: () => void }) {
   const avail = useAvailable()
   const enough = GOV.amount <= avail
   return (
-    <Screen
-      testId="gov-bill"
-      header={<NavBar onBack={onBack} />}
-      footer={
-        <ButtonBar>
-          {!enough && <RedLine>{t('payments.common.not_enough')}</RedLine>}
-          <ConfirmButton data-testid="gov-pay" disabled={!enough} onClick={onPay}>
-            {t('payments.gov.pay', { amount: formatNumber(GOV.amount) })}
-          </ConfirmButton>
-          <PrimaryButton variant="nobg" data-testid="gov-cancel" onClick={onBack}>
-            {t('payments.gov.cancel')}
-          </PrimaryButton>
-        </ButtonBar>
-      }
-    >
-      <div className="flex flex-col gap-6 px-5 pt-2">
-        <SheetTitle title={t('payments.gov.check_title')} subtitle={t('payments.gov.check_subtitle')} />
-        <DetailRows
-          rows={[
-            [t('payments.gov.institution'), GOV.institution],
-            [t('payments.gov.payer'), GOV.payer],
-            [t('payments.gov.bill'), GOV.bill],
-            [t('payments.gov.control_number_label'), groupDigits(control, [4, 4, 4])],
-            [t('payments.gov.pay_by'), GOV.payBy],
-            [t('payments.gov.amount'), formatTZS(GOV.amount)],
-            [t('payments.gov.fee'), t('payments.common.no_fee')],
-            [t('payments.gov.from_account'), t('payments.gov.from_account_value', { available: formatNumber(avail) })],
-          ]}
-        />
+    <BottomSheet open={open} onDismiss={onCancel} testId="gov-bill">
+      <SheetTitle title={t('payments.gov.check_title')} subtitle={t('payments.gov.check_subtitle')} />
+      <DetailRows
+        rows={[
+          [t('payments.gov.institution'), GOV.institution],
+          [t('payments.gov.payer'), GOV.payer],
+          [t('payments.gov.bill'), GOV.bill],
+          [t('payments.gov.control_number_label'), groupDigits(control, [4, 4, 4])],
+          [t('payments.gov.pay_by'), GOV.payBy],
+          [t('payments.gov.amount'), formatTZS(GOV.amount)],
+          [t('payments.gov.fee'), t('payments.common.no_fee')],
+          [t('payments.gov.from_account'), t('payments.gov.from_account_value', { available: formatNumber(avail) })],
+        ]}
+      />
+      <div className="flex flex-col gap-[10px]">
+        {!enough && <RedLine>{t('payments.common.not_enough')}</RedLine>}
+        <ConfirmButton data-testid="gov-pay" disabled={!enough} onClick={onPay}>
+          {t('payments.gov.pay', { amount: formatNumber(GOV.amount) })}
+        </ConfirmButton>
+        <PrimaryButton variant="nobg" data-testid="gov-cancel" onClick={onCancel}>
+          {t('payments.gov.cancel')}
+        </PrimaryButton>
       </div>
-    </Screen>
+    </BottomSheet>
   )
 }

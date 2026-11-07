@@ -11,7 +11,7 @@ import { SearchField, RedLine } from '../../components/Fields'
 import { Avatar } from '../../components/Avatar'
 import { Badge } from '../../components/Badge'
 import { BottomSheet, DetailRows, SheetTitle } from '../../components/BottomSheet'
-import { ButtonBar, MiniButton, PrimaryButton } from '../../components/PrimaryButton'
+import { ButtonBar, PrimaryButton } from '../../components/PrimaryButton'
 import { ConfirmButton } from '../../components/ConfirmButton'
 import { OtpScreen } from '../../components/OtpScreen'
 import { Receipt } from '../../components/Receipt'
@@ -31,8 +31,8 @@ import { t, type TextKey } from '../../mock/texts'
 type Step = { name: 'billers' } | { name: 'meter' } | { name: 'amount' } | { name: 'otp' } | { name: 'receipt' }
 type Lookup = 'idle' | 'found' | 'not_found'
 
-const GRADIENT = 'var(--gradient-bills)'
-const LukuAvatar = () => <Avatar icon="flash" color="#18ccb4" />
+const GRADIENT = 'var(--gradient-transfer)' // Figma: same lilac header as transfers
+const LukuAvatar = () => <Avatar icon="flash" color="#7a80ff" />
 const meterText = (m: string) => groupDigits(m, [4, 4, 3])
 const tokenText = (tk: string) => groupDigits(tk, [4, 4, 4, 4, 4])
 
@@ -146,26 +146,17 @@ export function BillsFlow() {
           status={t('payments.bills.success')}
           blocks={[
             [
-              [
-                t('payments.bills.token'),
-                <span className="flex flex-col items-start gap-2">
-                  <span data-testid="luku-token" className="font-semibold tracking-[0.5px]">{tokenText(BILLS.token)}</span>
-                  <MiniButton testId="copy-token" onClick={() => void copyToken()}>
-                    {t('payments.bills.copy_token')}
-                  </MiniButton>
-                </span>,
-              ],
+              [t('payments.bills.token'), <span data-testid="luku-token">{tokenText(BILLS.token)}</span>],
+              [t('payments.bills.biller'), BILLS.biller],
             ],
             [
-              [t('payments.bills.biller'), BILLS.biller],
               [t('payments.bills.meter_number'), meterText(meter)],
               [t('payments.bills.meter_owner_label'), BILLS.owner],
             ],
-            [
-              [t('payments.bills.paid_from'), paidFromValue()],
-              [t('payments.bills.date'), done.date],
-            ],
+            [[t('payments.bills.paid_from'), paidFromValue()]],
+            [[t('payments.bills.date'), done.date]],
           ]}
+          secondary={{ label: t('payments.bills.copy_token'), onClick: () => void copyToken(), testId: 'copy-token' }}
           doneLabel={t('payments.bills.done')}
           onDone={toHome}
         />
@@ -245,7 +236,7 @@ function Billers({ onBack, onSaved, onLuku }: { onBack: () => void; onSaved: () 
       <CapsHeader>{t('payments.bills.saved')}</CapsHeader>
       <ListRow
         testId="bills-saved-meter"
-        leading={<LukuAvatar />}
+        leading={<Avatar icon="flash" color={SAVED_METER.color} />}
         title={SAVED_METER.owner}
         subtitle={t('payments.bills.saved_meter_subtitle', { meter: meterText(SAVED_METER.meter) })}
         onClick={onSaved}
@@ -260,7 +251,8 @@ function Billers({ onBack, onSaved, onLuku }: { onBack: () => void; onSaved: () 
           avatarColor={b.color}
           title={t(b.titleKey as TextKey)}
           subtitle={t(b.subtitleKey as TextKey)}
-          right={b.active ? undefined : <Badge tone="gray">{t('payments.bills.soon')}</Badge>}
+          below={b.active ? undefined : <Badge tone="custom" color="rgba(0,0,0,0.45)">{t('payments.bills.soon')}</Badge>}
+          dimmed={!b.active}
           onClick={b.active ? onLuku : undefined} // Bills BR-02: Soon billers do not open
         />
       ))}

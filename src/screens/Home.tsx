@@ -44,10 +44,10 @@ export function Home() {
             onContextMenu={(e) => e.preventDefault()}
           >
             <div className="flex items-end justify-center">
-              <span className="pb-1 font-display text-fraction font-semibold">TZS&nbsp;</span>
               <span data-testid="balance-available" className="font-display text-main-amount font-semibold">
                 {formatNumber(available(ledger))}
               </span>
+              <span className="pb-1 font-display text-fraction font-semibold">&nbsp;TZS</span>
             </div>
             <div className="flex gap-2 text-caption text-secondary">
               <div className="flex flex-col items-start">

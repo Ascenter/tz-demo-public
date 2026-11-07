@@ -33,7 +33,7 @@ interface Target {
 
 type Step = { name: 'recipients' } | { name: 'amount' } | { name: 'otp' } | { name: 'receipt' }
 
-const GRADIENT = 'var(--gradient-airtime)'
+const GRADIENT = 'var(--gradient-transfer)' // Figma: same lilac header as transfers
 const ALL_CONTACTS = [AIRTIME_MY_NUMBER, ...AIRTIME_RECENT, ...AIRTIME_CONTACTS]
 
 /** Airtime (child BRD 3437592577): no Airtime/Data switch, no confirmation sheet (OQ-2 b). */
@@ -159,7 +159,7 @@ function Recipients({ onBack, onPick }: { onBack: () => void; onPick: (t: Target
       <ListRow
         key={c.phone + title}
         testId={testId}
-        leading={c === AIRTIME_MY_NUMBER ? <Avatar icon="user" color="#000" /> : <Avatar initials={initialsOf(c.name)} color={colorFor(c.name)} />}
+        leading={c === AIRTIME_MY_NUMBER ? <Avatar icon="phone" color="#39cc7e" /> : <Avatar initials={initialsOf(c.name)} color={colorFor(c.name)} />}
         title={title}
         subtitle={t('payments.airtime.row_subtitle', { phone: c.phone, operator })}
         onClick={() => onPick({ name: c === AIRTIME_MY_NUMBER ? t('payments.airtime.my_number') : c.name, phone: c.phone, operator })}

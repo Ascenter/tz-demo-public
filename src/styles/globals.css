@@ -82,13 +82,13 @@ button:disabled {
 /* Receipt paper: zig-zag top edge as in Figma "receipt bg". */
 .receipt-paper {
   background: var(--color-light-gray);
+  /* 8 px tall zig-zag strip on top, solid paper below it. */
   -webkit-mask:
-    conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg) top / 16px 51% repeat-x,
-    linear-gradient(#000 0 0) bottom / 100% 50% no-repeat;
+    conic-gradient(from 135deg at top, #000 90deg, #0000 0) 0 0 / 16px 8px repeat-x,
+    linear-gradient(#000 0 0) 0 7.5px / 100% calc(100% - 7.5px) no-repeat;
   mask:
-    conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg) top / 16px 51% repeat-x,
-    linear-gradient(#000 0 0) bottom / 100% 50% no-repeat;
-  padding-top: 8px;
+    conic-gradient(from 135deg at top, #000 90deg, #0000 0) 0 0 / 16px 8px repeat-x,
+    linear-gradient(#000 0 0) 0 7.5px / 100% calc(100% - 7.5px) no-repeat;
 }
 
 .pressable {

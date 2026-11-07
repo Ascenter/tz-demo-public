@@ -13,7 +13,16 @@ export default defineConfig({
     trace: 'off',
     serviceWorkers: 'block', // the SW is checked separately; tests always load fresh code
   },
-  projects: [{ name: 'webkit-iphone', use: { ...devices['iPhone 15 Pro'] } }],
+  projects: [
+    { name: 'webkit-iphone', use: { ...devices['iPhone 15 Pro'] }, testIgnore: /offline/ },
+    // Playwright's WebKit on Linux cannot serve an offline reload from the service worker;
+    // the offline/PWA check runs in Chromium with the same iPhone viewport.
+    {
+      name: 'chromium-offline',
+      use: { ...devices['iPhone 15 Pro'], browserName: 'chromium', defaultBrowserType: 'chromium' },
+      testMatch: /offline/,
+    },
+  ],
   webServer: {
     command: 'npm run build && npx vite preview --port 4173 --strictPort',
     url: 'http://localhost:4173',

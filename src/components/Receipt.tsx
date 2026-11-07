@@ -18,11 +18,13 @@ interface Props {
   actions?: ReactNode
   onDone: () => void
   doneLabel: string
+  /** No-BG button above Done (e.g. "Copy token"). */
+  secondary?: { label: string; onClick: () => void; testId?: string }
   testId?: string
 }
 
 /** Success screen with receipt paper (Figma 130:2154 / 42:5875). Share icon shown, inactive. */
-export function Receipt({ amount, status, blocks, actions, onDone, doneLabel, testId }: Props) {
+export function Receipt({ amount, status, blocks, actions, onDone, doneLabel, secondary, testId }: Props) {
   useBack(onDone)
   return (
     <Screen
@@ -38,13 +40,18 @@ export function Receipt({ amount, status, blocks, actions, onDone, doneLabel, te
       }
       footer={
         <ButtonBar gray>
+          {secondary && (
+            <PrimaryButton variant="nobg" data-testid={secondary.testId} onClick={secondary.onClick}>
+              {secondary.label}
+            </PrimaryButton>
+          )}
           <PrimaryButton data-testid="receipt-done" onClick={onDone}>
             {doneLabel}
           </PrimaryButton>
         </ButtonBar>
       }
     >
-      <div className="flex flex-col items-center gap-6 pt-2">
+      <div className="flex min-h-full flex-col items-center gap-6 pt-2">
         <Illustration kind="success" size={140} />
         <div className="flex flex-col items-center gap-2 px-5">
           <p data-testid="receipt-amount" className="font-display text-fraction font-semibold">

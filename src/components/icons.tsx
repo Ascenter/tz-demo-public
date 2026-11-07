@@ -82,6 +82,27 @@ const paths = {
       <path d="M3.5 10h17M7 14.5h3" />
     </>
   ),
+  percent: (
+    <>
+      <path d="M18 6 6 18" />
+      <circle cx="7.5" cy="7.5" r="2" />
+      <circle cx="16.5" cy="16.5" r="2" />
+    </>
+  ),
+  car: (
+    <>
+      <path d="M5 16.5V12l1.8-4.2A1.5 1.5 0 0 1 8.2 7h7.6a1.5 1.5 0 0 1 1.4.8L19 12v4.5" />
+      <path d="M4 12h16v4.5H4zM6.5 16.5V19M17.5 16.5V19M7.5 14.2h.01M16.5 14.2h.01" />
+    </>
+  ),
+  luggage: (
+    <>
+      <rect x="6" y="7" width="12" height="13" rx="2.5" />
+      <path d="M9.5 7V4.5h5V7M10 11v5M14 11v5" />
+    </>
+  ),
+  book: <path d="M12 6.5C10.5 5.3 8 5 4.5 5v13c3.5 0 6 .3 7.5 1.5m0-13c1.5-1.2 4-1.5 7.5-1.5v13c-3.5 0-6 .3-7.5 1.5m0-13v13" strokeLinejoin="round" />,
+  heart: <path d="M12 19s-7-4.4-7-9.5A3.8 3.8 0 0 1 12 7.3a3.8 3.8 0 0 1 7 2.2C19 14.6 12 19 12 19Z" strokeLinejoin="round" />,
   backspace: (
     <>
       <path d="M9 5.5h10a1.5 1.5 0 0 1 1.5 1.5v10a1.5 1.5 0 0 1-1.5 1.5H9L3.5 12 9 5.5Z" strokeLinejoin="round" />

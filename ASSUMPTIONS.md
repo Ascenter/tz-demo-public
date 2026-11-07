@@ -1,0 +1,50 @@
+# Assumptions
+
+Decisions taken where the BRDs (parent v16 + 7 children, as of 7 Nov 2026) and Figma did not settle a detail.
+Each one is the simplest inert version; change it in the file named.
+
+## Data and money
+
+| #   | Topic                                 | Decision                                                                                                                                                     | Where                      |
+| --- | ------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------------------------- |
+| A1  | Incoming money while credit is used   | Repays used credit first, then adds to own funds. Never reached in the Master script (own funds never go below 0).                                           | `src/engine/money.ts`      |
+| A2  | Seed recipients' account numbers      | Neema Mushi `015011223344`, Joseph Kimaro `015055667788`, Amina Said `015099001122` (BRD gives names and phones only). Phones reuse the Airtime BRD numbers. | `src/mock/recipients.ts`   |
+| A3  | TIPS bank list                        | CRDB Bank is scripted; NMB, NBC, Stanbic, Absa, Exim, Equity, DTB mirror Figma 42:5319. Any bank returns the scripted name check.                            | `src/mock/banks.ts`        |
+| A4  | TIPS account number for Recent        | `0152487639100` as typed in Send S2.                                                                                                                         | `src/mock/masterScript.ts` |
+| A5  | "Today" header with no outgoing money | Shows `Today, 0 TZS`.                                                                                                                                        | `src/screens/Feed.tsx`     |
+
+## Behaviour
+
+| #   | Topic                                                 | Decision                                                                                                                                                                                            |
+| --- | ----------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| B1  | Recipient search loader (Send BR-10)                  | Inline spinner in the list, at least 200 ms, so typing is never blocked by a full-screen loader. All other backend answers use the blocking loader.                                                 |
+| B2  | OTP cancelled (back, 3rd wrong code, expired)         | Returns to the previous step (amount screen or bill check) with the values kept; nothing is debited.                                                                                                |
+| B3  | Send money limits                                     | Parent wording: "Over the limit of TZS 5,000,000 per payment" and "Not enough money" (Send BRD error table).                                                                                        |
+| B4  | Gov "Not enough money" on the bill check              | Red line + disabled Pay (unreachable in the script).                                                                                                                                                |
+| B5  | Tapping a TIPS recipient in Recent                    | Goes straight to the amount; the "Check the transfer" sheet still shows (Send BR-06).                                                                                                               |
+| B6  | Airtime "My number"                                   | Row title "My number"; the same text is used as the feed name.                                                                                                                                      |
+| B7  | Cash withdrawal method choice                         | A screen with three rows (Figma section has no method sheet frame), Back → Payments.                                                                                                                |
+| B8  | Amount and OTP entry                                  | In-app keypad drawn like the Figma iOS number pad (no system keyboard jumping over the layout). Comment, search, account, control number and meter fields use the native keyboard with `inputmode`. |
+| B9  | Scanner without a camera (denied, desktop, simulator) | Shows "No camera access" + "Simulate scan" in the viewfinder, plus the demo-menu action.                                                                                                            |
+| B10 | Saving a contact on the receipt                       | Toast "Contact saved"; the "Save contact" button disappears once the account is saved.                                                                                                              |
+
+## Visual (Figma wins for layout)
+
+| #   | Topic                                                      | Decision                                                                                                                                             |
+| --- | ---------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
+| V1  | Currency position                                          | Big amounts follow Figma: `910,000 TZS` on Home and `25,000                                                                                          | TZS`in the amount input. Every text line uses BR-14`TZS 250,000` (Personal funds, hints, sheets, receipts, pushes). |
+| V2  | Icons                                                      | Hand-drawn inline SVGs in `src/components/icons.tsx`: the Figma asset URLs (`www.figma.com`) were blocked by the build environment's network policy. |
+| V3  | Illustrations                                              | Placeholder circles (✓, !, 📱, ⏳, 💵) instead of the lion mascots, same reason. Replace in `src/components/Illustration.tsx`.                       |
+| V4  | Airtime contacts header                                    | "Contacts" (BRD key `payments.airtime.contacts`) instead of Figma's A/B letter groups.                                                               |
+| V5  | Airtime amount hint                                        | One BRD line "Balance TZS {available} · No fee" (Figma draws two lines). Airtime/Data switch omitted (Airtime OQ-2 b).                               |
+| V6  | Bills biller order                                         | Figma order: LUKU, TV, Government payments, Water.                                                                                                   |
+| V7  | Gradients                                                  | Airtime, Bills and Gov use the lilac transfer gradient as drawn; Fund and Cash have no Figma header frame, so they use light green variants.         |
+| V8  | OTP screen, loader, push banner, demo menu, result screens | No Figma frame; built in the same visual language (white surfaces, black pill buttons, SF type scale).                                               |
+
+## Process
+
+| #   | Topic                        | Decision                                                                                                                                                                                                             |
+| --- | ---------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| P1  | LUKU step number             | The LUKU BRD still says "step 6, 895,000 → 875,000". The build prompt / parent Master script (step 7, 695,000 → 675,000) and the LUKU OQ-2 note are followed.                                                        |
+| P2  | Offline e2e browser          | Playwright WebKit on Linux cannot serve an offline reload from the service worker, so `offline.spec.ts` runs in Chromium; every flow test runs in WebKit. Re-check airplane mode on the real iPhone before the demo. |
+| P3  | Lighthouse "PWA installable" | Lighthouse 12+ removed the PWA category. Installability is covered by `offline.spec.ts` (manifest: standalone, portrait, 192/512 icons, apple-touch-icon; service worker controls the page).                         |

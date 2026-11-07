@@ -1,6 +1,6 @@
 import type { IconName } from '../components/icons'
 
-// Bill payments biller list (Bills BR-02). Only LUKU electricity opens.
+// Bill payments biller list (Bills BR-02). Only LUKU electricity opens; the rest show "Soon".
 export interface Biller {
   id: string
   titleKey: string
@@ -11,11 +11,11 @@ export interface Biller {
 }
 
 export const BILLERS: Biller[] = [
-  { id: 'luku', titleKey: 'payments.bills.luku', subtitleKey: 'payments.bills.luku_subtitle', icon: 'flash', color: '#18ccb4', active: true },
-  { id: 'gepg', titleKey: 'payments.bills.gepg', subtitleKey: 'payments.bills.gepg_subtitle', icon: 'gov', color: '#c7c758', active: false },
-  { id: 'tv', titleKey: 'payments.bills.tv', subtitleKey: 'payments.bills.tv_subtitle', icon: 'tv', color: '#ff7a59', active: false },
-  { id: 'water', titleKey: 'payments.bills.water', subtitleKey: 'payments.bills.water_subtitle', icon: 'drop', color: '#4bc5eb', active: false },
+  { id: 'luku', titleKey: 'payments.bills.luku', subtitleKey: 'payments.bills.luku_subtitle', icon: 'flash', color: '#7a80ff', active: true },
+  { id: 'tv', titleKey: 'payments.bills.tv', subtitleKey: 'payments.bills.tv_subtitle', icon: 'tv', color: '#ff7a8a', active: false },
+  { id: 'gepg', titleKey: 'payments.bills.gepg', subtitleKey: 'payments.bills.gepg_subtitle', icon: 'gov', color: '#39cc7e', active: false },
+  { id: 'water', titleKey: 'payments.bills.water', subtitleKey: 'payments.bills.water_subtitle', icon: 'drop', color: '#ff7a8a', active: false },
 ]
 
 /** Saved meter in the SAVED block (seed). */
-export const SAVED_METER = { owner: 'Juma Mrisho', meter: '01234567890' } as const
+export const SAVED_METER = { owner: 'Juma Mrisho', meter: '01234567890', color: '#a983fb' } as const
