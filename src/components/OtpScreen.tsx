@@ -57,9 +57,10 @@ export function OtpScreen({ onSuccess, onCancel }: Props) {
     } else if (result === 'locked') {
       cancelWith('payments.common.otp_too_many')
     } else {
+      // Clear at once so a fast re-entry is never wiped; the error stays until the next digit.
+      setCode('')
       setError(true)
       void shake.start({ x: [0, -10, 10, -6, 6, 0], transition: { duration: 0.35 } })
-      setTimeout(() => setCode(''), 350)
     }
   }
 

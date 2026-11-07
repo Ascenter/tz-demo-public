@@ -48,6 +48,14 @@ export default defineConfig(({ mode }) => {
       __APP_VERSION__: JSON.stringify(pkg.version),
       __BUILD_DATE__: JSON.stringify(new Date().toISOString().slice(0, 16).replace('T', ' ')),
     },
+    build: {
+      rolldownOptions: {
+        output: {
+          // React + motion + router in their own chunk keeps the app chunk small and cacheable.
+          codeSplitting: { groups: [{ name: 'vendor', test: /node_modules[\\/](react|react-dom|scheduler|motion|motion-dom|motion-utils|framer-motion|react-router|zustand)[\\/]/ }] },
+        },
+      },
+    },
     test: {
       include: ['tests/unit/**/*.test.ts'],
       environment: 'node',
