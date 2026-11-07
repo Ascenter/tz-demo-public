@@ -63,6 +63,13 @@ Open it with a **long press (1 s) on the Home balance** or a **triple tap on the
 
 The app opens full screen in portrait, with no browser UI and no update prompts during the demo. A new deploy applies on the next launch.
 
+### GitHub Pages (set up)
+
+`.github/workflows/pages.yml` runs the unit tests, builds with `BASE_PATH=/<repo>/` and publishes on every push to `main`.
+One-time: repo **Settings → Pages → Build and deployment → Source: GitHub Actions**. The URL is
+`https://<owner>.github.io/<repo>/` (private repos need a paid GitHub plan for Pages).
+For a local sub-path build: `BASE_PATH=/tz-payments-demo/ npm run build`.
+
 ### Deploying `dist/`
 
 Any static host works; the app uses an in-memory router, so no rewrite rules are needed:

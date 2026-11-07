@@ -10,6 +10,8 @@ import pkg from './package.json' with { type: 'json' }
 const THEME = '#feffd6'
 
 export default defineConfig(({ mode }) => {
+  // GitHub Pages serves the app under /<repo>/: the workflow sets BASE_PATH. Local builds use '/'.
+  const base = process.env.BASE_PATH ?? '/'
   const plugins: PluginOption[] = [
     react(),
     tailwindcss(),
@@ -23,8 +25,8 @@ export default defineConfig(({ mode }) => {
         description: 'Mo-Simba Bank payments demo',
         display: 'standalone',
         orientation: 'portrait',
-        start_url: '/',
-        scope: '/',
+        start_url: base,
+        scope: base,
         background_color: THEME,
         theme_color: THEME,
         icons: [
@@ -35,7 +37,7 @@ export default defineConfig(({ mode }) => {
       },
       workbox: {
         globPatterns: ['**/*.{js,css,html,svg,png,ico,webmanifest,wasm}'],
-        navigateFallback: '/index.html',
+        navigateFallback: `${base}index.html`,
         cleanupOutdatedCaches: true,
       },
     }),
@@ -43,6 +45,7 @@ export default defineConfig(({ mode }) => {
   if (mode === 'https') plugins.push(basicSsl())
 
   return {
+    base,
     plugins,
     define: {
       __APP_VERSION__: JSON.stringify(pkg.version),
