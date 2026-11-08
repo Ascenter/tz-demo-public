@@ -32,6 +32,9 @@ export const SCAN = {
   tipsReference: 'TZ26103112054418', // Figma 130:2154
 } as const
 
+// Parent registry v17: Get code → code 482 913, valid 30 min, no debit until Done on the code screen.
+// Done → loader, debit of the typed amount, Home with "Cash withdrawal · Wakala agent, Juma Shop" first.
+// Agent data and the reference feed the history row, its transaction details and the push.
 export const CASH = {
   code: '482 913',
   validMinutes: 30,

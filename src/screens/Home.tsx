@@ -43,11 +43,10 @@ export function Home() {
             onPointerCancel={endPress}
             onContextMenu={(e) => e.preventDefault()}
           >
-            <div className="flex items-end justify-center">
-              <span data-testid="balance-available" className="font-display text-main-amount font-semibold">
-                {formatNumber(available(ledger))}
-              </span>
-              <span className="pb-1 font-display text-fraction font-semibold">&nbsp;TZS</span>
+            {/* Figma 176:4682 (8 Nov): currency first, same size as the amount (parent BR-14). */}
+            <div className="flex w-full items-end justify-start px-[25px] font-display text-main-amount font-normal">
+              <span>TZS&nbsp;</span>
+              <span data-testid="balance-available">{formatNumber(available(ledger))}</span>
             </div>
             <div className="flex gap-2 text-caption text-secondary">
               <div className="flex flex-col items-start">

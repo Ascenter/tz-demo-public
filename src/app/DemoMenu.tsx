@@ -22,7 +22,6 @@ export function DemoMenu() {
 function MenuBody() {
   const close = () => useUi.getState().setDemoMenu(false)
   useBack(close)
-  const agentEntered = useUi((s) => s.agentEntered)
   const simulateScan = useUi((s) => s.simulateScan)
   const { loaderMs, setLoaderMs, jumpToStep, showFrame, setShowFrame } = useDemo()
   const [confirmReset, setConfirmReset] = useState(false)
@@ -53,9 +52,6 @@ function MenuBody() {
           </button>
         </div>
 
-        <DevButton testId="demo-agent-entered" disabled={!agentEntered} hint={t('demo.agent_entered_hint')} onClick={run(() => agentEntered?.())}>
-          {t('demo.agent_entered')}
-        </DevButton>
         <DevButton testId="demo-simulate-qr" disabled={!simulateScan} hint={t('demo.simulate_qr_hint')} onClick={run(() => simulateScan?.())}>
           {t('demo.simulate_qr')}
         </DevButton>

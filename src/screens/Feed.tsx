@@ -1,10 +1,11 @@
-import { useMemo } from 'react'
+import { useMemo, useState } from 'react'
 import { useDemo } from '../app/store'
 import { groupByDay, type Category, type Operation } from '../engine/money'
 import { formatFeedAmount, formatNumber } from '../engine/format'
 import { startOfDay, now, DAY_MS } from '../engine/clock'
 import { CapsHeader, ListRow } from '../components/ListRow'
 import { Icon, type IconName } from '../components/icons'
+import { TransactionDetails } from '../components/TransactionDetails'
 import { t } from '../mock/texts'
 
 // Category icon and colour as in the Figma "Transaction_list_item" rows.
@@ -33,8 +34,11 @@ function dayHeader(day: number, sum: number): string {
 export function Feed() {
   const history = useDemo((s) => s.history)
   const groups = useMemo(() => groupByDay(history, now()), [history])
+  const [openId, setOpenId] = useState<string | null>(null)
+  const open = history.find((o) => o.id === openId) ?? null
   return (
     <div className="flex flex-col gap-6" data-testid="feed">
+      <TransactionDetails op={open} onClose={() => setOpenId(null)} />
       {groups.map((g, i) => (
         <section key={g.day} data-testid={i === 0 ? 'feed-group-first' : undefined}>
           <CapsHeader
@@ -51,7 +55,7 @@ export function Feed() {
             {dayHeader(g.day, g.outSum)}
           </CapsHeader>
           {g.items.map((op) => (
-            <FeedRow key={op.id} op={op} />
+            <FeedRow key={op.id} op={op} onOpen={op.details ? () => setOpenId(op.id) : undefined} />
           ))}
         </section>
       ))}
@@ -60,7 +64,7 @@ export function Feed() {
   )
 }
 
-function FeedRow({ op }: { op: Operation }) {
+function FeedRow({ op, onOpen }: { op: Operation; onOpen?: () => void }) {
   const c = CATEGORY[op.category]
   return (
     <div data-testid="feed-row">
@@ -70,6 +74,7 @@ function FeedRow({ op }: { op: Operation }) {
         icon={op.initials ? undefined : c.icon}
         initials={op.initials}
         avatarColor={c.color}
+        onClick={onOpen} // only entries with details open (Cash v5)
         right={
           <span data-testid="feed-amount" className="text-xl-body whitespace-nowrap">
             {formatFeedAmount(op.amount, op.direction)}

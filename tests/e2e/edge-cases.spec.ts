@@ -1,8 +1,8 @@
 import { test, expect } from '@playwright/test'
-import { launchFresh, typeAmount, enterOtp, expectPush, expectStep, goHome, goPayments, openDemoMenu, demoAction } from './helpers'
+import { launchFresh, typeAmount, enterOtp, expectPush, expectStep, goHome, goPayments, openDemoMenu } from './helpers'
 
 // Rules outside the Master script: OTP limits, scripted M-Pesa failures, idempotent confirm,
-// cash code cancel/decline, Bills → Fund my account return, presenter tools.
+// cash Cancel code and double-tap Done, Bills → Fund my account return, presenter tools.
 
 test.beforeEach(async ({ page }) => {
   await launchFresh(page)
@@ -79,28 +79,31 @@ test('Fund: exactly 25,000 → "Top-up in progress"; Got it credits it (Fund BR-
   await expect(page.getByTestId('balance-available')).toHaveText('935,000')
 })
 
-test('Cash: Cancel code and Decline leave the balance untouched (Cash BR-10)', async ({ page }) => {
-  for (const exit of ['cancel-code', 'decline'] as const) {
-    await goPayments(page)
-    await page.getByTestId('pay-cash').click()
-    await page.getByTestId('cash-agent').click()
-    await typeAmount(page, 50_000)
-    await page.getByTestId('amount-primary').click()
-    await page.getByTestId('sheet-confirm').click()
-    await expect(page.getByTestId('cash-code-value')).toHaveText('482 913')
-    if (exit === 'cancel-code') {
-      await page.getByTestId('result-secondary').click()
-    } else {
-      await demoAction(page, 'demo-agent-entered')
-      await page.getByTestId('cash-approve-sheet').getByTestId('sheet-cancel').click()
-    }
-    await expect(page.getByTestId('payments')).toBeVisible()
-  }
-  // Presenter action is disabled away from the code screen.
-  await openDemoMenu(page)
-  await expect(page.getByTestId('demo-agent-entered')).toBeDisabled()
-  await page.getByTestId('demo-close').click()
+async function openCashCode(page: import('@playwright/test').Page) {
+  await goPayments(page)
+  await page.getByTestId('pay-cash').click()
+  await page.getByTestId('cash-agent').click()
+  await typeAmount(page, 50_000)
+  await page.getByTestId('amount-primary').click()
+  await page.getByTestId('sheet-confirm').click()
+  await expect(page.getByTestId('cash-code-value')).toHaveText('482 913')
+}
+
+test('Cash: Cancel code goes to Payments with no debit and no new row (Cash BR-10)', async ({ page }) => {
+  await openCashCode(page)
+  await page.getByTestId('result-secondary').click() // Cancel code
+  await expect(page.getByTestId('payments')).toBeVisible()
   await expectStep(page, 0)
+  await expect(page.getByTestId('feed-row').filter({ hasText: 'Wakala agent' })).toHaveCount(0)
+})
+
+test('Cash: a double tap on Done makes one debit and one row (Cash BR-09)', async ({ page }) => {
+  await openCashCode(page)
+  await page.getByTestId('result-primary').dblclick()
+  await expect(page.getByTestId('home')).toBeVisible()
+  await expect(page.getByTestId('balance-available')).toHaveText('860,000')
+  await expect(page.getByTestId('feed-row').filter({ hasText: 'Wakala agent, Juma Shop' })).toHaveCount(1)
+  await expect(page.getByTestId('today-header')).toHaveText('Today, TZS 153,500')
 })
 
 test('Bills: "Fund my account" opens Fund and returns to the amount, cleared (Bills BR-13)', async ({ page }) => {

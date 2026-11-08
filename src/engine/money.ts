@@ -30,7 +30,17 @@ export interface Operation {
   dayOffset?: number
   /** Initials avatar instead of a category icon (e.g. "ML" for the QR merchant). */
   initials?: string
+  /** Transaction details opened by tapping the row (Cash v5). Rows without details are not tappable. */
+  details?: OperationDetails
 }
+
+/** Receipt content for a history entry. A value of DATE_TOKEN is replaced by the entry's date. */
+export interface OperationDetails {
+  status: string
+  blocks: [label: string, value: string][][]
+}
+
+export const DATE_TOKEN = '{date}'
 
 // parent BR-04: available balance = own funds + available credit.
 export function available(l: Ledger): number {

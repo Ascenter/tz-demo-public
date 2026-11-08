@@ -18,9 +18,7 @@ interface UiState {
   demoMenuOpen: boolean
   setDemoMenu: (open: boolean) => void
 
-  /** Presenter actions the current screen offers (BR-11): set while the screen is mounted. */
-  agentEntered: (() => void) | null
-  setAgentEntered: (fn: (() => void) | null) => void
+  /** Presenter action the scanner offers (BR-11): set while the scanner is mounted. */
   simulateScan: (() => void) | null
   setSimulateScan: (fn: (() => void) | null) => void
 
@@ -50,8 +48,6 @@ export const useUi = create<UiState>((set) => ({
   demoMenuOpen: false,
   setDemoMenu: (open) => set({ demoMenuOpen: open }),
 
-  agentEntered: null,
-  setAgentEntered: (fn) => set({ agentEntered: fn }),
   simulateScan: null,
   setSimulateScan: (fn) => set({ simulateScan: fn }),
 

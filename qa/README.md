@@ -13,3 +13,10 @@ Intended differences (see ../ASSUMPTIONS.md):
 - **Airtime contacts**: "Contacts" header instead of letter groups — V4.
 - **Scan amount**: no quick chips (Scan BRD: "Quick amount chips — not used").
 - **TIPS receipt**: no "Save recipient" (Send BRD Out of Scope).
+
+## cash-withdrawal-v5/
+
+Home after step 4 (real run: Done on the code screen) next to Figma 176:4682, plus the new transaction details.
+Only dynamic values differ: the time on the details screen, and the rows under the first one. The Figma frame
+shows just the seed rows, while the Master script also has the step 1–3 operations above them (the Today total,
+313,500, already includes them and matches).

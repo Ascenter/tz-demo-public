@@ -172,7 +172,7 @@ test('Master demo script, steps 0 → 7', async ({ page }) => {
   await expectStep(page, 3)
   await expectFirstFeedRow(page, 'Mama Lishe Café', 'QR payment', '25,000')
 
-  // ── Step 4: Cash withdrawal, scenarios 2 → 1 ──────────────────────────
+  // ── Step 4: Cash withdrawal, scenarios 2 → 1 (BRD v5: Done completes it and opens Home) ──
   await goPayments(page)
   await page.getByTestId('pay-cash').click()
   await page.getByTestId('cash-agent').click()
@@ -183,21 +183,25 @@ test('Master demo script, steps 0 → 7', async ({ page }) => {
   await clearAmount(page)
   await typeAmount(page, 50_000)
   await page.getByTestId('amount-primary').click()
+  await expect(page.getByTestId('cash-sheet')).toContainText('The money leaves your balance when you tap Done after the agent pays out')
   await expect(page.getByTestId('cash-sheet')).toContainText('30 minutes, one use')
   await page.getByTestId('sheet-confirm').click()
   await expect(page.getByTestId('cash-code-value')).toHaveText('482 913')
   await expect(page.getByTestId('result-body')).toContainText("They'll pay out TZS 50,000. It works once, until")
-  await demoAction(page, 'demo-agent-entered')
-  const approve = page.getByTestId('cash-approve-sheet')
-  await expect(approve).toContainText('Juma Shop')
-  await expect(approve).toContainText('123456 | UmojaSwitch')
-  await page.getByTestId('sheet-confirm').click()
-  await expect(page.getByTestId('receipt-status')).toContainText('Cash withdrawn')
-  await expect(receipt).toContainText('CW26110312110719')
+  await page.getByTestId('result-primary').click() // Done
+  await expect(page.getByTestId('home')).toBeVisible() // Done → Home, no result screen
   await expectPush(page, 'TZS 50,000 withdrawn at Juma Shop')
-  await page.getByTestId('receipt-done').click()
-  await expect(page.getByTestId('payments')).toBeVisible() // Done → Payments
   await expectStep(page, 4)
+  await expectFirstFeedRow(page, 'Cash withdrawal', 'Wakala agent, Juma Shop', '50,000')
+  await page.getByTestId('feed-row').first().getByRole('button').click() // transaction details
+  const details = page.getByTestId('transaction-details')
+  await expect(details.getByTestId('receipt-status')).toContainText('Cash withdrawn')
+  await expect(details.getByTestId('receipt-amount')).toHaveText('TZS 50,000')
+  await expect(details).toContainText('CW26110312110719')
+  await expect(details).toContainText('123456 | UmojaSwitch')
+  await expect(details).toContainText('Kariakoo, Dar es Salaam')
+  await details.getByTestId('receipt-done').click()
+  await expect(page.getByTestId('transaction-details')).toHaveCount(0)
 
   // ── Step 5: Airtime, scenarios 2 → 3 → 1 ──────────────────────────────
   await goPayments(page)

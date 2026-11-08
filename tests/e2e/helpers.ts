@@ -81,7 +81,7 @@ export async function expectStep(page: Page, step: number) {
   await expect(page.getByTestId('balance-available')).toHaveText(fmt(e.available))
   await expect(page.getByTestId('balance-own')).toHaveText(`TZS ${fmt(e.ownFunds)}`)
   await expect(page.getByTestId('balance-credit')).toHaveText('TZS 660,000')
-  await expect(page.getByTestId('today-header')).toHaveText(`Today, ${fmt(e.today)} TZS`)
+  await expect(page.getByTestId('today-header')).toHaveText(`Today, TZS ${fmt(e.today)}`)
 }
 
 export async function expectFirstFeedRow(page: Page, title: string, subtitle: string, amount: string) {

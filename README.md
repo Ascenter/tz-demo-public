@@ -40,13 +40,14 @@ The first e2e run on a new machine needs the browsers: `npx playwright install w
 | 6    | Government bill      | 2 → 1         | 695,000   | 35,000    | 518,500      |
 | 7    | Bill payments (LUKU) | 2 → 3 → 4 → 1 | 675,000   | 15,000    | 538,500      |
 
-Scripted inputs: OTP **123456** · Send search `0784 552 019` and `Nee` · TIPS account `0152 4876 39100` · Airtime not-found number `0799 000 111` · GePG `9910 8112 3890` (not found: `…3809`) · LUKU meter `0123 4567 890` (not found: `…899`) · M-Pesa: over 500,000 → "Not enough on M-Pesa", exactly 25,000 → "in progress", Cancel in the prompt → declined.
+Scripted inputs: OTP **123456** · Send search `0784 552 019` and `Nee` · TIPS account `0152 4876 39100` · Airtime not-found number `0799 000 111` · GePG `9910 8112 3890` (not found: `…3809`) · LUKU meter `0123 4567 890` (not found: `…899`) · M-Pesa: over 500,000 → "Not enough on M-Pesa", exactly 25,000 → "in progress", Cancel in the prompt → declined · Cash: Get code / Done → code 482 913 / debit + Home, first row Juma Shop.
+
+**Step 4, Cash withdrawal (BRD v5):** Payments → Cash withdrawal → At a Wakala agent → 1,000,000 (Not enough money) → 50,000 → Continue → Get code (482 913) → **Done** → lands on Home with "Cash withdrawal · Wakala agent, Juma Shop" first (tap the row to show the details). There is no agent approval step and no presenter action.
 
 ### Hidden demo menu (presenter only)
 
 Open it with a **long press (1 s) on the Home balance** or a **triple tap on the status bar**. It offers:
 
-- **Agent entered the code**: only while the cash code screen is open.
 - **Simulate QR scan**: only on the scanner. The scanner also shows "Simulate scan" when there is no camera.
 - **Jump to step 0–7**: sets the balance and history to the state after that step, for rehearsing one flow.
 - **Loader duration**: 200, 700 or 1500 ms.

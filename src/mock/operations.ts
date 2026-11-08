@@ -1,4 +1,4 @@
-import type { Operation } from '../engine/money'
+import { DATE_TOKEN, type Operation } from '../engine/money'
 import { t } from './texts'
 import { SCAN, CASH, GOV } from './scripted'
 import { groupDigits } from '../engine/format'
@@ -31,12 +31,28 @@ export const scanOp = (amount: number): OpDraft => ({
   initials: SCAN.initials,
 })
 
+// Cash v5: the receipt content now lives in the history entry's transaction details.
 export const cashOp = (amount: number): OpDraft => ({
   title: t('payments.cash_withdrawal.history_title'),
   subtitle: t('payments.cash_withdrawal.history_subtitle', { agent: CASH.agent }),
   amount,
   direction: 'out',
   category: 'cash',
+  details: {
+    status: t('payments.cash_withdrawal.success'),
+    blocks: [
+      [
+        [t('payments.cash_withdrawal.agent_label'), CASH.agent],
+        [t('payments.cash_withdrawal.agent_id'), CASH.agentId],
+      ],
+      [[t('payments.cash_withdrawal.fee'), t('payments.common.no_fee')]],
+      [[t('payments.cash_withdrawal.reference'), CASH.reference]],
+      [
+        [t('payments.cash_withdrawal.date'), DATE_TOKEN],
+        [t('payments.cash_withdrawal.location'), CASH.location],
+      ],
+    ],
+  },
 })
 
 export const airtimeOp = (name: string, operator: string, amount: number): OpDraft => ({

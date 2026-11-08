@@ -1,7 +1,8 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useSteps, StepHost } from '../steps'
-import { AmountStep, receiptDate } from '../shared'
-import { useExitFlow } from '../exit'
+import { AmountStep } from '../shared'
+import { useExitFlow, useExitToHome } from '../exit'
+import { completeCashWithdrawal } from './complete'
 import { Screen } from '../../components/Screen'
 import { LargeTitle, NavBar } from '../../components/NavBar'
 import { ListRow } from '../../components/ListRow'
@@ -10,31 +11,30 @@ import { BottomSheet, DetailRows, SheetTitle } from '../../components/BottomShee
 import { PrimaryButton } from '../../components/PrimaryButton'
 import { ConfirmButton } from '../../components/ConfirmButton'
 import { ResultScreen } from '../../components/ResultScreen'
-import { Receipt } from '../../components/Receipt'
 import { useBack } from '../../app/back'
+import { useOnce } from '../../app/once'
 import { useUi } from '../../app/ui'
-import { useDemo, useAvailable } from '../../app/store'
+import { useAvailable } from '../../app/store'
 import { simulate } from '../../engine/delay'
 import { validateAmount } from '../../engine/validate'
 import { formatNumber, formatTZS, formatTime, parseAmount } from '../../engine/format'
 import { now } from '../../engine/clock'
 import { CHIPS, FLOW_MAX, MIN_AMOUNT } from '../../mock/limits'
 import { CASH } from '../../mock/scripted'
-import { cashOp } from '../../mock/operations'
 import { t } from '../../mock/texts'
 
-type Step = { name: 'methods' } | { name: 'amount' } | { name: 'code'; until: string } | { name: 'receipt' }
+type Step = { name: 'methods' } | { name: 'amount' } | { name: 'code'; until: string }
 
 const GRADIENT = 'var(--gradient-cash)'
 
-/** Cash withdrawal at a Wakala agent (child BRD 3432644674). */
+/** Cash withdrawal at a Wakala agent (child BRD 3432644674, v5). */
 export function CashFlow() {
   const exit = useExitFlow()
+  const toHome = useExitToHome()
   const nav = useSteps<Step>({ name: 'methods' })
   const avail = useAvailable()
   const [value, setValue] = useState('')
   const [sheet, setSheet] = useState(false)
-  const [done, setDone] = useState<{ amount: number; date: string } | null>(null)
   const amount = parseAmount(value)
 
   const getCode = async () => {
@@ -44,11 +44,12 @@ export function CashFlow() {
     nav.push({ name: 'code', until })
   }
 
-  const approve = async () => {
-    await simulate(() => useDemo.getState().spend(cashOp(amount))) // Cash BR-07: debit at Approve
-    useUi.getState().showPush(t('payments.cash_withdrawal.push', { amount: formatNumber(amount), agent: CASH.agent }))
-    setDone({ amount, date: receiptDate() })
-    nav.replace({ name: 'receipt' })
+  // Cash BR-06/BR-09 (v5): Done on the code screen → loader → debit → Home → push. No result screen.
+  const complete = async () => {
+    await simulate(() => completeCashWithdrawal(amount))
+    toHome()
+    const text = t('payments.cash_withdrawal.push', { amount: formatNumber(amount), agent: CASH.agent })
+    setTimeout(() => useUi.getState().showPush(text), 420) // once Home has slid in
   }
 
   const step = nav.step
@@ -90,30 +91,7 @@ export function CashFlow() {
       break
     }
     case 'code':
-      screen = <CodeScreen amount={amount} until={step.until} onLeave={exit} onApprove={approve} />
-      break
-    case 'receipt':
-      screen = done && (
-        <Receipt
-          testId="cash-receipt"
-          amount={done.amount}
-          status={t('payments.cash_withdrawal.success')}
-          blocks={[
-            [
-              [t('payments.cash_withdrawal.agent_label'), CASH.agent],
-              [t('payments.cash_withdrawal.agent_id'), CASH.agentId],
-            ],
-            [[t('payments.cash_withdrawal.fee'), t('payments.common.no_fee')]],
-            [[t('payments.cash_withdrawal.reference'), CASH.reference]],
-            [
-              [t('payments.cash_withdrawal.date'), done.date],
-              [t('payments.cash_withdrawal.location'), CASH.location],
-            ],
-          ]}
-          doneLabel={t('payments.cash_withdrawal.done')}
-          onDone={exit}
-        />
-      )
+      screen = <CodeScreen amount={amount} until={step.until} onCancel={exit} onDone={complete} />
       break
   }
 
@@ -157,63 +135,27 @@ function Methods({ onBack, onAgent }: { onBack: () => void; onAgent: () => void 
 }
 
 /**
- * Code screen (Figma 176:2903). The presenter's "Agent entered the code" works only while this screen
- * is open (Cash BR-06, BR-09). Leaving, Done or Cancel code discards the code, no debit (BR-10).
+ * Code screen (Figma 176:2903). Done completes the withdrawal (BR-09, v5): locked on the first tap,
+ * so a double tap makes one debit. Cancel code and back discard the code, no debit (BR-10).
  */
-function CodeScreen({ amount, until, onLeave, onApprove }: { amount: number; until: string; onLeave: () => void; onApprove: () => Promise<void> }) {
-  const [approval, setApproval] = useState(false)
-  useEffect(() => {
-    const open = () => setApproval(true)
-    useUi.getState().setAgentEntered(open)
-    return () => {
-      if (useUi.getState().agentEntered === open) useUi.getState().setAgentEntered(null)
-    }
-  }, [])
-
+function CodeScreen({ amount, until, onCancel, onDone }: { amount: number; until: string; onCancel: () => void; onDone: () => Promise<void> }) {
+  const once = useOnce()
   return (
-    <>
-      <ResultScreen
-        testId="cash-code"
-        kind="cash"
-        title={
-          <span data-testid="cash-code-value" className="font-display text-amount-input font-semibold">
-            {CASH.code}
-          </span>
-        }
-        body={t('payments.cash_withdrawal.code_hint', { amount: formatNumber(amount), time: until })}
-        extra={
-          <p className="w-full rounded-component bg-highlight px-4 py-3 text-center text-caption">{t('payments.cash_withdrawal.never_share')}</p>
-        }
-        secondary={{ label: t('payments.cash_withdrawal.cancel_code'), onClick: onLeave }}
-        primary={{ label: t('payments.cash_withdrawal.done'), onClick: onLeave }}
-        onBack={onLeave}
-      />
-      {/* Swipe down → back to the code screen; Decline → Payments, no debit. */}
-      <BottomSheet open={approval} onDismiss={() => setApproval(false)} testId="cash-approve-sheet">
-        <SheetTitle title={t('payments.cash_withdrawal.approve_title')} subtitle={t('payments.cash_withdrawal.approve_subtitle')} />
-        <DetailRows
-          rows={[
-            [t('payments.cash_withdrawal.agent_label'), CASH.agent],
-            [t('payments.cash_withdrawal.agent_id'), CASH.agentId],
-            [t('payments.cash_withdrawal.location'), CASH.location],
-            [t('payments.cash_withdrawal.amount'), formatTZS(amount)],
-          ]}
-        />
-        <div className="flex flex-col gap-[10px]">
-          <ConfirmButton
-            data-testid="sheet-confirm"
-            onClick={() => {
-              setApproval(false)
-              void onApprove()
-            }}
-          >
-            {t('payments.cash_withdrawal.approve')}
-          </ConfirmButton>
-          <PrimaryButton variant="nobg" data-testid="sheet-cancel" onClick={onLeave}>
-            {t('payments.cash_withdrawal.decline')}
-          </PrimaryButton>
-        </div>
-      </BottomSheet>
-    </>
+    <ResultScreen
+      testId="cash-code"
+      kind="cash"
+      title={
+        <span data-testid="cash-code-value" className="font-display text-amount-input font-semibold">
+          {CASH.code}
+        </span>
+      }
+      body={t('payments.cash_withdrawal.code_hint', { amount: formatNumber(amount), time: until })}
+      extra={
+        <p className="w-full rounded-component bg-highlight px-4 py-3 text-center text-caption">{t('payments.cash_withdrawal.never_share')}</p>
+      }
+      secondary={{ label: t('payments.cash_withdrawal.cancel_code'), onClick: onCancel }}
+      primary={{ label: t('payments.cash_withdrawal.done'), onClick: () => once.run(onDone) }}
+      onBack={onCancel}
+    />
   )
 }
