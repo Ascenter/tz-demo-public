@@ -1653,6 +1653,274 @@
    "deviations": {
     "🤓 Save contact": "Save contact"
    }
+  },
+  {
+   "figmaId": "130:2352",
+   "name": "Home - Main - After payment",
+   "flow": "03-scan-to-pay",
+   "png": "design/figma-export/screens-1x/03-scan-to-pay/home-main-after-payment__130-2352.png",
+   "spec": "design/figma-export/specs/03-scan-to-pay/home-main-after-payment__130-2352.json",
+   "setup": {
+    "step": 3,
+    "actions": []
+   },
+   "mask": [
+    [
+     0,
+     0,
+     402,
+     44
+    ]
+   ],
+   "homeAfter": true
+  },
+  {
+   "figmaId": "130:1092",
+   "name": "Scan to pay - Scanner - Checking merchant",
+   "flow": "03-scan-to-pay",
+   "png": "design/figma-export/screens-1x/03-scan-to-pay/scan-to-pay-scanner-checking-merchant__130-1092.png",
+   "spec": "design/figma-export/specs/03-scan-to-pay/scan-to-pay-scanner-checking-merchant__130-1092.json",
+   "setup": {
+    "step": 2,
+    "actions": [
+     "loader:1500",
+     "tap:quick-scan",
+     "simulateQr",
+     "wait:200"
+    ],
+    "settleMs": 100
+   },
+   "mask": [
+    [
+     0,
+     0,
+     402,
+     44
+    ],
+    [
+     0,
+     148,
+     402,
+     546
+    ]
+   ]
+  },
+  {
+   "figmaId": "130:901",
+   "name": "Scan to pay - Scanner - Default",
+   "flow": "03-scan-to-pay",
+   "png": "design/figma-export/screens-1x/03-scan-to-pay/scan-to-pay-scanner-default__130-901.png",
+   "spec": "design/figma-export/specs/03-scan-to-pay/scan-to-pay-scanner-default__130-901.json",
+   "setup": {
+    "step": 2,
+    "actions": [
+     "tap:quick-scan"
+    ]
+   },
+   "mask": [
+    [
+     0,
+     0,
+     402,
+     44
+    ],
+    [
+     0,
+     148,
+     402,
+     546
+    ]
+   ]
+  },
+  {
+   "figmaId": "130:3566",
+   "name": "Scan to pay - Static QR - Above limit",
+   "flow": "03-scan-to-pay",
+   "png": "design/figma-export/screens-1x/03-scan-to-pay/scan-to-pay-static-qr-above-limit__130-3566.png",
+   "spec": "design/figma-export/specs/03-scan-to-pay/scan-to-pay-static-qr-above-limit__130-3566.json",
+   "setup": {
+    "step": 2,
+    "actions": [
+     "tap:quick-scan",
+     "simulateQr",
+     "amount:6000000",
+     "fill:comment=For lunch"
+    ]
+   },
+   "mask": [
+    [
+     0,
+     0,
+     402,
+     44
+    ]
+   ],
+   "keyboard": true,
+   "deviations": {
+    "TZS 10,000@520": null,
+    "TZS 20,000@520": null,
+    "TZS 50,000@520": null
+   },
+   "known": {
+    "TZS 6,000,000": "BRD red line replaces the hints (parent BR-05), so the block is one line shorter",
+    "Balance TZS 975,000": "BRD red line replaces the hints (parent BR-05), so the block is one line shorter",
+    "No fee": "BRD red line replaces the hints (parent BR-05), so the block is one line shorter"
+   }
+  },
+  {
+   "figmaId": "130:1558",
+   "name": "Scan to pay - Static QR - Confirmation",
+   "flow": "03-scan-to-pay",
+   "png": "design/figma-export/screens-1x/03-scan-to-pay/scan-to-pay-static-qr-confirmation__130-1558.png",
+   "spec": "design/figma-export/specs/03-scan-to-pay/scan-to-pay-static-qr-confirmation__130-1558.json",
+   "setup": {
+    "step": 2,
+    "actions": [
+     "tap:quick-scan",
+     "simulateQr",
+     "amount:25000",
+     "fill:comment=For lunch",
+     "continue"
+    ]
+   },
+   "mask": [
+    [
+     0,
+     0,
+     402,
+     44
+    ]
+   ],
+   "deviations": {
+    "TZS 10,000@520": null,
+    "TZS 20,000@520": null,
+    "TZS 50,000@520": null
+   },
+   "knownFrom": {
+    "y": 200,
+    "note": "sheet has the extra Comment row (Scan BR-10), so it starts 58 pt higher"
+   }
+  },
+  {
+   "figmaId": "130:1204",
+   "name": "Scan to pay - Static QR - Enter amount empty",
+   "flow": "03-scan-to-pay",
+   "png": "design/figma-export/screens-1x/03-scan-to-pay/scan-to-pay-static-qr-enter-amount-empty__130-1204.png",
+   "spec": "design/figma-export/specs/03-scan-to-pay/scan-to-pay-static-qr-enter-amount-empty__130-1204.json",
+   "setup": {
+    "step": 2,
+    "actions": [
+     "tap:quick-scan",
+     "simulateQr"
+    ]
+   },
+   "mask": [
+    [
+     0,
+     0,
+     402,
+     44
+    ]
+   ],
+   "keyboard": true,
+   "deviations": {
+    "TZS 10,000@520": null,
+    "TZS 20,000@520": null,
+    "TZS 50,000@520": null
+   }
+  },
+  {
+   "figmaId": "130:1441",
+   "name": "Scan to pay - Static QR - Enter amount filled",
+   "flow": "03-scan-to-pay",
+   "png": "design/figma-export/screens-1x/03-scan-to-pay/scan-to-pay-static-qr-enter-amount-filled__130-1441.png",
+   "spec": "design/figma-export/specs/03-scan-to-pay/scan-to-pay-static-qr-enter-amount-filled__130-1441.json",
+   "setup": {
+    "step": 2,
+    "actions": [
+     "tap:quick-scan",
+     "simulateQr",
+     "amount:25000",
+     "fill:comment=For lunch"
+    ]
+   },
+   "mask": [
+    [
+     0,
+     0,
+     402,
+     44
+    ]
+   ],
+   "keyboard": true,
+   "deviations": {
+    "TZS 10,000@520": null,
+    "TZS 20,000@520": null,
+    "TZS 50,000@520": null
+   }
+  },
+  {
+   "figmaId": "130:3449",
+   "name": "Scan to pay - Static QR - Not enough money",
+   "flow": "03-scan-to-pay",
+   "png": "design/figma-export/screens-1x/03-scan-to-pay/scan-to-pay-static-qr-not-enough-money__130-3449.png",
+   "spec": "design/figma-export/specs/03-scan-to-pay/scan-to-pay-static-qr-not-enough-money__130-3449.json",
+   "setup": {
+    "step": 2,
+    "actions": [
+     "tap:quick-scan",
+     "simulateQr",
+     "amount:1000000",
+     "fill:comment=For lunch"
+    ]
+   },
+   "mask": [
+    [
+     0,
+     0,
+     402,
+     44
+    ]
+   ],
+   "keyboard": true,
+   "deviations": {
+    "TZS 10,000@520": null,
+    "TZS 20,000@520": null,
+    "TZS 50,000@520": null
+   },
+   "known": {
+    "TZS 1,000,000": "BRD red line replaces the hints (parent BR-05), so the block is one line shorter",
+    "Balance TZS 975,000": "BRD red line replaces the hints (parent BR-05), so the block is one line shorter",
+    "No fee": "BRD red line replaces the hints (parent BR-05), so the block is one line shorter"
+   }
+  },
+  {
+   "figmaId": "130:2154",
+   "name": "Scan to pay - Static QR - Success",
+   "flow": "03-scan-to-pay",
+   "png": "design/figma-export/screens-1x/03-scan-to-pay/scan-to-pay-static-qr-success__130-2154.png",
+   "spec": "design/figma-export/specs/03-scan-to-pay/scan-to-pay-static-qr-success__130-2154.json",
+   "setup": {
+    "step": 2,
+    "actions": [
+     "tap:quick-scan",
+     "simulateQr",
+     "amount:25000",
+     "fill:comment=For lunch",
+     "continue",
+     "confirm",
+     "otp",
+     "push"
+    ]
+   },
+   "mask": [
+    [
+     0,
+     0,
+     402,
+     44
+    ]
+   ]
   }
  ]
 }

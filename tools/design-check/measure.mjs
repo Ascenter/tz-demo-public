@@ -107,6 +107,7 @@ export function layoutProblems() {
     if (!r.width || !r.height) continue
     const cs = getComputedStyle(el)
     if (cs.visibility === 'hidden' || Number(cs.opacity) === 0) continue
+    if (r.width <= 1 && r.height <= 1) continue // visually hidden (sr-only) text
     // Ignore elements parked off-screen by a transition or a scroll container.
     if (r.right <= f.left || r.left >= f.right || r.bottom <= f.top || r.top >= f.bottom) continue
     if (r.left < f.left - 0.5 || r.right > f.right + 0.5) {

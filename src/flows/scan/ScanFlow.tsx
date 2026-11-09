@@ -96,7 +96,7 @@ export function ScanFlow() {
               [t('payments.scan_to_pay.receipt_fee'), t('payments.common.no_fee')],
               [t('payments.scan_to_pay.receipt_total'), formatTZS(done.amount)],
             ],
-            [[t('payments.scan_to_pay.tips_reference'), SCAN.tipsReference]],
+            [[t('payments.scan_to_pay.tips_reference'), SCAN.tipsReference, 'small']],
             [
               [t('payments.scan_to_pay.receipt_date'), done.date],
               [t('payments.scan_to_pay.receipt_comment'), done.comment || undefined], // Scan BR-10

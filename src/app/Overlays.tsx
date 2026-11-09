@@ -12,7 +12,7 @@ export function LoaderOverlay() {
       {loaderVisible && (
         <motion.div
           data-testid="loader"
-          className="absolute inset-0 z-[70] grid place-items-center bg-white/40"
+          className={`absolute inset-0 z-[70] grid place-items-center ${loaderLabel ? '' : 'bg-white/40'}`}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -20,11 +20,8 @@ export function LoaderOverlay() {
         >
           <div className="flex flex-col items-center gap-2">
             <PawLoader />
-            {loaderLabel ? (
-              <span className="t-semibold-16 text-on-bg-primary">{loaderLabel}</span>
-            ) : (
-              <span className="sr-only">{t('payments.common.loading')}</span>
-            )}
+            {/* A labelled wait (QR check) shows its label in the screen's own title (Scanner). */}
+            <span className="sr-only">{loaderLabel ?? t('payments.common.loading')}</span>
           </div>
         </motion.div>
       )}

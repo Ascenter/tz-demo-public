@@ -35,7 +35,8 @@ const TIPS_TEXTS = { 'Baraka Mwakyusa@90': 'BARAKA JOHN MWAKYUSA', 'BM@100': 'BJ
 const ABOVE_KEYBOARD = 'Figma places the button above the drawn iOS keyboard'
 // Send over-limit / not-enough frames keep the grey hints; the app shows the BRD red line in their place (parent BR-05).
 const RED_LINE_STATE = 'BRD red line replaces the hints (parent BR-05), so the block is one line shorter'
-const RED_LINE_KNOWN = (amount) => ({ [amount]: RED_LINE_STATE, 'Balance TZS 1,060,000': RED_LINE_STATE, 'No fee': RED_LINE_STATE })
+const RED_LINE_KNOWN = (amount, balance = 'Balance TZS 1,060,000') => ({ [amount]: RED_LINE_STATE, [balance]: RED_LINE_STATE, 'No fee': RED_LINE_STATE })
+const SCAN_AMOUNT = ['tap:quick-scan', 'simulateQr']
 const KEYBOARD_GLYPH = ['\u{100147}']
 
 export const SETUPS = {
@@ -121,4 +122,17 @@ export const SETUPS = {
     deviations: SEND_CONTACTS,
     known: Object.fromEntries(['Baraka Mwakyusa', 'CRDB Bank •••• 9100', 'NM', 'Neema Mushi', 'JK', 'Joseph Kimaro', 'Simba'].map((k) => [k, RECENT_AFTER])),
   },
+
+  // ── 03 Scan to pay (from step 2) ─────────────────────────────────
+  // The camera feed is live video in the app and a blurred photo in Figma: masked.
+  '130:901': { step: 2, actions: ['tap:quick-scan'], mask: [STATUS, [0, 148, 402, 546]] },
+  '130:1092': { step: 2, actions: ['loader:1500', 'tap:quick-scan', 'simulateQr', 'wait:200'], settleMs: 100, mask: [STATUS, [0, 148, 402, 546]] },
+  '130:1204': { step: 2, actions: [...SCAN_AMOUNT], keyboard: true, deviations: CHIPS_HIDDEN },
+  '130:1441': { step: 2, actions: [...SCAN_AMOUNT, 'amount:25000', 'fill:comment=For lunch'], keyboard: true, deviations: CHIPS_HIDDEN },
+  '130:3566': { step: 2, actions: [...SCAN_AMOUNT, 'amount:6000000', 'fill:comment=For lunch'], keyboard: true, deviations: CHIPS_HIDDEN, known: RED_LINE_KNOWN('TZS 6,000,000', 'Balance TZS 975,000') },
+  '130:3449': { step: 2, actions: [...SCAN_AMOUNT, 'amount:1000000', 'fill:comment=For lunch'], keyboard: true, deviations: CHIPS_HIDDEN, known: RED_LINE_KNOWN('TZS 1,000,000', 'Balance TZS 975,000') },
+  // The app's sheet also lists the comment (Scan BR-10), one row more than Figma, so the bottom-anchored sheet is 58 pt taller.
+  '130:1558': { step: 2, actions: [...SCAN_AMOUNT, 'amount:25000', 'fill:comment=For lunch', 'continue'], deviations: CHIPS_HIDDEN, knownFrom: { y: 200, note: 'sheet has the extra Comment row (Scan BR-10), so it starts 58 pt higher' } },
+  '130:2154': { step: 2, actions: [...SCAN_AMOUNT, 'amount:25000', 'fill:comment=For lunch', 'continue', 'confirm', 'otp', 'push'] },
+  '130:2352': { step: 3, actions: [], homeAfter: true },
 }
