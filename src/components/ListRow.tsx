@@ -14,7 +14,7 @@ interface Props {
   /** Missing onClick = inert row: rendered as in Figma, a tap does nothing, no error. */
   onClick?: () => void
   testId?: string
-  /** Shown at 40 % (e.g. "Soon" billers, Figma 234:772). */
+  /** Icon at 40 % (e.g. "Soon" billers, Figma 234:772); the texts keep their colours. */
   dimmed?: boolean
   /** Extra line under the subtitle (e.g. a "Soon" badge). */
   below?: ReactNode
@@ -26,7 +26,9 @@ interface Props {
 export function ListRow({ title, subtitle, icon, iconColor, initials, avatarColor, leading, right, onClick, testId, dimmed, below, gap = 20 }: Props) {
   const content = (
     <>
-      {leading ?? <Avatar icon={icon} initials={initials} color={avatarColor} iconColor={iconColor} />}
+      <span className={`shrink-0 ${dimmed ? 'opacity-40' : ''}`}>
+        {leading ?? <Avatar icon={icon} initials={initials} color={avatarColor} iconColor={iconColor} />}
+      </span>
       <span className="flex min-w-0 flex-1 flex-col items-start text-left">
         <span className="w-full truncate t-regular-16 text-on-bg-primary">{title}</span>
         {subtitle !== undefined && <span className="w-full t-regular-14 text-on-bg-secondary">{subtitle}</span>}
@@ -35,7 +37,7 @@ export function ListRow({ title, subtitle, icon, iconColor, initials, avatarColo
       {right}
     </>
   )
-  const cls = `flex min-h-[60px] w-full items-center px-5 py-[10px] ${dimmed ? 'opacity-40' : ''}`
+  const cls = 'flex min-h-[60px] w-full items-center px-5 py-[10px]'
   return onClick ? (
     <button type="button" data-testid={testId} onClick={onClick} className={`${cls} row-pressable`} style={{ columnGap: gap }}>
       {content}

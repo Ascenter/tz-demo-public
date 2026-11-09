@@ -254,7 +254,7 @@ function Billers({ onBack, onSaved, onLuku }: { onBack: () => void; onSaved: () 
           title={t(b.titleKey as TextKey)}
           subtitle={t(b.subtitleKey as TextKey)}
           below={b.active ? undefined : <Badge tone="custom" color="var(--color-on-bg-secondary)">{t('payments.bills.soon')}</Badge>}
-          // Figma 234:772 draws the "Soon" billers at full colour; they are inert (no tap feedback).
+          dimmed={!b.active}
           onClick={b.active ? onLuku : undefined} // Bills BR-02: Soon billers do not open
         />
       ))}

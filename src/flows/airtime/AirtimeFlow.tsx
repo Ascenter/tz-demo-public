@@ -19,7 +19,6 @@ import { simulate } from '../../engine/delay'
 import { validateAmount } from '../../engine/validate'
 import { digitsOnly, formatNumber, parseAmount } from '../../engine/format'
 import { CHIPS, FLOW_MAX, MIN_AMOUNT } from '../../mock/limits'
-import { OPERATOR_COLORS } from '../../mock/operators'
 import { AIRTIME_CONTACTS, AIRTIME_MY_NUMBER, AIRTIME_RECENT, type AirtimeContact } from '../../mock/recipients'
 import { airtimeOp } from '../../mock/operations'
 import { t } from '../../mock/texts'
@@ -82,7 +81,7 @@ export function AirtimeFlow() {
           header={{
             leading: target.name ? <Avatar initials={initialsOf(target.name)} color={colorFor(target.name)} /> : <Avatar icon="phone" />,
             title,
-            badge: <Badge tone="custom" color={OPERATOR_COLORS[target.operator]}>{target.operator}</Badge>,
+            badge: <Badge>{target.operator}</Badge>, // dark badge as in Figma 222:1102
           }}
           value={value}
           onChange={setValue}
