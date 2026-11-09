@@ -15,7 +15,10 @@
     "qa": "node scripts/qa-shots.mjs",
     "icons": "node scripts/make-icons.mjs",
     "typecheck": "tsc -b",
-    "design:assets": "node scripts/sync-design-assets.mjs"
+    "design:assets": "node scripts/sync-design-assets.mjs",
+    "design:map": "node tools/design-check/build-map.mjs",
+    "design:check": "node tools/design-check/check.mjs",
+    "design:check:mac": "node tools/design-check/check.mjs --mac"
   },
   "dependencies": {
     "motion": "14.10.1",
