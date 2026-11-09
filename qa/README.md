@@ -1,5 +1,8 @@
 # Visual QA
 
+> Superseded by `npm run design:check` (report in `qa/design/report.html`, see the README section *Design sync*).
+> The pairs below are the older manual snapshot and predate the Figma export sync.
+
 `index.html` shows each Figma frame (left, `figma/`) next to the build (right, `ours/`) at 402 × 874.
 Regenerate: `npm run build && npx vite preview --port 4173 &` then `npm run qa`.
 Figma PNGs were taken with the Figma MCP `get_screenshot` (file `ihcteWxkN7OtuBaC3Q4RVA`); node IDs are on the page.

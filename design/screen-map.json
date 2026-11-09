@@ -150,8 +150,8 @@
     "M-Pesa": "Top up from M-Pesa"
    },
    "known": {
-    "Top up from M-Pesa": "Figma header x differs between Fund frames (A1)",
-    "+255 75• ••• 412": "Figma header x differs between Fund frames (A1)"
+    "Top up from M-Pesa": "Figma header x differs between Fund frames (F1)",
+    "+255 75• ••• 412": "Figma header x differs between Fund frames (F1)"
    }
   },
   {
@@ -208,12 +208,12 @@
     "M-Pesa": "Top up from M-Pesa"
    },
    "known": {
-    "Top up from M-Pesa": "Figma sheet text at x = 36, all other sheets x = 28 (A2)",
-    "Amount": "Figma sheet text at x = 36, all other sheets x = 28 (A2)",
-    "From": "Figma sheet text at x = 36, all other sheets x = 28 (A2)",
-    "M-Pesa +255 75• ••• 412": "Figma sheet text at x = 36, all other sheets x = 28 (A2)",
-    "Fee": "Figma sheet text at x = 36, all other sheets x = 28 (A2)",
-    "No fee": "Figma sheet text at x = 36, all other sheets x = 28 (A2)"
+    "Top up from M-Pesa": "Figma sheet text at x = 36, all other sheets x = 28 (F2)",
+    "Amount": "Figma sheet text at x = 36, all other sheets x = 28 (F2)",
+    "From": "Figma sheet text at x = 36, all other sheets x = 28 (F2)",
+    "M-Pesa +255 75• ••• 412": "Figma sheet text at x = 36, all other sheets x = 28 (F2)",
+    "Fee": "Figma sheet text at x = 36, all other sheets x = 28 (F2)",
+    "No fee": "Figma sheet text at x = 36, all other sheets x = 28 (F2)"
    }
   },
   {
@@ -1235,7 +1235,7 @@
    ],
    "knownFrom": {
     "y": 190,
-    "note": "Figma list offset differs from 12:4246 (A4)"
+    "note": "Figma list offset differs from 12:4246 (F4)"
    }
   },
   {
@@ -1473,7 +1473,7 @@
    },
    "knownFrom": {
     "y": 230,
-    "note": "Figma list offset differs from 124:11212 (A4)"
+    "note": "Figma list offset differs from 124:11212 (F4)"
    }
   },
   {
@@ -2294,7 +2294,10 @@
      402,
      44
     ]
-   ]
+   ],
+   "known": {
+    "Continue": "Figma places the button above the drawn iOS keyboard"
+   }
   },
   {
    "figmaId": "239:4506",
@@ -2422,8 +2425,8 @@
     ]
    ],
    "known": {
-    "TRA tax": "Figma feed text x differs from other Home frames (A4)",
-    "Government payment": "Figma feed text x differs from other Home frames (A4)"
+    "TRA tax": "Figma feed text x differs from other Home frames (F4)",
+    "Government payment": "Figma feed text x differs from other Home frames (F4)"
    },
    "homeAfter": true
   },
@@ -2547,7 +2550,7 @@
    ],
    "keyboard": true,
    "known": {
-    "TZS 900,000": "Figma amount y differs from the other amount frames (A4)"
+    "TZS 900,000": "Figma amount y differs from the other amount frames (F4)"
    }
   },
   {
@@ -2578,7 +2581,7 @@
    ],
    "keyboard": true,
    "known": {
-    "TZS 1,500,000": "Figma amount y differs from the other amount frames (A4)"
+    "TZS 1,500,000": "Figma amount y differs from the other amount frames (F4)"
    }
   },
   {
@@ -2687,8 +2690,8 @@
     ]
    ],
    "known": {
-    "LUKU electricity": "Figma feed text x differs from other Home frames (A4)",
-    "Bills · Meter 0123 4567 890": "Figma feed text x differs from other Home frames (A4)"
+    "LUKU electricity": "Figma feed text x differs from other Home frames (F4)",
+    "Bills · Meter 0123 4567 890": "Figma feed text x differs from other Home frames (F4)"
    },
    "homeAfter": true
   }

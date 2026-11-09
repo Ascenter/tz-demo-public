@@ -153,7 +153,7 @@ export function SendFlow() {
               [t('payments.send_money.receipt_sender'), tips ? undefined : CUSTOMER.name],
               [t('payments.send_money.receipt_account'), tips ? undefined : paidFromValue()],
             ],
-            // Figma 42:5875: TIPS shows Fee and Total (FIGMA_VS_BRD leaves it open; ASSUMPTIONS A6).
+            // Figma 42:5875: TIPS shows Fee and Total (FIGMA_VS_BRD leaves it open; ASSUMPTIONS F6).
             [
               [t('payments.send_money.receipt_fee'), tips ? t('payments.common.no_fee') : undefined],
               [t('payments.send_money.receipt_total'), tips ? formatTZS(done.amount) : undefined],

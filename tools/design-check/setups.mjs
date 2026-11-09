@@ -19,7 +19,7 @@ const FUND_HEADER = { 'M-Pesa': 'Top up from M-Pesa' }
 const SEND_S1 = ['tap:quick-send', 'fill:send-search=0784 552 019', 'tap:recipient-row@Baraka M.', 'amount:50000', 'fill:comment=For the order', 'continue', 'confirm', 'otp', 'push']
 const SEND_S4 = ['tap:quick-send', 'fill:send-search=Nee', 'tap:recipient-row@Neema Mushi', 'amount:35000', 'fill:comment=For lunch', 'continue', 'otp', 'push']
 const TIPS_FORM = ['tap:quick-send', 'tap:send-other-bank', 'tap:bank-CRDB Bank', 'fill:bank-account=0152 4876 39100', 'fill:bank-name=Baraka Mwakyusa', 'blur']
-// Figma lists phone-book contacts (letter groups) on the Send start screen; the Send BRD has Recent only (ASSUMPTIONS A3).
+// Figma lists phone-book contacts (letter groups) on the Send start screen; the Send BRD has Recent only (ASSUMPTIONS F3).
 const SEND_CONTACTS = Object.fromEntries(
   ['Simba@649', 'Simba@853', 'A', 'B', 'Athumani Bakari', '+255 768 220 415', 'Asha Mwinyi', '+255 655 903 118', 'Bahati Mollel', '+255 742 610 093', 'AB', 'AM', 'BM'].map((k) => [k, null]),
 )
@@ -46,8 +46,8 @@ const LUKU_METER = ['payments', 'tap:pay-bills', 'tap:biller-luku']
 const LUKU_AMOUNT = [...LUKU_METER, 'fill:meter-input=01234567890', 'blur', 'tap:meter-continue']
 const BILLS_HINT = { 'Balance TZS 695,000': 'Balance TZS 695,000 · No fee', 'No fee@306': null }
 const BILLS_HINT_KNOWN = { 'Balance TZS 695,000 · No fee': 'one hint line (as Airtime, V5) sits 8 pt under the amount' }
-// LUKU error frames put the amount 7 pt lower than every other amount screen (A4).
-const LUKU_ERROR_Y = 'Figma amount y differs from the other amount frames (A4)'
+// LUKU error frames put the amount 7 pt lower than every other amount screen (F4).
+const LUKU_ERROR_Y = 'Figma amount y differs from the other amount frames (F4)'
 const KEYBOARD_GLYPH = ['\u{100147}']
 
 export const SETUPS = {
@@ -64,14 +64,14 @@ export const SETUPS = {
     keyboard: true,
     deviations: FUND_HEADER,
     // This frame puts the header text at x = 80, its sibling 49:4304 at x = 94; the app follows 49:4304.
-    known: { 'Top up from M-Pesa': 'Figma header x differs between Fund frames (A1)', '+255 75• ••• 412': 'Figma header x differs between Fund frames (A1)' },
+    known: { 'Top up from M-Pesa': 'Figma header x differs between Fund frames (F1)', '+255 75• ••• 412': 'Figma header x differs between Fund frames (F1)' },
   },
   '50:3093': {
     step: 0,
     actions: [...FUND_AMOUNT, 'amount:50000', 'continue'],
     deviations: FUND_HEADER,
-    // Half of this sheet's texts sit at x = 36, the rest and every other sheet at x = 28 (A2).
-    known: Object.fromEntries(['Top up from M-Pesa', 'Amount', 'From', 'M-Pesa +255 75• ••• 412', 'Fee', 'No fee'].map((k) => [k, 'Figma sheet text at x = 36, all other sheets x = 28 (A2)'])),
+    // Half of this sheet's texts sit at x = 36, the rest and every other sheet at x = 28 (F2).
+    known: Object.fromEntries(['Top up from M-Pesa', 'Amount', 'From', 'M-Pesa +255 75• ••• 412', 'Fee', 'No fee'].map((k) => [k, 'Figma sheet text at x = 36, all other sheets x = 28 (F2)'])),
   },
   // Figma draws this state without the prompt; the app opens the prompt at once (BRD), so mask it.
   '49:4738': { step: 0, actions: [...FUND_AMOUNT, 'amount:50000', 'continue', 'confirm'], mask: [STATUS, [0, 280, 402, 300]] },
@@ -91,8 +91,8 @@ export const SETUPS = {
   '124:11212': { step: 1, actions: ['tap:quick-send'], deviations: SEND_CONTACTS },
   '42:5301': { step: 1, actions: ['tap:quick-send'], deviations: SEND_CONTACTS },
   '106:11008': { step: 1, actions: ['tap:quick-send'], deviations: SEND_CONTACTS },
-  // Focused-search frame: list 9–15 pt lower and 3 pt right of the other focused frames (12:4246) (A4).
-  '1:10181': { step: 1, actions: ['tap:quick-send', 'focus:send-search'], keyboard: true, ignore: KEYBOARD_GLYPH, knownFrom: { y: 190, note: 'Figma list offset differs from 12:4246 (A4)' } },
+  // Focused-search frame: list 9–15 pt lower and 3 pt right of the other focused frames (12:4246) (F4).
+  '1:10181': { step: 1, actions: ['tap:quick-send', 'focus:send-search'], keyboard: true, ignore: KEYBOARD_GLYPH, knownFrom: { y: 190, note: 'Figma list offset differs from 12:4246 (F4)' } },
   '12:4034': { step: 1, actions: ['loader:1500', 'tap:quick-send', 'fill:send-search=0784 552 019', 'wait:350'], settleMs: 100, keyboard: true },
   '12:4246': { step: 1, actions: ['tap:quick-send', 'fill:send-search=0784 552 019'], keyboard: true },
   '12:5035': { step: 1, actions: ['tap:quick-send', 'fill:send-search=0150 2345 6789'], keyboard: true, deviations: { 'Account •••• 6789': '+255 784 552 019' } },
@@ -102,8 +102,8 @@ export const SETUPS = {
   '12:5552': { step: 1, actions: [...SEND_S1], deviations: { '🤓 Save contact': 'Save contact' } },
   '19:7357': { step: 1, actions: [...SEND_S1, 'tap:save-contact', 'fill:contact-name=Baraka Mwakyusa'], keyboard: true, known: { Save: ABOVE_KEYBOARD } },
   '12:5946': { step: 1, actions: [...SEND_S1, 'done', 'home'] , homeAfter: true },
-  // This frame's list sits 5–10 pt lower than its siblings (124:11212) on the same 212 pt sheet (A4).
-  '12:6295': { step: 1, actions: [...SEND_S1, 'done', 'tap:quick-send'], deviations: SEND_CONTACTS, knownFrom: { y: 230, note: 'Figma list offset differs from 124:11212 (A4)' } },
+  // This frame's list sits 5–10 pt lower than its siblings (124:11212) on the same 212 pt sheet (F4).
+  '12:6295': { step: 1, actions: [...SEND_S1, 'done', 'tap:quick-send'], deviations: SEND_CONTACTS, knownFrom: { y: 230, note: 'Figma list offset differs from 124:11212 (F4)' } },
   // S4, saved recipient (after S1 + S3)
   '1:10213': { step: 1, actions: [...SEND_S1, 'done', 'tap:quick-send', 'fill:send-search=0754 318 902'], keyboard: true, deviations: RESULTS_HEADER },
   '1:10206': { step: 1, actions: ['loader:1500', 'tap:quick-send', 'fill:send-search=0754 318 902', 'wait:350'], settleMs: 100, keyboard: true },
@@ -174,10 +174,10 @@ export const SETUPS = {
   '239:4123': { step: 5, actions: ['payments', 'tap:pay-gov'] },
   '239:4506': { step: 5, actions: [...GOV_CONTROL, 'fill:gov-control-input=991081123890'], keyboard: true, known: { Continue: ABOVE_KEYBOARD } },
   '239:6979': { step: 5, actions: [...GOV_CONTROL, 'fill:gov-control-input=991081123809'], keyboard: true, known: { Continue: ABOVE_KEYBOARD } },
-  '239:5938': { step: 5, actions: [...GOV_CONTROL, 'fill:gov-control-input=991081123890', 'blur', 'tap:gov-continue'] },
+  '239:5938': { step: 5, actions: [...GOV_CONTROL, 'fill:gov-control-input=991081123890', 'blur', 'tap:gov-continue'], known: { Continue: ABOVE_KEYBOARD } },
   '239:6670': { step: 5, actions: [...GOV_CONTROL, 'fill:gov-control-input=991081123890', 'blur', 'tap:gov-continue', 'tap:gov-pay', 'otp', 'push'] },
-  // This Home frame puts the first row's text at x = 56 (other Home frames: 61–62) (A4).
-  '321:12104': { step: 6, actions: [], homeAfter: true, known: { 'TRA tax': 'Figma feed text x differs from other Home frames (A4)', 'Government payment': 'Figma feed text x differs from other Home frames (A4)' } },
+  // This Home frame puts the first row's text at x = 56 (other Home frames: 61–62) (F4).
+  '321:12104': { step: 6, actions: [], homeAfter: true, known: { 'TRA tax': 'Figma feed text x differs from other Home frames (F4)', 'Government payment': 'Figma feed text x differs from other Home frames (F4)' } },
 
   // ── 07 Bill payments, LUKU (from step 6) ─────────────────────────
   '234:772': { step: 6, actions: ['payments', 'tap:pay-bills'] },
@@ -188,5 +188,5 @@ export const SETUPS = {
   '245:2831': { step: 6, actions: [...LUKU_AMOUNT, 'amount:900000'], keyboard: true, known: { 'TZS 900,000': LUKU_ERROR_Y } },
   '234:804': { step: 6, actions: [...LUKU_AMOUNT, 'amount:20000', 'continue'], deviations: BILLS_HINT, known: BILLS_HINT_KNOWN },
   '234:1227': { step: 6, actions: [...LUKU_AMOUNT, 'amount:20000', 'continue', 'confirm', 'otp', 'push'] },
-  '246:2881': { step: 7, actions: [], homeAfter: true, known: { 'LUKU electricity': 'Figma feed text x differs from other Home frames (A4)', 'Bills · Meter 0123 4567 890': 'Figma feed text x differs from other Home frames (A4)' } },
+  '246:2881': { step: 7, actions: [], homeAfter: true, known: { 'LUKU electricity': 'Figma feed text x differs from other Home frames (F4)', 'Bills · Meter 0123 4567 890': 'Figma feed text x differs from other Home frames (F4)' } },
 }
