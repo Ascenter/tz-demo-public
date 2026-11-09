@@ -4,9 +4,9 @@ import { AmountStep, paidFromValue, receiptDate } from '../shared'
 import { useExitFlow } from '../exit'
 import { completeLocal, operatorOf, toIntl } from './numbers'
 import { Screen } from '../../components/Screen'
-import { LargeTitle, NavBar } from '../../components/NavBar'
 import { CapsHeader, ListRow } from '../../components/ListRow'
-import { SearchField } from '../../components/Fields'
+import { SearchHeader } from '../../components/SearchHeader'
+import { Illustration } from '../../components/Illustration'
 import { Avatar, colorFor, initialsOf } from '../../components/Avatar'
 import { Badge } from '../../components/Badge'
 import { OtpScreen } from '../../components/OtpScreen'
@@ -91,6 +91,7 @@ export function AirtimeFlow() {
             status === 'over_max' ? t('payments.airtime.max_amount') : status === 'over_balance' ? t('payments.common.not_enough') : undefined
           }
           chips={CHIPS.airtime}
+          offsetTop={84} // room of the hidden Airtime / Data switch (FIGMA_VS_BRD: hide it, keep the spacing)
           button={{ label: t('payments.airtime.continue'), disabled: status !== 'ok', onClick: () => nav.push({ name: 'otp' }) }} // BR-10: OTP directly
         />
       )
@@ -106,15 +107,16 @@ export function AirtimeFlow() {
           amount={done.amount}
           status={t('payments.airtime.success')}
           blocks={[
+            // Blocks as in Figma 222:2075.
             [
               [t('payments.airtime.recipient'), target.name ?? target.phone],
               [t('payments.airtime.number'), target.phone],
-              [t('payments.airtime.operator'), target.operator],
             ],
             [
+              [t('payments.airtime.operator'), target.operator],
               [t('payments.airtime.paid_from'), paidFromValue()],
-              [t('payments.airtime.date'), done.date],
             ],
+            [[t('payments.airtime.date'), done.date]],
           ]}
           doneLabel={t('payments.common.done')}
           onDone={exit}
@@ -172,13 +174,15 @@ function Recipients({ onBack, onPick }: { onBack: () => void; onPick: (t: Target
       testId="airtime-recipients"
       gradient={GRADIENT}
       header={
-        <>
-          <NavBar onBack={onBack} />
-          <LargeTitle title={t('payments.airtime.title')} />
-          <div className="pb-6">
-            <SearchField data-testid="airtime-search" placeholder={t('payments.airtime.search_hint')} value={query} onChange={(e) => setQuery(e.target.value)} inputMode="text" autoComplete="off" />
-          </div>
-        </>
+        <SearchHeader
+          title={t('payments.airtime.title')}
+          onBack={onBack}
+          query={query}
+          onQuery={setQuery}
+          data-testid="airtime-search"
+          placeholder={t('payments.airtime.search_hint')}
+          inputMode="text"
+        />
       }
     >
       {view.kind === 'lists' && (
@@ -203,9 +207,11 @@ function Recipients({ onBack, onPick }: { onBack: () => void; onPick: (t: Target
         />
       )}
       {view.kind === 'not_found' && (
-        <div data-testid="airtime-not-found" className="flex flex-col items-center gap-2 px-10 pt-12 text-center">
-          <p className="t-display-20">{t('payments.airtime.not_found_title')}</p>
-          <p className="t-regular-14 text-on-bg-secondary">{t('payments.airtime.not_found_hint')}</p>
+        // Figma 243:19982: small mascot, 20/28 title, 13/18 hint.
+        <div data-testid="airtime-not-found" className="flex flex-col items-center px-[54px] pt-2 text-center">
+          <Illustration kind="notFound" />
+          <p className="mt-6 t-display-20">{t('payments.airtime.not_found_title')}</p>
+          <p className="mt-[2px] t-regular-13 text-on-bg-secondary">{t('payments.airtime.not_found_hint')}</p>
         </div>
       )}
     </Screen>

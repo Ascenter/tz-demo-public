@@ -1,9 +1,8 @@
 import { Spinner } from '../../components/Loader'
 import { useEffect, useState } from 'react'
 import { Screen } from '../../components/Screen'
-import { LargeTitle, NavBar } from '../../components/NavBar'
 import { CapsHeader, ListRow } from '../../components/ListRow'
-import { SearchField } from '../../components/Fields'
+import { SearchHeader } from '../../components/SearchHeader'
 import { Avatar, colorFor, initialsOf } from '../../components/Avatar'
 import { Badge } from '../../components/Badge'
 import { Icon } from '../../components/icons'
@@ -31,14 +30,6 @@ export function RecipientsScreen({ onBack, onPick, onOtherBank }: Props) {
   const [query, setQuery] = useState('')
   const [result, setResult] = useState<SearchResult | null>(null)
   const [loading, setLoading] = useState(false)
-  // Focused search: the large title collapses into the nav bar and a Cancel button appears (Figma 1:10181).
-  const [focused, setFocused] = useState(false)
-  const searching = focused || !!query.trim()
-  const cancel = () => {
-    setQuery('')
-    setFocused(false)
-    ;(document.activeElement as HTMLElement | null)?.blur()
-  }
 
   // Send BR-10: search shows a loader of at least 200 ms (inline, so typing is not blocked).
   useEffect(() => {
@@ -84,28 +75,15 @@ export function RecipientsScreen({ onBack, onPick, onOtherBank }: Props) {
       testId="send-recipients"
       gradient={SEND_GRADIENT}
       header={
-        <>
-          <NavBar onBack={onBack} title={searching ? t('payments.send_money.title') : undefined} />
-          {!searching && <LargeTitle title={t('payments.send_money.title')} tight />}
-          <div className={`flex items-center gap-3 px-5 pb-[34px] ${searching ? 'pt-[2px]' : ''}`}>
-            <SearchField
-              className="flex-1"
-              data-testid="send-search"
-              placeholder={t('payments.send_money.search_hint')}
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              onFocus={() => setFocused(true)}
-              onClear={() => setQuery('')}
-              inputMode="search"
-              autoComplete="off"
-            />
-            {searching && (
-              <button type="button" data-testid="search-cancel" onClick={cancel} className="pressable w-[78px] shrink-0 text-left t-regular-16 text-on-bg-primary">
-                {t('payments.send_money.cancel')}
-              </button>
-            )}
-          </div>
-        </>
+        <SearchHeader
+          title={t('payments.send_money.title')}
+          onBack={onBack}
+          query={query}
+          onQuery={setQuery}
+          data-testid="send-search"
+          placeholder={t('payments.send_money.search_hint')}
+          inputMode="search"
+        />
       }
     >
       {!query.trim() ? (

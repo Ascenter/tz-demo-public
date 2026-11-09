@@ -38,6 +38,9 @@ const RED_LINE_STATE = 'BRD red line replaces the hints (parent BR-05), so the b
 const RED_LINE_KNOWN = (amount, balance = 'Balance TZS 1,060,000') => ({ [amount]: RED_LINE_STATE, [balance]: RED_LINE_STATE, 'No fee': RED_LINE_STATE })
 const SCAN_AMOUNT = ['tap:quick-scan', 'simulateQr']
 const CASH_AMOUNT = ['payments', 'tap:pay-cash', 'cash.agent']
+const AIRTIME_AMOUNT = ['payments', 'tap:pay-airtime', 'tap:airtime-row@Neema Mushi']
+// Airtime: one hint line "Balance … · No fee" (ASSUMPTIONS V5) and one "Contacts" header for the letter groups (V4).
+const AIRTIME_HINT = { 'Balance TZS 900,000': 'Balance TZS 900,000 · No fee', 'No fee': null }
 const KEYBOARD_GLYPH = ['\u{100147}']
 
 export const SETUPS = {
@@ -150,4 +153,13 @@ export const SETUPS = {
     known: { "Show this code to any Wakala agent with your phone number. They'll pay out TZS 50,000. It works once, until 12:34": 'device time ("until HH:MM")' },
   },
   '176:4682': { step: 4, actions: [], homeAfter: true },
+
+  // ── 05 Airtime (from step 4) ─────────────────────────────────────
+  '222:919': { step: 4, actions: ['payments', 'tap:pay-airtime'], deviations: { A: 'CONTACTS', B: null }, knownFrom: { y: 740, note: 'one Contacts header instead of the A/B letter groups (V4), so the B rows sit 54 pt higher' } },
+  '243:19982': { step: 4, actions: ['payments', 'tap:pay-airtime', 'fill:airtime-search=0799 000 111'], keyboard: true, ignore: KEYBOARD_GLYPH },
+  '222:1102': { step: 4, actions: [...AIRTIME_AMOUNT, 'amount:5000'], keyboard: true, deviations: AIRTIME_HINT, known: { 'Balance TZS 900,000 · No fee': 'one hint line (V5) sits 8 pt under the amount, Figma\'s two lines 2 pt' } },
+  '243:20231': { step: 4, actions: [...AIRTIME_AMOUNT, 'amount:600000'], keyboard: true, known: RED_LINE_KNOWN('TZS 600,000', 'Balance TZS 900,000') },
+  '243:20111': { step: 4, actions: [...AIRTIME_AMOUNT, 'amount:950000'], keyboard: true, known: RED_LINE_KNOWN('TZS 950,000', 'Balance TZS 900,000') },
+  '222:2075': { step: 4, actions: [...AIRTIME_AMOUNT, 'amount:5000', 'continue', 'otp', 'push'] },
+  '222:2267': { step: 5, actions: [], homeAfter: true },
 }

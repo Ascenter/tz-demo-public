@@ -2073,6 +2073,202 @@
     ]
    ],
    "homeAfter": true
+  },
+  {
+   "figmaId": "243:20231",
+   "name": "Airtime and data - Airtime amount - Above limit",
+   "flow": "05-airtime",
+   "png": "design/figma-export/screens-1x/05-airtime/airtime-and-data-airtime-amount-above-limit__243-20231.png",
+   "spec": "design/figma-export/specs/05-airtime/airtime-and-data-airtime-amount-above-limit__243-20231.json",
+   "setup": {
+    "step": 4,
+    "actions": [
+     "payments",
+     "tap:pay-airtime",
+     "tap:airtime-row@Neema Mushi",
+     "amount:600000"
+    ]
+   },
+   "mask": [
+    [
+     0,
+     0,
+     402,
+     44
+    ]
+   ],
+   "keyboard": true,
+   "known": {
+    "TZS 600,000": "BRD red line replaces the hints (parent BR-05), so the block is one line shorter",
+    "Balance TZS 900,000": "BRD red line replaces the hints (parent BR-05), so the block is one line shorter",
+    "No fee": "BRD red line replaces the hints (parent BR-05), so the block is one line shorter"
+   }
+  },
+  {
+   "figmaId": "222:1102",
+   "name": "Airtime and data - Airtime amount - Filled",
+   "flow": "05-airtime",
+   "png": "design/figma-export/screens-1x/05-airtime/airtime-and-data-airtime-amount-filled__222-1102.png",
+   "spec": "design/figma-export/specs/05-airtime/airtime-and-data-airtime-amount-filled__222-1102.json",
+   "setup": {
+    "step": 4,
+    "actions": [
+     "payments",
+     "tap:pay-airtime",
+     "tap:airtime-row@Neema Mushi",
+     "amount:5000"
+    ]
+   },
+   "mask": [
+    [
+     0,
+     0,
+     402,
+     44
+    ]
+   ],
+   "keyboard": true,
+   "deviations": {
+    "Balance TZS 900,000": "Balance TZS 900,000 · No fee",
+    "No fee": null
+   },
+   "known": {
+    "Balance TZS 900,000 · No fee": "one hint line (V5) sits 8 pt under the amount, Figma's two lines 2 pt"
+   }
+  },
+  {
+   "figmaId": "243:20111",
+   "name": "Airtime and data - Airtime amount - Not enough money",
+   "flow": "05-airtime",
+   "png": "design/figma-export/screens-1x/05-airtime/airtime-and-data-airtime-amount-not-enough-money__243-20111.png",
+   "spec": "design/figma-export/specs/05-airtime/airtime-and-data-airtime-amount-not-enough-money__243-20111.json",
+   "setup": {
+    "step": 4,
+    "actions": [
+     "payments",
+     "tap:pay-airtime",
+     "tap:airtime-row@Neema Mushi",
+     "amount:950000"
+    ]
+   },
+   "mask": [
+    [
+     0,
+     0,
+     402,
+     44
+    ]
+   ],
+   "keyboard": true,
+   "known": {
+    "TZS 950,000": "BRD red line replaces the hints (parent BR-05), so the block is one line shorter",
+    "Balance TZS 900,000": "BRD red line replaces the hints (parent BR-05), so the block is one line shorter",
+    "No fee": "BRD red line replaces the hints (parent BR-05), so the block is one line shorter"
+   }
+  },
+  {
+   "figmaId": "222:919",
+   "name": "Airtime and data - Recipients - Default",
+   "flow": "05-airtime",
+   "png": "design/figma-export/screens-1x/05-airtime/airtime-and-data-recipients-default__222-919.png",
+   "spec": "design/figma-export/specs/05-airtime/airtime-and-data-recipients-default__222-919.json",
+   "setup": {
+    "step": 4,
+    "actions": [
+     "payments",
+     "tap:pay-airtime"
+    ]
+   },
+   "mask": [
+    [
+     0,
+     0,
+     402,
+     44
+    ]
+   ],
+   "deviations": {
+    "A": "CONTACTS",
+    "B": null
+   },
+   "knownFrom": {
+    "y": 740,
+    "note": "one Contacts header instead of the A/B letter groups (V4), so the B rows sit 54 pt higher"
+   }
+  },
+  {
+   "figmaId": "243:19982",
+   "name": "Airtime and data - Recipients - Number not found",
+   "flow": "05-airtime",
+   "png": "design/figma-export/screens-1x/05-airtime/airtime-and-data-recipients-number-not-found__243-19982.png",
+   "spec": "design/figma-export/specs/05-airtime/airtime-and-data-recipients-number-not-found__243-19982.json",
+   "setup": {
+    "step": 4,
+    "actions": [
+     "payments",
+     "tap:pay-airtime",
+     "fill:airtime-search=0799 000 111"
+    ]
+   },
+   "mask": [
+    [
+     0,
+     0,
+     402,
+     44
+    ]
+   ],
+   "keyboard": true,
+   "ignore": [
+    "􀅇"
+   ]
+  },
+  {
+   "figmaId": "222:2075",
+   "name": "Airtime and data - Success - Airtime",
+   "flow": "05-airtime",
+   "png": "design/figma-export/screens-1x/05-airtime/airtime-and-data-success-airtime__222-2075.png",
+   "spec": "design/figma-export/specs/05-airtime/airtime-and-data-success-airtime__222-2075.json",
+   "setup": {
+    "step": 4,
+    "actions": [
+     "payments",
+     "tap:pay-airtime",
+     "tap:airtime-row@Neema Mushi",
+     "amount:5000",
+     "continue",
+     "otp",
+     "push"
+    ]
+   },
+   "mask": [
+    [
+     0,
+     0,
+     402,
+     44
+    ]
+   ]
+  },
+  {
+   "figmaId": "222:2267",
+   "name": "Home - Main - After airtime top up",
+   "flow": "05-airtime",
+   "png": "design/figma-export/screens-1x/05-airtime/home-main-after-airtime-top-up__222-2267.png",
+   "spec": "design/figma-export/specs/05-airtime/home-main-after-airtime-top-up__222-2267.json",
+   "setup": {
+    "step": 5,
+    "actions": []
+   },
+   "mask": [
+    [
+     0,
+     0,
+     402,
+     44
+    ]
+   ],
+   "homeAfter": true
   }
  ]
 }
