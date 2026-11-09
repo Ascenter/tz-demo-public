@@ -48,7 +48,7 @@ export function PhoneShell({ children }: { children: ReactNode }) {
     </div>
   )
 
-  if (IS_FULLSCREEN) return <div className="fixed inset-0">{screen}</div>
+  if (IS_FULLSCREEN) return <div className="app-fullscreen">{screen}</div>
 
   const size = { width: DEVICE.width, height: DEVICE.height }
   const insets = { '--safe-top': `${DEVICE.safeTop}px`, '--safe-bottom': `${DEVICE.safeBottom}px` } as React.CSSProperties
