@@ -1,9 +1,47 @@
-import type { SVGProps } from 'react'
+import type { ComponentType, CSSProperties, SVGProps } from 'react'
+// Figma icons (copied from the offline export by `npm run design:assets`), inlined as React components by svgr.
+// Monochrome ones use currentColor; round 40 pt ones take their circle colour from --icon-bg.
+import ArrowLeft24 from '../assets/icons/ic_arrowLeft_24.svg?react'
+import ArrowDown16 from '../assets/icons/ic_arrow_down.svg?react'
+import ArrowRight16 from '../assets/icons/ic_arrow_right.svg?react'
+import Chat20 from '../assets/icons/ic_chat_20.svg?react'
+import Checkmark24 from '../assets/icons/ic_checkmark_24.svg?react'
+import CrossClose16 from '../assets/icons/ic_cross_close_16.svg?react'
+import Diagram24 from '../assets/icons/ic_diagram_24.svg?react'
+import Search from '../assets/icons/ic_search.svg?react'
+import Search24 from '../assets/icons/ic_search_24.svg?react'
+import TabHome from '../assets/icons/tab_home.svg?react'
+import TabPayments from '../assets/icons/tab_payments.svg?react'
+import TabCredit from '../assets/icons/tab_credit.svg?react'
+import TabSavings from '../assets/icons/tab_savings.svg?react'
+import TabMore from '../assets/icons/tab_more.svg?react'
+import PlusBlack52 from '../assets/icons/plusBlack_52.svg?react'
+import ArrowRightBlack52 from '../assets/icons/arrowrightBlack_52.svg?react'
+import QrBlack52 from '../assets/icons/qrBlack_52.svg?react'
+import CategoryBook from '../assets/icons/category_book.svg?react'
+import CategoryCar from '../assets/icons/category_car.svg?react'
+import CategoryCommunal from '../assets/icons/category_communal.svg?react'
+import CategoryElectricity from '../assets/icons/category_electricity.svg?react'
+import CategoryGov from '../assets/icons/category_gov_payments.svg?react'
+import CategoryHealth from '../assets/icons/category_health.svg?react'
+import CategoryMobileTopUp from '../assets/icons/category_mobile_top_up.svg?react'
+import CategoryPercents from '../assets/icons/category_percents.svg?react'
+import CategoryProducts from '../assets/icons/category_products.svg?react'
+import CategorySendToCard from '../assets/icons/category_send_to_card.svg?react'
+import CategoryTopup from '../assets/icons/category_topup.svg?react'
+import CategoryTravel from '../assets/icons/category_travel.svg?react'
+import CategoryTv from '../assets/icons/category_tv.svg?react'
+import CategoryWithdrawCash from '../assets/icons/category_withdraw_cash.svg?react'
+import Mobile40 from '../assets/icons/ic_mobile_40.svg?react'
+import Wallet40 from '../assets/icons/ic_wallet_40.svg?react'
+import UnknownBank40 from '../assets/icons/ic_unknown_bank.svg?react'
+import StoreMarket40 from '../assets/icons/ic_store_market_40.svg?react'
+import VisaWhite from '../assets/icons/logo_visa_white.svg?react'
 
-// Inline SVG icon set drawn to match the Figma icons (24 px grid, 2 px stroke).
-// The Figma asset URLs could not be downloaded from this build environment (www.figma.com blocked);
-// swap any icon here for the exported Figma SVG — call sites use <Icon name="…" /> only.
+type Svg = ComponentType<SVGProps<SVGSVGElement>>
 
+// Glyphs the export has no SVG for (share, keypad delete, scanner controls, 24 pt close…) stay hand-drawn
+// on the 24 px grid; they are listed in design/MISSING.md.
 const paths = {
   arrowLeft: <path d="M19 12H5m0 0 6-6m-6 6 6 6" />,
   arrowRight: <path d="M5 12h14m0 0-6-6m6 6-6 6" />,
@@ -135,7 +173,26 @@ const filled = {
   check: <path d="M9.5 16.2 5.3 12l-1.4 1.4 5.6 5.6 11-11-1.4-1.4-9.6 9.6Z" />,
 } as const
 
-export type IconName = keyof typeof paths | keyof typeof filled
+/** Icons that render the Figma SVG instead of the hand-drawn glyph. */
+const FIGMA: Partial<Record<IconName, Svg>> = {
+  arrowLeft: ArrowLeft24,
+  chevronRight: ArrowRight16,
+  chevronDown: ArrowDown16,
+  chat: Chat20,
+  check: Checkmark24,
+  clear: CrossClose16,
+  diagram: Diagram24,
+  search: Search,
+  search24: Search24,
+  tabHome: TabHome,
+  tabPayments: TabPayments,
+  tabCredit: TabCredit,
+  tabSavings: TabSavings,
+  tabMore: TabMore,
+}
+
+/** Hand-drawn glyphs, Figma-only glyphs, and round-only icons (method rows). */
+export type IconName = keyof typeof paths | keyof typeof filled | 'chevronDown' | 'clear' | 'search24' | 'mobile' | 'airtelWallet'
 
 interface IconProps extends Omit<SVGProps<SVGSVGElement>, 'name'> {
   name: IconName
@@ -143,7 +200,9 @@ interface IconProps extends Omit<SVGProps<SVGSVGElement>, 'name'> {
   color?: string
 }
 
-export function Icon({ name, size = 24, color = 'currentColor', ...rest }: IconProps) {
+export function Icon({ name, size = 24, color = 'currentColor', style, ...rest }: IconProps) {
+  const Figma = FIGMA[name]
+  if (Figma) return <Figma width={size} height={size} aria-hidden="true" style={{ color, ...style }} {...rest} />
   const isFilled = name in filled
   return (
     <svg
@@ -155,6 +214,7 @@ export function Icon({ name, size = 24, color = 'currentColor', ...rest }: IconP
       strokeWidth={2}
       strokeLinecap="round"
       aria-hidden="true"
+      style={style}
       {...rest}
     >
       {isFilled ? filled[name as keyof typeof filled] : paths[name as keyof typeof paths]}
@@ -162,11 +222,55 @@ export function Icon({ name, size = 24, color = 'currentColor', ...rest }: IconP
   )
 }
 
-/** 52 px black round quick-action button used on Home (Figma icon / 52). */
+/**
+ * Round 40 pt icons (Figma "icon / 40 / Category icon" and the method icons). Keys are the app's
+ * category names; the circle keeps its Figma colour unless a row overrides it (`color`).
+ */
+const ROUND: Partial<Record<IconName, Svg>> = {
+  arrowRight: CategorySendToCard,
+  plus: CategoryTopup,
+  wallet: CategoryWithdrawCash,
+  card: CategoryWithdrawCash, // ATM row (Figma 176:1053)
+  qr: CategoryWithdrawCash, // "Scan QR" row (Figma 1:4211, indigo)
+  flash: CategoryElectricity,
+  drop: CategoryCommunal,
+  home: CategoryCommunal,
+  gov: CategoryGov,
+  apple: CategoryProducts,
+  phone: CategoryMobileTopUp,
+  tv: CategoryTv,
+  percent: CategoryPercents,
+  car: CategoryCar,
+  luggage: CategoryTravel,
+  book: CategoryBook,
+  heart: CategoryHealth,
+  mobile: Mobile40,
+  airtelWallet: Wallet40,
+  bank: UnknownBank40,
+  user: StoreMarket40,
+}
+
+export type RoundIconName = keyof typeof ROUND
+
+export function hasRoundIcon(name: IconName): boolean {
+  return name in ROUND
+}
+
+export function RoundIcon({ name, size = 40, color }: { name: IconName; size?: number; color?: string }) {
+  const C = ROUND[name]
+  if (!C) return null
+  return <C width={size} height={size} aria-hidden="true" style={color ? ({ '--icon-bg': color } as CSSProperties) : undefined} />
+}
+
+/** 52 pt black round quick action on Home (Figma icon / 52): the glyph is cut out, so the header shows through. */
+const QUICK: Partial<Record<IconName, Svg>> = { plus: PlusBlack52, arrowRight: ArrowRightBlack52, qr: QrBlack52 }
+
 export function RoundIcon52({ name }: { name: IconName }) {
-  return (
-    <span className="grid size-[52px] place-items-center rounded-full bg-black">
-      <Icon name={name} size={26} color="#ffc3ad" />
-    </span>
-  )
+  const C = QUICK[name]
+  return C ? <C width={52} height={52} aria-hidden="true" className="text-on-bg-primary" /> : null
+}
+
+/** White Visa logo for the black card (Figma " payment system logo / visa"). */
+export function VisaLogo(props: SVGProps<SVGSVGElement>) {
+  return <VisaWhite aria-label="VISA" {...props} />
 }

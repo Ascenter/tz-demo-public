@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { Icon, type IconName } from '../../components/icons'
+import { Icon } from '../../components/icons'
 import { useBack } from '../../app/back'
 import { useUi } from '../../app/ui'
 import { t } from '../../mock/texts'
@@ -69,51 +69,65 @@ export function Scanner({ onBack, onScanned }: { onBack: () => void; onScanned: 
     setFlashOn(scanner.current.isFlashOn())
   }
 
-  const tool = (icon: IconName, label: string, onClick?: () => void, active?: boolean) => (
-    <button
-      type="button"
-      aria-label={label}
-      onClick={onClick}
-      className={`flex flex-col items-center gap-2 text-caption text-white ${onClick ? 'pressable' : ''}`}
-    >
-      <span className={`grid size-[52px] place-items-center rounded-full ${active ? 'bg-white text-black' : 'bg-white/15 backdrop-blur'}`}>
-        <Icon name={icon} color={active ? '#000' : '#fff'} />
-      </span>
-      {label}
-    </button>
-  )
+  // Zoom presets as drawn (Figma 130:901). The demo camera keeps its own zoom; the selection is visual.
+  const [zoom, setZoom] = useState(1)
+  const loaderLabel = useUi((s) => (s.loaderVisible ? s.loaderLabel : undefined))
 
   return (
     <div className="absolute inset-0 overflow-hidden bg-black" data-testid="scanner">
       <video ref={video} className="absolute inset-0 size-full object-cover" playsInline muted />
-      <div className="absolute inset-x-0 top-0 z-10" style={{ paddingTop: 'var(--safe-top)' }}>
-        <div className="flex h-11 items-center px-5">
+
+      {/* Top bar (0–148 pt): back, flash, title. While the merchant is checked the title says so (Figma 130:1092). */}
+      <div className="absolute inset-x-0 top-0 z-10 h-[148px] bg-black/40" style={{ paddingTop: 'var(--safe-top)' }}>
+        <div className="flex h-11 items-center justify-between px-5">
           <button type="button" data-testid="nav-back" aria-label={t('payments.common.back')} onClick={onBack} className="pressable -ml-2 grid size-10 place-items-center">
-            <Icon name="close" color="#fff" />
+            <Icon name="arrowLeft" color="var(--color-surface)" />
+          </button>
+          <button
+            type="button"
+            aria-label={t('payments.scan_to_pay.flashlight')}
+            aria-pressed={flashOn}
+            onClick={toggleFlash}
+            className="pressable -mr-2 grid size-10 place-items-center"
+          >
+            <Icon name="flash" color="var(--color-surface)" style={{ opacity: hasFlash || flashOn ? 1 : 0.9 }} />
           </button>
         </div>
-        <h1 className="px-5 pt-2 text-center font-display text-header font-semibold text-white">{t('payments.scan_to_pay.scanner_title')}</h1>
+        <h1 className="px-5 pt-2 text-center t-display-20 text-white">{loaderLabel ?? t('payments.scan_to_pay.scanner_title')}</h1>
       </div>
 
-      {/* viewfinder */}
-      <div className="absolute left-1/2 top-[42%] size-[250px] -translate-x-1/2 -translate-y-1/2 rounded-[28px] shadow-[0_0_0_2000px_rgba(0,0,0,0.45)]">
-        {['left-0 top-0 border-l-4 border-t-4 rounded-tl-[28px]', 'right-0 top-0 border-r-4 border-t-4 rounded-tr-[28px]', 'left-0 bottom-0 border-l-4 border-b-4 rounded-bl-[28px]', 'right-0 bottom-0 border-r-4 border-b-4 rounded-br-[28px]'].map((c) => (
-          <span key={c} className={`absolute size-12 border-white ${c}`} />
-        ))}
-        {denied && (
-          <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 text-center">
-            <p className="text-body-m text-white/80">{t('payments.scan_to_pay.camera_denied')}</p>
-            <button type="button" data-testid="simulate-scan" onClick={() => fire.current()} className="pressable rounded-full bg-white px-5 py-[10px] text-body-mp font-semibold">
-              {t('payments.scan_to_pay.simulate_scan')}
+      {denied && (
+        // No camera (desktop rehearsal, denied permission): the presenter can still scan.
+        <div className="absolute inset-x-0 top-[148px] bottom-[180px] flex flex-col items-center justify-center gap-3 text-center">
+          <p className="t-regular-14 text-white/80">{t('payments.scan_to_pay.camera_denied')}</p>
+          <button type="button" data-testid="simulate-scan" onClick={() => fire.current()} className="pressable rounded-full bg-white px-5 py-[10px] t-semibold-15">
+            {t('payments.scan_to_pay.simulate_scan')}
+          </button>
+        </div>
+      )}
+
+      {/* Bottom bar (694–874 pt on 402 × 874): zoom presets, gallery. */}
+      <div className="absolute inset-x-0 bottom-0 z-10 h-[180px] bg-black/40">
+        <div className="mt-[24px] flex justify-center gap-[18px]">
+          {[1, 2, 3].map((z) => (
+            <button
+              key={z}
+              type="button"
+              aria-pressed={zoom === z}
+              onClick={() => setZoom(z)}
+              className={`grid size-[34px] place-items-center rounded-full t-semibold-13 ${zoom === z ? 'bg-white/20 text-white' : 'text-white/60'}`}
+            >
+              {z}x
             </button>
-          </div>
-        )}
-      </div>
-
-      <div className="absolute inset-x-0 bottom-0 flex justify-around px-10" style={{ paddingBottom: 'calc(var(--safe-bottom) + 28px)' }}>
-        {tool('gallery', t('payments.scan_to_pay.gallery'))}
-        {tool('flashlight', t('payments.scan_to_pay.flashlight'), toggleFlash, flashOn)}
-        {tool('qr', t('payments.scan_to_pay.my_qr'))}
+          ))}
+        </div>
+        <span
+          aria-label={t('payments.scan_to_pay.gallery')}
+          className="absolute right-5 grid size-10 place-items-center rounded-full bg-white/20"
+          style={{ bottom: 'calc(var(--safe-bottom) + 10px)' }}
+        >
+          <Icon name="gallery" size={22} color="var(--color-surface)" />
+        </span>
       </div>
     </div>
   )

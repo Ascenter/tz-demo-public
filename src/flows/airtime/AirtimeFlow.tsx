@@ -4,9 +4,9 @@ import { AmountStep, paidFromValue, receiptDate } from '../shared'
 import { useExitFlow } from '../exit'
 import { completeLocal, operatorOf, toIntl } from './numbers'
 import { Screen } from '../../components/Screen'
-import { LargeTitle, NavBar } from '../../components/NavBar'
 import { CapsHeader, ListRow } from '../../components/ListRow'
-import { SearchField } from '../../components/Fields'
+import { SearchHeader } from '../../components/SearchHeader'
+import { Illustration } from '../../components/Illustration'
 import { Avatar, colorFor, initialsOf } from '../../components/Avatar'
 import { Badge } from '../../components/Badge'
 import { OtpScreen } from '../../components/OtpScreen'
@@ -19,7 +19,6 @@ import { simulate } from '../../engine/delay'
 import { validateAmount } from '../../engine/validate'
 import { digitsOnly, formatNumber, parseAmount } from '../../engine/format'
 import { CHIPS, FLOW_MAX, MIN_AMOUNT } from '../../mock/limits'
-import { OPERATOR_COLORS } from '../../mock/operators'
 import { AIRTIME_CONTACTS, AIRTIME_MY_NUMBER, AIRTIME_RECENT, type AirtimeContact } from '../../mock/recipients'
 import { airtimeOp } from '../../mock/operations'
 import { t } from '../../mock/texts'
@@ -33,7 +32,7 @@ interface Target {
 
 type Step = { name: 'recipients' } | { name: 'amount' } | { name: 'otp' } | { name: 'receipt' }
 
-const GRADIENT = 'var(--gradient-transfer)' // Figma: same lilac header as transfers
+const GRADIENT = 'var(--gradient-flow-header-blue)' // Figma: same lilac header as transfers
 const ALL_CONTACTS = [AIRTIME_MY_NUMBER, ...AIRTIME_RECENT, ...AIRTIME_CONTACTS]
 
 /** Airtime (child BRD 3437592577): no Airtime/Data switch, no confirmation sheet (OQ-2 b). */
@@ -80,9 +79,9 @@ export function AirtimeFlow() {
           gradient={GRADIENT}
           onBack={nav.pop}
           header={{
-            leading: target.name ? <Avatar initials={initialsOf(target.name)} color={colorFor(target.name)} /> : <Avatar icon="phone" color="#39cc7e" />,
+            leading: target.name ? <Avatar initials={initialsOf(target.name)} color={colorFor(target.name)} /> : <Avatar icon="phone" />,
             title,
-            badge: <Badge tone="custom" color={OPERATOR_COLORS[target.operator]}>{target.operator}</Badge>,
+            badge: <Badge>{target.operator}</Badge>, // dark badge as in Figma 222:1102
           }}
           value={value}
           onChange={setValue}
@@ -91,6 +90,7 @@ export function AirtimeFlow() {
             status === 'over_max' ? t('payments.airtime.max_amount') : status === 'over_balance' ? t('payments.common.not_enough') : undefined
           }
           chips={CHIPS.airtime}
+          offsetTop={84} // room of the hidden Airtime / Data switch (FIGMA_VS_BRD: hide it, keep the spacing)
           button={{ label: t('payments.airtime.continue'), disabled: status !== 'ok', onClick: () => nav.push({ name: 'otp' }) }} // BR-10: OTP directly
         />
       )
@@ -106,15 +106,16 @@ export function AirtimeFlow() {
           amount={done.amount}
           status={t('payments.airtime.success')}
           blocks={[
+            // Blocks as in Figma 222:2075.
             [
               [t('payments.airtime.recipient'), target.name ?? target.phone],
               [t('payments.airtime.number'), target.phone],
-              [t('payments.airtime.operator'), target.operator],
             ],
             [
+              [t('payments.airtime.operator'), target.operator],
               [t('payments.airtime.paid_from'), paidFromValue()],
-              [t('payments.airtime.date'), done.date],
             ],
+            [[t('payments.airtime.date'), done.date]],
           ]}
           doneLabel={t('payments.common.done')}
           onDone={exit}
@@ -159,7 +160,7 @@ function Recipients({ onBack, onPick }: { onBack: () => void; onPick: (t: Target
       <ListRow
         key={c.phone + title}
         testId={testId}
-        leading={c === AIRTIME_MY_NUMBER ? <Avatar icon="phone" color="#39cc7e" /> : <Avatar initials={initialsOf(c.name)} color={colorFor(c.name)} />}
+        leading={c === AIRTIME_MY_NUMBER ? <Avatar icon="phone" /> : <Avatar initials={initialsOf(c.name)} color={colorFor(c.name)} />}
         title={title}
         subtitle={t('payments.airtime.row_subtitle', { phone: c.phone, operator })}
         onClick={() => onPick({ name: c === AIRTIME_MY_NUMBER ? t('payments.airtime.my_number') : c.name, phone: c.phone, operator })}
@@ -172,13 +173,15 @@ function Recipients({ onBack, onPick }: { onBack: () => void; onPick: (t: Target
       testId="airtime-recipients"
       gradient={GRADIENT}
       header={
-        <>
-          <NavBar onBack={onBack} />
-          <LargeTitle title={t('payments.airtime.title')} />
-          <div className="pb-6">
-            <SearchField data-testid="airtime-search" placeholder={t('payments.airtime.search_hint')} value={query} onChange={(e) => setQuery(e.target.value)} inputMode="text" autoComplete="off" />
-          </div>
-        </>
+        <SearchHeader
+          title={t('payments.airtime.title')}
+          onBack={onBack}
+          query={query}
+          onQuery={setQuery}
+          data-testid="airtime-search"
+          placeholder={t('payments.airtime.search_hint')}
+          inputMode="text"
+        />
       }
     >
       {view.kind === 'lists' && (
@@ -196,16 +199,18 @@ function Recipients({ onBack, onPick }: { onBack: () => void; onPick: (t: Target
       {view.kind === 'number' && (
         <ListRow
           testId="airtime-number-row"
-          leading={<Avatar icon="phone" color="#39cc7e" />}
+          leading={<Avatar icon="phone" />}
           title={view.target.name ?? view.target.phone}
           subtitle={t('payments.airtime.row_subtitle', { phone: view.target.phone, operator: view.target.operator })}
           onClick={() => onPick(view.target)}
         />
       )}
       {view.kind === 'not_found' && (
-        <div data-testid="airtime-not-found" className="flex flex-col items-center gap-2 px-10 pt-12 text-center">
-          <p className="font-display text-header font-semibold">{t('payments.airtime.not_found_title')}</p>
-          <p className="text-body-m text-secondary">{t('payments.airtime.not_found_hint')}</p>
+        // Figma 243:19982: small mascot, 20/28 title, 13/18 hint.
+        <div data-testid="airtime-not-found" className="flex flex-col items-center px-[54px] pt-2 text-center">
+          <Illustration kind="notFound" />
+          <p className="mt-6 t-display-20">{t('payments.airtime.not_found_title')}</p>
+          <p className="mt-[2px] t-regular-13 text-on-bg-secondary">{t('payments.airtime.not_found_hint')}</p>
         </div>
       )}
     </Screen>

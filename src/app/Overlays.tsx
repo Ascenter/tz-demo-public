@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import { AnimatePresence, motion } from 'motion/react'
 import { useUi } from './ui'
 import { t } from '../mock/texts'
+import { PawLoader } from '../components/Loader'
 
 /** Blocking loader for every simulated backend answer (parent BR-03). */
 export function LoaderOverlay() {
@@ -11,18 +12,16 @@ export function LoaderOverlay() {
       {loaderVisible && (
         <motion.div
           data-testid="loader"
-          className="absolute inset-0 z-[70] grid place-items-center bg-white/70 backdrop-blur-[2px]"
+          className={`absolute inset-0 z-[70] grid place-items-center ${loaderLabel ? '' : 'bg-white/40'}`}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.12 }}
         >
-          <div className="flex flex-col items-center gap-4">
-            <span
-              className="size-10 rounded-full border-[3px] border-black/10 border-t-black"
-              style={{ animation: 'spin 0.8s linear infinite' }}
-            />
-            <span className="text-body-m text-secondary">{loaderLabel ?? t('payments.common.loading')}</span>
+          <div className="flex flex-col items-center gap-2">
+            <PawLoader />
+            {/* A labelled wait (QR check) shows its label in the screen's own title (Scanner). */}
+            <span className="sr-only">{loaderLabel ?? t('payments.common.loading')}</span>
           </div>
         </motion.div>
       )}
@@ -59,10 +58,10 @@ export function PushBanner() {
           <AppIcon size={38} />
           <span className="flex min-w-0 flex-1 flex-col">
             <span className="flex items-center justify-between">
-              <span className="text-body-mp font-semibold">{t('app.name')}</span>
-              <span className="text-caption text-secondary">{t('app.now')}</span>
+              <span className="t-semibold-15">{t('app.name')}</span>
+              <span className="t-regular-13 text-on-bg-secondary">{t('app.now')}</span>
             </span>
-            <span data-testid="push-text" className="text-body-mp leading-5">
+            <span data-testid="push-text" className="t-regular-15 leading-5">
               {push.text}
             </span>
           </span>
@@ -110,7 +109,7 @@ export function Toast() {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -12 }}
         >
-          <span className="rounded-full bg-black/85 px-4 py-[6px] text-center text-body-m text-white">{toast.text}</span>
+          <span className="rounded-full bg-black/85 px-4 py-[6px] text-center t-regular-14 text-white">{toast.text}</span>
         </motion.div>
       )}
     </AnimatePresence>

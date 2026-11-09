@@ -33,8 +33,8 @@ export function TabBar() {
               onClick={() => !active && navigate(tab.path, { replace: true, state: { tab: true } })}
               className={`flex h-[55px] flex-1 flex-col items-center justify-center gap-px rounded-full ${active ? 'bg-tab-selection' : ''}`}
             >
-              <Icon name={tab.icon} size={28} color={active ? 'var(--color-tab-active)' : '#000'} />
-              <span className={`text-tab font-medium ${active ? 'text-tab-active' : 'text-primary'}`}>{t(tab.label)}</span>
+              <Icon name={tab.icon} size={28} color={active ? 'var(--color-tab-active)' : 'var(--color-on-bg-primary)'} />
+              <span className={`t-medium-9 ${active ? 'text-tab-active' : 'text-on-bg-primary'}`}>{t(tab.label)}</span>
             </button>
           )
         })}

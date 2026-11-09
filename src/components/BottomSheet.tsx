@@ -52,7 +52,6 @@ function SheetBody({ onDismiss, children, testId }: Omit<Props, 'open'>) {
         dragElastic={{ top: 0, bottom: 0.6 }}
         onDragEnd={onDragEnd}
       >
-        <div className="absolute left-1/2 top-2 h-[5px] w-9 -translate-x-1/2 rounded-full bg-black/15" />
         {children}
       </motion.div>
     </div>
@@ -63,8 +62,8 @@ function SheetBody({ onDismiss, children, testId }: Omit<Props, 'open'>) {
 export function SheetTitle({ title, subtitle }: { title: ReactNode; subtitle?: ReactNode }) {
   return (
     <div className="flex flex-col gap-[2px]">
-      <h2 className="font-display text-header font-semibold">{title}</h2>
-      {subtitle && <p className="text-body-m text-secondary">{subtitle}</p>}
+      <h2 className="t-display-20">{title}</h2>
+      {subtitle && <p className="t-regular-14 text-on-bg-secondary">{subtitle}</p>}
     </div>
   )
 }
@@ -77,8 +76,8 @@ export function DetailRows({ rows }: { rows: [string, ReactNode | undefined][] }
         .filter(([, v]) => v !== undefined && v !== '')
         .map(([label, value]) => (
           <div key={label} className="flex flex-col">
-            <span className="text-body-m text-secondary">{label}</span>
-            <span className="text-body-l text-primary">{value}</span>
+            <span className="t-regular-14 text-on-bg-secondary">{label}</span>
+            <span className="t-regular-16 text-on-bg-primary">{value}</span>
           </div>
         ))}
     </div>

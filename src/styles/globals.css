@@ -22,7 +22,7 @@ body,
 body {
   font-family: var(--font-sans);
   background: #e9e9ee;
-  color: var(--color-primary);
+  color: var(--color-on-bg-primary);
   -webkit-font-smoothing: antialiased;
   -webkit-tap-highlight-color: transparent;
   -webkit-text-size-adjust: 100%;
@@ -44,18 +44,21 @@ html.standalone body {
   -webkit-user-select: text;
   user-select: text;
 }
-/* iOS zooms inputs below 16 px: keep every input at 16 px or more. */
-input,
-textarea {
-  font-size: 16px;
-  font-family: inherit;
-}
-button {
-  font-family: inherit;
-  cursor: pointer;
-}
-button:disabled {
-  cursor: default;
+@layer base {
+  /* iOS zooms inputs below 16 px unless the viewport forbids zoom (index.html: maximum-scale=1).
+     In the base layer, so the t-* text styles (e.g. the 13 pt comment field) win. */
+  input,
+  textarea {
+    font-size: 16px;
+    font-family: inherit;
+  }
+  button {
+    font-family: inherit;
+    cursor: pointer;
+  }
+  button:disabled {
+    cursor: default;
+  }
 }
 
 .scroll-y {
@@ -118,4 +121,13 @@ button:disabled {
 }
 .caret {
   animation: caret 1s step-end infinite;
+}
+@keyframes paw-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(0.92);
+  }
 }

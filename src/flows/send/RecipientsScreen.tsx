@@ -1,19 +1,20 @@
+import { Spinner } from '../../components/Loader'
 import { useEffect, useState } from 'react'
 import { Screen } from '../../components/Screen'
-import { LargeTitle, NavBar } from '../../components/NavBar'
 import { CapsHeader, ListRow } from '../../components/ListRow'
-import { SearchField } from '../../components/Fields'
+import { SearchHeader } from '../../components/SearchHeader'
 import { Avatar, colorFor, initialsOf } from '../../components/Avatar'
 import { Badge } from '../../components/Badge'
+import { Icon } from '../../components/icons'
 import { useBack } from '../../app/back'
 import { useDemo, displayName } from '../../app/store'
 import { simulateInline } from '../../engine/delay'
 import { t } from '../../mock/texts'
-import { MO_SIMBA, type SendRecipient } from '../../mock/recipients'
+import { MO_SIMBA, SEED_RECENT, type SendRecipient } from '../../mock/recipients'
 import { searchRecipients, type SearchResult } from './search'
 import { maskAccount } from '../shared'
 
-export const SEND_GRADIENT = 'var(--gradient-transfer)'
+export const SEND_GRADIENT = 'var(--gradient-flow-header-blue)'
 
 interface Props {
   onBack: () => void
@@ -52,25 +53,18 @@ export function RecipientsScreen({ onBack, onPick, onOtherBank }: Props) {
     }
   }, [query, recent, saved])
 
-  const row = (r: SendRecipient, isNew = false) => {
+  // Rows as in Figma 124:11212 / 12:4246: Mo-Simba recipients carry a "Simba" badge; TIPS rows show bank and account.
+  const row = (r: SendRecipient, withPhone = false) => {
     const name = displayName(r, saved)
+    const internal = r.kind === 'internal'
     return (
       <ListRow
         key={r.account}
         testId="recipient-row"
         leading={<Avatar initials={initialsOf(name)} color={colorFor(name)} />}
         title={name}
-        subtitle={
-          isNew ? (
-            <span className="flex items-center gap-2">
-              {r.phone} <Badge>Simba</Badge>
-            </span>
-          ) : r.kind === 'tips' ? (
-            `${maskAccount(r.account)} · ${r.bank}`
-          ) : (
-            r.phone ?? r.bank
-          )
-        }
+        subtitle={internal ? (withPhone ? r.phone : undefined) : `${r.bank} ${maskAccount(r.account)}`}
+        below={internal ? <Badge>{SIMBA_BADGE}</Badge> : undefined}
         onClick={() => onPick(r)}
       />
     )
@@ -81,20 +75,15 @@ export function RecipientsScreen({ onBack, onPick, onOtherBank }: Props) {
       testId="send-recipients"
       gradient={SEND_GRADIENT}
       header={
-        <>
-          <NavBar onBack={onBack} />
-          <LargeTitle title={t('payments.send_money.title')} />
-          <div className="pb-6">
-            <SearchField
-              data-testid="send-search"
-              placeholder={t('payments.send_money.search_hint')}
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              inputMode="search"
-              autoComplete="off"
-            />
-          </div>
-        </>
+        <SearchHeader
+          title={t('payments.send_money.title')}
+          onBack={onBack}
+          query={query}
+          onQuery={setQuery}
+          data-testid="send-search"
+          placeholder={t('payments.send_money.search_hint')}
+          inputMode="search"
+        />
       }
     >
       {!query.trim() ? (
@@ -102,18 +91,19 @@ export function RecipientsScreen({ onBack, onPick, onOtherBank }: Props) {
           <ListRow
             testId="send-other-bank"
             icon="bank"
-            avatarColor="#000"
+            right={<Icon name="chevronRight" size={16} color="var(--color-icon-30)" />}
             title={t('payments.send_money.other_bank_title')}
             subtitle={t('payments.send_money.other_bank_subtitle')}
             onClick={onOtherBank}
           />
           <div className="h-6" />
           <CapsHeader>{t('payments.send_money.recent')}</CapsHeader>
-          <div data-testid="send-recent">{recent.map((r) => row(r))}</div>
+          {/* Address-book recipients show name and badge; a recipient found by number and not saved also shows the phone (Figma 12:6295). */}
+          <div data-testid="send-recent">{recent.map((r) => row(r, !(r.account in saved) && !SEED_RECENT.some((x) => x.account === r.account)))}</div>
         </>
       ) : loading ? (
         <div className="flex justify-center py-10" data-testid="search-loader">
-          <span className="size-7 rounded-full border-[3px] border-black/10 border-t-black" style={{ animation: 'spin 0.8s linear infinite' }} />
+          <Spinner size={28} />
         </div>
       ) : (
         <div data-testid="search-results">
@@ -126,7 +116,7 @@ export function RecipientsScreen({ onBack, onPick, onOtherBank }: Props) {
           {result && result.contacts.length > 0 && (
             <>
               <CapsHeader>{t('payments.send_money.results')}</CapsHeader>
-              {result.contacts.map((r) => row(r))}
+              {result.contacts.map((r) => row(r, true))}
             </>
           )}
         </div>
@@ -135,4 +125,7 @@ export function RecipientsScreen({ onBack, onPick, onOtherBank }: Props) {
   )
 }
 
-export const bankBadge = (bank: string) => <Badge>{bank === MO_SIMBA ? 'Mo-Simba' : bank}</Badge>
+/** Badge label for Mo-Simba accounts, as drawn in Figma ("Simba"). */
+export const SIMBA_BADGE = 'Simba'
+
+export const bankBadge = (bank: string) => <Badge>{bank === MO_SIMBA ? SIMBA_BADGE : bank}</Badge>

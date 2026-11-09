@@ -24,16 +24,17 @@ export const BARAKA_INTERNAL: SendRecipient = {
 export const BARAKA_LOOKUP_KEYS = ['0784552019', '255784552019', '784552019', '015023456789']
 
 // Seed Recent: Neema Mushi (saved), Joseph Kimaro, Amina Said.
-// Assumption: account numbers for seed recipients are not in the BRD (see ASSUMPTIONS.md).
+// Assumption: account numbers for seed recipients are not in the BRD (see ASSUMPTIONS.md);
+// Neema's ends in 4521 as drawn in Figma 1:10250 (FIGMA_VS_BRD.md).
 export const SEED_RECENT: SendRecipient[] = [
-  { account: '015011223344', name: 'Neema Mushi', phone: '+255 754 318 902', bank: MO_SIMBA, kind: 'internal' },
+  { account: '015011224521', name: 'Neema Mushi', phone: '+255 754 318 902', bank: MO_SIMBA, kind: 'internal' },
   { account: '015055667788', name: 'Joseph Kimaro', phone: '+255 683 220 415', bank: MO_SIMBA, kind: 'internal' },
   { account: '015099001122', name: 'Amina Said', phone: '+255 715 609 118', bank: MO_SIMBA, kind: 'internal' },
 ]
 
 /** Saved contacts at seed: account → contact name. */
 export const SEED_SAVED: Record<string, string> = {
-  '015011223344': 'Neema Mushi',
+  '015011224521': 'Neema Mushi',
 }
 
 // Airtime recipient screen (Airtime BR-02).

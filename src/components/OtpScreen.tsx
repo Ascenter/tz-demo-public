@@ -85,26 +85,26 @@ export function OtpScreen({ onSuccess, onCancel }: Props) {
   return (
     <Screen testId="otp-screen" header={<NavBar onBack={onCancel} />} scroll={false}>
       <div className="flex flex-1 flex-col items-center px-5 pt-6">
-        <h1 className="font-display text-toolbar-expanded font-semibold">{t('payments.common.otp_title')}</h1>
-        <p className="mt-2 text-center text-body-m text-secondary">
+        <h1 className="t-display-26">{t('payments.common.otp_title')}</h1>
+        <p className="mt-2 text-center t-regular-14 text-on-bg-secondary">
           {t('payments.common.otp_subtitle', { phone: CUSTOMER.phoneMasked })}
         </p>
         <motion.div animate={shake} className="mt-8 flex gap-2" data-testid="otp-boxes">
           {Array.from({ length: LEN }, (_, i) => (
             <span
               key={i}
-              className={`grid h-14 w-12 place-items-center rounded-[14px] font-display text-[28px] font-semibold ${
-                error ? 'bg-error/10 text-error' : 'bg-tertiary-bg'
+              className={`grid h-14 w-12 place-items-center rounded-[14px] t-display-26 text-[28px] ${
+                error ? 'bg-error-hint/10 text-error-hint' : 'bg-field-bg'
               } ${i === code.length && !error ? 'ring-2 ring-black/80' : ''}`}
             >
               {code[i] ?? ''}
             </span>
           ))}
         </motion.div>
-        <p data-testid="otp-error" className="mt-3 h-5 text-body-m text-error">
+        <p data-testid="otp-error" className="mt-3 h-5 t-regular-14 text-error-hint">
           {error ? t('payments.common.otp_wrong') : ''}
         </p>
-        <button type="button" data-testid="otp-resend" onClick={resend} className="pressable mt-4 text-body-mp font-semibold">
+        <button type="button" data-testid="otp-resend" onClick={resend} className="pressable mt-4 t-semibold-15">
           {t('payments.common.otp_resend')}
         </button>
       </div>

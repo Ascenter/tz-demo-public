@@ -9,16 +9,16 @@ import { TransactionDetails } from '../components/TransactionDetails'
 import { t } from '../mock/texts'
 
 // Category icon and colour as in the Figma "Transaction_list_item" rows.
-const CATEGORY: Record<Category, { icon: IconName; color: string }> = {
-  transfer: { icon: 'arrowRight', color: '#7a80ff' },
-  topup: { icon: 'plus', color: '#000000' },
-  cash: { icon: 'wallet', color: '#88c758' },
-  bills: { icon: 'flash', color: '#18ccb4' },
-  water: { icon: 'drop', color: '#4bc5eb' },
-  gov: { icon: 'gov', color: '#c7c758' },
-  card: { icon: 'apple', color: '#ff9d57' },
-  qr: { icon: 'qr', color: '#39cc7e' },
-  airtime: { icon: 'phone', color: '#39cc7e' },
+const CATEGORY: Record<Category, { icon: IconName; color?: string }> = {
+  transfer: { icon: 'arrowRight' },
+  topup: { icon: 'plus', color: 'var(--color-on-bg-primary)' },
+  cash: { icon: 'wallet' },
+  bills: { icon: 'flash' },
+  water: { icon: 'drop' },
+  gov: { icon: 'gov', color: 'var(--color-olive)' },
+  card: { icon: 'apple' },
+  qr: { icon: 'qr', color: 'var(--color-turquoise)' },
+  airtime: { icon: 'phone' },
 }
 
 function dayHeader(day: number, sum: number): string {
@@ -45,7 +45,7 @@ export function Feed() {
             testId={startOfDay(now()) === g.day ? 'today-header' : undefined}
             right={
               i === 0 ? (
-                <span className="flex gap-5 text-icon30">
+                <span className="flex gap-5 text-icon-30">
                   <Icon name="diagram" />
                   <Icon name="search" />
                 </span>
@@ -59,7 +59,7 @@ export function Feed() {
           ))}
         </section>
       ))}
-      {groups.length === 0 && <p className="px-5 py-10 text-center text-body-m text-secondary">{t('home.history_empty')}</p>}
+      {groups.length === 0 && <p className="px-5 py-10 text-center t-regular-14 text-on-bg-secondary">{t('home.history_empty')}</p>}
     </div>
   )
 }
@@ -74,9 +74,10 @@ function FeedRow({ op, onOpen }: { op: Operation; onOpen?: () => void }) {
         icon={op.initials ? undefined : c.icon}
         initials={op.initials}
         avatarColor={c.color}
+        gap={2}
         onClick={onOpen} // only entries with details open (Cash v5)
         right={
-          <span data-testid="feed-amount" className="text-xl-body whitespace-nowrap">
+          <span data-testid="feed-amount" className="t-regular-18 whitespace-nowrap">
             {formatFeedAmount(op.amount, op.direction)}
           </span>
         }

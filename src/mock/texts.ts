@@ -34,7 +34,7 @@ export const TEXTS = {
   'payments.send_money.entry_subtitle': 'To Mo-Simba users, mobile wallets and banks',
   'payments.fund_account.entry_subtitle': 'From M-Pesa, Airtel Money, banks or an agent',
   'payments.cash_withdrawal.entry': 'Cash withdrawal',
-  'payments.cash_withdrawal.entry_subtitle': 'At an ATM or a Wakala agent',
+  'payments.cash_withdrawal.entry_subtitle': 'ATM, Wakala agent or M-Pesa', // parent BRD v17 (FIGMA_VS_BRD.md)
   'payments.airtime.entry': 'Airtime & data',
   'payments.airtime.entry_subtitle': 'All mobile operators',
   'payments.bills.entry': 'Bill payment',
@@ -122,6 +122,7 @@ export const TEXTS = {
   'payments.send_money.other_bank_title': 'Transfer to another bank',
   'payments.send_money.other_bank_subtitle': 'Bank account, instant via TIPS',
   'payments.send_money.select_bank': 'Select bank',
+  'payments.send_money.bank_search_hint': 'Bank name', // Figma 42:5319 (shown inactive, like Gov BR-10)
   'payments.send_money.banks': 'Banks',
   'payments.send_money.bank_transfer_title': 'Bank transfer',
   'payments.send_money.bank_transfer_subtitle': 'Instant via TIPS, 24/7',

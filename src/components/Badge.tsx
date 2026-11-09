@@ -7,14 +7,14 @@ interface Props {
 /** Small label pill next to a title — bank brand, operator, "Soon", "New recipient" (Figma "badge"). */
 export function Badge({ children, tone = 'dark', color }: Props) {
   const styles: Record<string, React.CSSProperties> = {
-    dark: { background: '#000', color: '#fff' },
-    gray: { background: 'rgba(0,0,0,0.06)', color: 'rgba(0,0,0,0.5)' },
-    green: { background: '#39cc7e', color: '#fff' },
-    custom: { background: color, color: '#fff' },
+    dark: { background: 'var(--color-badge-dark)', color: 'var(--color-surface)' },
+    gray: { background: 'var(--color-field-bg)', color: 'var(--color-on-bg-secondary)' },
+    green: { background: 'var(--color-turquoise)', color: 'var(--color-surface)' },
+    custom: { background: color, color: 'var(--color-surface)' },
   }
   return (
     <span
-      className="inline-flex h-4 items-center rounded-[5px] px-[5px] text-nano font-semibold whitespace-nowrap"
+      className="inline-flex h-4 items-center rounded-[5px] px-[6px] t-semibold-11 whitespace-nowrap"
       style={styles[tone]}
     >
       {children}

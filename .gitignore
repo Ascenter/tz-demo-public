@@ -4,3 +4,7 @@ dev-dist
 test-results
 playwright-report
 *.local
+
+# Figma export: local only (public repo). Unzip tz-figma-export.zip here.
+design/figma-export/
+qa/design/

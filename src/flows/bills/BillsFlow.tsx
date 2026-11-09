@@ -5,7 +5,8 @@ import { AmountStep, paidFromValue, receiptDate } from '../shared'
 import { useExitFlow, useExitToHome } from '../exit'
 import { FundFlow } from '../fund/FundFlow'
 import { Screen } from '../../components/Screen'
-import { HeaderItem, LargeTitle, NavBar } from '../../components/NavBar'
+import { CodeEntry } from '../../components/CodeEntry'
+import { LargeTitle, NavBar } from '../../components/NavBar'
 import { CapsHeader, ListRow } from '../../components/ListRow'
 import { SearchField, RedLine } from '../../components/Fields'
 import { Avatar } from '../../components/Avatar'
@@ -31,8 +32,8 @@ import { t, type TextKey } from '../../mock/texts'
 type Step = { name: 'billers' } | { name: 'meter' } | { name: 'amount' } | { name: 'otp' } | { name: 'receipt' }
 type Lookup = 'idle' | 'found' | 'not_found'
 
-const GRADIENT = 'var(--gradient-transfer)' // Figma: same lilac header as transfers
-const LukuAvatar = () => <Avatar icon="flash" color="#7a80ff" />
+const GRADIENT = 'var(--gradient-flow-header-blue)' // Figma: same lilac header as transfers
+const LukuAvatar = () => <Avatar icon="flash" color="var(--color-slate-blue)" />
 const meterText = (m: string) => groupDigits(m, [4, 4, 3])
 const tokenText = (tk: string) => groupDigits(tk, [4, 4, 4, 4, 4])
 
@@ -153,7 +154,7 @@ export function BillsFlow() {
               [t('payments.bills.meter_number'), meterText(meter)],
               [t('payments.bills.meter_owner_label'), BILLS.owner],
             ],
-            [[t('payments.bills.paid_from'), paidFromValue()]],
+            [[t('payments.bills.paid_from'), paidFromValue(), 'small']],
             [[t('payments.bills.date'), done.date]],
           ]}
           secondary={{ label: t('payments.bills.copy_token'), onClick: () => void copyToken(), testId: 'copy-token' }}
@@ -226,8 +227,9 @@ function Billers({ onBack, onSaved, onLuku }: { onBack: () => void; onSaved: () 
       header={
         <>
           <NavBar onBack={onBack} />
-          <LargeTitle title={t('payments.bills.title')} />
-          <div className="pb-6">
+          <LargeTitle title={t('payments.bills.title')} tight />
+          {/* Bills BR-03: shown, not active. */}
+          <div className="pb-[34px]">
             <SearchField inactive placeholder={t('payments.bills.search_hint')} />
           </div>
         </>
@@ -251,7 +253,7 @@ function Billers({ onBack, onSaved, onLuku }: { onBack: () => void; onSaved: () 
           avatarColor={b.color}
           title={t(b.titleKey as TextKey)}
           subtitle={t(b.subtitleKey as TextKey)}
-          below={b.active ? undefined : <Badge tone="custom" color="rgba(0,0,0,0.45)">{t('payments.bills.soon')}</Badge>}
+          below={b.active ? undefined : <Badge tone="custom" color="var(--color-on-bg-secondary)">{t('payments.bills.soon')}</Badge>}
           dimmed={!b.active}
           onClick={b.active ? onLuku : undefined} // Bills BR-02: Soon billers do not open
         />
@@ -283,10 +285,11 @@ function MeterScreen(props: {
     <Screen
       testId="bills-meter"
       gradient={GRADIENT}
+      gradientFull
       header={
         <>
           <NavBar onBack={onBack} />
-          <HeaderItem leading={<LukuAvatar />} title={t('payments.bills.meter_title')} subtitle={t('payments.bills.luku_subtitle')} />
+          <LargeTitle title={t('payments.bills.meter_title')} />
         </>
       }
       footer={
@@ -297,30 +300,28 @@ function MeterScreen(props: {
         </ButtonBar>
       }
     >
-      <CapsHeader>{t('payments.bills.meter_label')}</CapsHeader>
-      <div className="flex flex-col gap-2 px-5">
-        <input
-          data-testid="meter-input"
-          inputMode="numeric"
-          autoComplete="off"
-          placeholder={t('payments.bills.meter_placeholder')}
-          value={meterText(meter)}
-          onChange={(e) => {
-            const m = digitsOnly(e.target.value).slice(0, 11)
-            if (m !== meter) {
-              ran.current = null
-              onChange(m)
-            }
-          }}
-          className="h-14 rounded-field bg-tertiary-bg px-4 font-display text-[24px] font-semibold tracking-[1px] outline-none placeholder:text-black/20"
-        />
+      <CodeEntry
+        label={t('payments.bills.meter_label')}
+        data-testid="meter-input"
+        inputMode="numeric"
+        autoComplete="off"
+        placeholder={t('payments.bills.meter_placeholder')}
+        value={meterText(meter)}
+        onChange={(e) => {
+          const m = digitsOnly(e.target.value).slice(0, 11)
+          if (m !== meter) {
+            ran.current = null
+            onChange(m)
+          }
+        }}
+      >
         {lookup === 'found' && (
-          <p data-testid="meter-owner" className="text-caption text-secondary">
+          <p data-testid="meter-owner" className="text-center t-regular-13 text-on-bg-secondary">
             {t('payments.bills.meter_owner', { name: BILLS.owner })}
           </p>
         )}
         {lookup === 'not_found' && <RedLine>{t('payments.bills.meter_not_found')}</RedLine>}
-      </div>
+      </CodeEntry>
     </Screen>
   )
 }

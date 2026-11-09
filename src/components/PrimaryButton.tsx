@@ -6,13 +6,13 @@ interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 /** 52 px pill button (Figma "Primary button component": Primary · No BG · Secondary). */
 export function PrimaryButton({ variant = 'primary', className = '', children, ...rest }: Props) {
-  const base = 'pressable flex h-[52px] w-full items-center justify-center rounded-full text-body-l font-semibold'
+  const base = 'pressable flex h-[52px] w-full items-center justify-center rounded-full t-semibold-16'
   const v =
     variant === 'primary'
-      ? 'bg-button text-white disabled:bg-black/15 disabled:text-white'
+      ? 'bg-button-primary text-white disabled:bg-black/15 disabled:text-white'
       : variant === 'secondary'
-        ? 'bg-tertiary-bg text-primary disabled:text-secondary'
-        : 'bg-transparent text-secondary'
+        ? 'bg-field-bg text-on-bg-primary disabled:text-on-bg-secondary'
+        : 'bg-transparent text-on-bg-secondary'
   return (
     <button type="button" className={`${base} ${v} ${className}`} {...rest}>
       {children}
@@ -42,7 +42,7 @@ export function MiniButton({ children, onClick, testId }: { children: React.Reac
       type="button"
       data-testid={testId}
       onClick={onClick}
-      className="pressable inline-flex items-center rounded-full bg-tertiary-bg px-3 py-[5px] text-caption font-semibold text-primary"
+      className="pressable inline-flex items-center rounded-full bg-field-bg px-3 py-[5px] t-semibold-13 text-on-bg-primary"
     >
       {children}
     </button>

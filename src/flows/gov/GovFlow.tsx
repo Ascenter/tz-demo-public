@@ -3,10 +3,10 @@ import { useSteps, StepHost } from '../steps'
 import { paidFromValue, receiptDate } from '../shared'
 import { useExitFlow, useExitToHome } from '../exit'
 import { Screen } from '../../components/Screen'
-import { HeaderItem, LargeTitle, NavBar } from '../../components/NavBar'
+import { CodeEntry } from '../../components/CodeEntry'
+import { LargeTitle, NavBar } from '../../components/NavBar'
 import { CapsHeader, ListRow } from '../../components/ListRow'
 import { SearchField, RedLine } from '../../components/Fields'
-import { Avatar } from '../../components/Avatar'
 import { BottomSheet, DetailRows, SheetTitle } from '../../components/BottomSheet'
 import { ButtonBar, PrimaryButton } from '../../components/PrimaryButton'
 import { ConfirmButton } from '../../components/ConfirmButton'
@@ -19,14 +19,13 @@ import { useDemo, useAvailable } from '../../app/store'
 import { simulate } from '../../engine/delay'
 import { digitsOnly, formatNumber, formatTZS, groupDigits } from '../../engine/format'
 import { GOV } from '../../mock/scripted'
-import { INSTITUTIONS, TRA } from '../../mock/institutions'
+import { INSTITUTIONS } from '../../mock/institutions'
 import { govOp } from '../../mock/operations'
 import { t, type TextKey } from '../../mock/texts'
 
 type Step = { name: 'institutions' } | { name: 'control' } | { name: 'otp' } | { name: 'receipt' }
 
-const GRADIENT = 'var(--gradient-transfer)' // Figma: same lilac header as transfers
-const GovAvatar = () => <Avatar icon={TRA.icon} color={TRA.color} />
+const GRADIENT = 'var(--gradient-flow-header-blue)' // Figma: same lilac header as transfers
 
 /** Government bill via GePG (child BRD 3447390224). Done on the receipt opens Home (BR-09). */
 export function GovFlow() {
@@ -81,16 +80,17 @@ export function GovFlow() {
           amount={GOV.amount}
           status={t('payments.gov.success')}
           blocks={[
+            // Blocks as in Figma 239:6670 ("Paid from" is set in 14/20 there).
             [
               [t('payments.gov.institution'), GOV.institution],
               [t('payments.gov.bill'), GOV.bill],
-              [t('payments.gov.control_number_label'), groupDigits(control, [4, 4, 4])],
             ],
-            [[t('payments.gov.gepg_receipt'), <span data-testid="gepg-receipt">{GOV.receipt}</span>]],
             [
-              [t('payments.gov.paid_from'), paidFromValue()],
-              [t('payments.gov.date'), date],
+              [t('payments.gov.control_number_label'), groupDigits(control, [4, 4, 4])],
+              [t('payments.gov.gepg_receipt'), <span data-testid="gepg-receipt">{GOV.receipt}</span>],
             ],
+            [[t('payments.gov.paid_from'), paidFromValue(), 'small']],
+            [[t('payments.gov.date'), date]],
           ]}
           doneLabel={t('payments.gov.done')}
           secondary={{ label: t('payments.gov.copy_receipt'), onClick: () => void copyReceipt(), testId: 'copy-receipt' }}
@@ -127,8 +127,9 @@ function Institutions({ onBack, onTra }: { onBack: () => void; onTra: () => void
       header={
         <>
           <NavBar onBack={onBack} />
-          <LargeTitle title={t('payments.gov.title')} />
-          <div className="pb-6">
+          <LargeTitle title={t('payments.gov.title')} tight />
+          {/* Gov BR-10: shown, not active. */}
+          <div className="pb-[34px]">
             <SearchField inactive placeholder={t('payments.gov.search_hint')} />
           </div>
         </>
@@ -159,10 +160,11 @@ function ControlNumber({ value, onChange, onBack, onContinue }: { value: string;
     <Screen
       testId="gov-control"
       gradient={GRADIENT}
+      gradientFull
       header={
         <>
           <NavBar onBack={onBack} />
-          <HeaderItem leading={<GovAvatar />} title={t('payments.gov.inst.tra')} subtitle={t('payments.gov.inst.tra_subtitle')} />
+          <LargeTitle title={t('payments.gov.inst.tra')} />
         </>
       }
       footer={
@@ -173,27 +175,25 @@ function ControlNumber({ value, onChange, onBack, onContinue }: { value: string;
         </ButtonBar>
       }
     >
-      <CapsHeader>{t('payments.gov.control_number')}</CapsHeader>
-      <div className="flex flex-col gap-2 px-5">
-        <input
-          data-testid="gov-control-input"
-          inputMode="numeric"
-          autoComplete="off"
-          autoFocus
-          placeholder={t('payments.gov.control_number_placeholder')}
-          value={groupDigits(value, [4, 4, 4])}
-          onChange={(e) => onChange(digitsOnly(e.target.value).slice(0, 12))}
-          className="h-14 rounded-field bg-tertiary-bg px-4 font-display text-[24px] font-semibold tracking-[1px] outline-none placeholder:text-black/20"
-        />
+      <CodeEntry
+        label={t('payments.gov.control_number')}
+        data-testid="gov-control-input"
+        inputMode="numeric"
+        autoComplete="off"
+        autoFocus
+        placeholder={t('payments.gov.control_number_placeholder')}
+        value={groupDigits(value, [4, 4, 4])}
+        onChange={(e) => onChange(digitsOnly(e.target.value).slice(0, 12))}
+      >
         {complete &&
           (found ? (
-            <p data-testid="gov-found" className="text-caption text-secondary">
+            <p data-testid="gov-found" className="text-center t-regular-13 text-on-bg-secondary">
               {t('payments.gov.found', { institution: GOV.institution, payer: GOV.payer })}
             </p>
           ) : (
             <RedLine>{t('payments.gov.not_found')}</RedLine>
           ))}
-      </div>
+      </CodeEntry>
     </Screen>
   )
 }

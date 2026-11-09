@@ -52,7 +52,7 @@ export function Keypad({ onDigit, onDelete, keyboard = true }: Props) {
           aria-label="Delete"
           data-testid="key-del"
           onClick={onDelete}
-          className="grid h-[50px] flex-1 place-items-center rounded-[8.5px] text-[#595959] active:bg-black/10"
+          className="grid h-[50px] flex-1 place-items-center rounded-[8.5px] text-keyboard-glyph active:bg-black/10"
         >
           <Icon name="backspace" size={26} />
         </button>

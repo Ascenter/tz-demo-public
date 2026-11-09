@@ -3,6 +3,7 @@ import { defineConfig, type PluginOption } from 'vite'
 import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
 import basicSsl from '@vitejs/plugin-basic-ssl'
+import svgr from 'vite-plugin-svgr'
 import { VitePWA } from 'vite-plugin-pwa'
 import pkg from './package.json' with { type: 'json' }
 
@@ -15,6 +16,7 @@ export default defineConfig(({ mode }) => {
   const plugins: PluginOption[] = [
     react(),
     tailwindcss(),
+    svgr({ svgrOptions: { svgProps: { focusable: 'false' } } }),
     VitePWA({
       registerType: 'autoUpdate', // no update prompt during the demo; new SW applies on next launch
       injectRegister: 'auto',
@@ -36,7 +38,7 @@ export default defineConfig(({ mode }) => {
         ],
       },
       workbox: {
-        globPatterns: ['**/*.{js,css,html,svg,png,ico,webmanifest,wasm}'],
+        globPatterns: ['**/*.{js,css,html,svg,png,webp,ico,webmanifest,wasm}'],
         navigateFallback: `${base}index.html`,
         cleanupOutdatedCaches: true,
       },

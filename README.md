@@ -8,7 +8,7 @@ A web demo of the Mo-Simba Bank mobile app's payment flows. It runs fully in the
 
 ```bash
 npm install
-npm run dev            # http://localhost:5173 — desktop shows a 402 × 874 device frame
+npm run dev            # http://localhost:5173 — desktop shows an iPhone 15 Plus frame (430 × 932)
 ```
 
 | Script                            | What it does                                                                                    |
@@ -18,7 +18,9 @@ npm run dev            # http://localhost:5173 — desktop shows a 402 × 874 de
 | `npm run build`                   | Type-check and build a static `dist/` with the service worker                                   |
 | `npm run preview`                 | Serve `dist/` locally                                                                           |
 | `npm test`                        | Vitest: engine, validators, formatters, OTP, Jump-to-step snapshots                             |
-| `npm run e2e`                     | Playwright: Master demo script and edge cases (WebKit, iPhone 15 Pro), offline check (Chromium) |
+| `npm run e2e`                     | Playwright: Master demo script and edge cases (WebKit, iPhone 15 Plus), offline check (Chromium) |
+| `npm run design:check`            | Compare every Figma ★ screen with the app (see [Design sync](#design-sync)); `design:check:mac` on macOS |
+| `npm run design:assets` / `design:map` | Copy icons and illustrations from the Figma export; rebuild `design/screen-map.json` |
 | `npm run qa`                      | Screenshots for `qa/index.html` (Figma vs build), needs `vite preview` on port 4173             |
 | `npm run lint` / `npm run format` | ESLint / Prettier                                                                               |
 
@@ -122,7 +124,42 @@ Shared rules the code follows:
 - **Own back stack.** Each flow has its own back stack: the back icon and the iOS left-edge swipe both go to the previous step from the BRD Navigation tables.
 - **Versioned storage.** State persists in `localStorage` under the key `mo-simba-demo` (version 1).
 
+## Design sync
+
+The app follows the Figma file `ihcteWxkN7OtuBaC3Q4RVA` through an **offline export**: this environment cannot reach figma.com, and nothing in the code, tests or tooling calls it.
+
+- **Where it lives.** Unzip `tz-figma-export.zip` into `design/`, so that `design/figma-export/` exists. The folder is gitignored (the repo is public) and is never shipped: it is outside `public/` and not in the PWA precache. Only the assets the app uses are copied into `src/assets/` (`npm run design:assets`).
+- **Rules.** `design/figma-export/FIGMA_VS_BRD.md`: the BRD wins for values and texts, Figma for visuals. Decisions are in `ASSUMPTIONS.md` (section *Design sync*); gaps in the export are in `design/MISSING.md`.
+- **Screen map.** `design/screen-map.json` has one entry per ★ screen with a spec (84): Figma id, PNG, spec, how to reach it (`setup`: Jump to step N + UI actions) and masks for dynamic areas. It is generated from `tools/design-check/setups.mjs` by `npm run design:map`. Test builds expose `window.__demo` (`jumpToStep(n)`, `run(actions)`; production builds only with `?e2e=1`), so any screen opens directly. `?device=figma&bare=1` renders the bare 402 × 874 Figma frame.
+
+### Running the check
+
+```bash
+npm run design:check                       # all screens (~15 min); builds, serves on :4174, WebKit
+npm run design:check -- --flow 04          # one flow (folder prefix), or --screen 176:2903,176:2233
+npm run design:check -- --no-430 --no-visual   # faster: spec conformance only
+npm run design:check:mac                   # on macOS (SF Pro installed): adds the ≤ 3 % visual target
+```
+
+It exits non-zero when a screen misses the gate. Output goes to `qa/design/` (gitignored).
+
+### Reading the report
+
+Open `qa/design/report.html`. One row per screen, worst visual mismatch first: **Figma | app (402 × 874) | diff | iPhone 15 Plus (430 × 932 @3x)**.
+
+- **Spec conformance (A) is the gate**: every text in the spec must be found by its exact text and drawn within ±3 pt (closest of left / centre / right edge, since fonts differ off macOS), with the same size, line height, weight, tracking (±0.1) and colour including alpha. Target ≥ 95 % per screen. Mismatches are listed as *text → expected vs actual*.
+- **Expected deviations** (BRD texts, device time, known Figma inconsistencies) are listed per screen and not counted. Each one is explained in `ASSUMPTIONS.md` or `tools/design-check/deviations.json`.
+- **Visual diff (B) is a guide** off macOS (no SF Pro). Masks: status bar, the drawn iOS keyboard (y ≥ 556), dates and the camera. Large numbers on the scanner, the Fund waiting screen and the confirm sheets are explained in `ASSUMPTIONS.md` (F9, F10, F12).
+- **iPhone 15 Plus**: a warning appears when anything sticks out horizontally or text is clipped at 430 pt.
+
+### Refreshing the export
+
+1. Replace `design/figma-export/` with the new export.
+2. `npm run design:assets` if icons or illustrations changed; update `src/styles/tokens.css` if `tokens/tokens.json` changed.
+3. Add or adjust setups in `tools/design-check/setups.mjs` for new ★ screens (`npm run design:map` lists those without one).
+4. `npm run design:check`, fix, then `npm test && npm run e2e`.
+
 ## Known limitations
 
-- Icons are hand-drawn, and the lion illustrations are placeholders. The Figma asset URLs on `www.figma.com` were blocked in the build environment. To swap in the real assets, edit `src/components/icons.tsx` and `src/components/Illustration.tsx`.
+- A few glyphs the Figma export does not include are hand-drawn (`design/MISSING.md`).
 - The offline e2e runs in Chromium, because Playwright's WebKit on Linux can't do an offline reload. Check airplane mode on the real iPhone (step 4 above).

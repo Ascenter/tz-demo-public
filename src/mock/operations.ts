@@ -14,12 +14,19 @@ export const fundOp = (amount: number): OpDraft => ({
   category: 'topup',
 })
 
+// People get an initials avatar instead of the category icon (Figma 42:6269, 222:2267).
+const initials = (name: string) => {
+  const p = name.replace(/[^\p{L}\s]/gu, '').trim().split(/\s+/)
+  return ((p[0]?.[0] ?? '') + (p.at(-1)?.[0] ?? '')).toUpperCase()
+}
+
 export const sendOp = (name: string, bank: string, amount: number): OpDraft => ({
   title: name,
   subtitle: t('payments.send_money.history_to_account', { bank }),
   amount,
   direction: 'out',
   category: 'transfer',
+  initials: initials(name),
 })
 
 export const scanOp = (amount: number): OpDraft => ({
@@ -61,6 +68,7 @@ export const airtimeOp = (name: string, operator: string, amount: number): OpDra
   amount,
   direction: 'out',
   category: 'airtime',
+  initials: initials(name),
 })
 
 export const govOp = (): OpDraft => ({

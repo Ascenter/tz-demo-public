@@ -1,0 +1,14 @@
+{
+  "_doc": "Figma text → text the app shows (null = not shown). From design/figma-export/FIGMA_VS_BRD.md: the BRD wins for values and texts. Per-screen deviations live in design/screen-map.json.",
+  "texts": {
+    "Free, from your M-Pesa wallet": "No fee, from your M-Pesa wallet",
+    "Free": "No fee",
+    "Send prompt again": null,
+    "At an ATM or a Wakala agent": "ATM, Wakala agent or M-Pesa",
+    "🤓 Save recipient": null,
+    "Add to existing contact": null,
+    "EF26110410365529": "EF26120000731",
+    "Airtime": null,
+    "Data": null
+  }
+}

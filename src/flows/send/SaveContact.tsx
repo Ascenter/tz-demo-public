@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Screen } from '../../components/Screen'
-import { NavBar } from '../../components/NavBar'
+import { LargeTitle, NavBar } from '../../components/NavBar'
 import { TextField } from '../../components/Fields'
 import { ButtonBar, PrimaryButton } from '../../components/PrimaryButton'
 import { useBack } from '../../app/back'
@@ -23,7 +23,12 @@ export function SaveContact({ recipient, onBack, onSaved }: { recipient: SendRec
   return (
     <Screen
       testId="send-save-contact"
-      header={<NavBar onBack={onBack} title={t('payments.send_money.save_contact')} />}
+      header={
+        <>
+          <NavBar onBack={onBack} />
+          <LargeTitle title={t('payments.send_money.save_contact')} />
+        </>
+      }
       footer={
         <ButtonBar>
           <PrimaryButton data-testid="save-contact-save" disabled={!name.trim()} onClick={save}>
@@ -32,7 +37,7 @@ export function SaveContact({ recipient, onBack, onSaved }: { recipient: SendRec
         </ButtonBar>
       }
     >
-      <div className="flex flex-col gap-5 px-5 pt-4">
+      <div className="flex flex-col gap-5 px-5">
         <TextField data-testid="contact-name" label={t('payments.send_money.contact_name')} value={name} onChange={(e) => setName(e.target.value)} autoComplete="off" />
         <TextField data-testid="contact-phone" label={t('payments.send_money.mobile_optional')} value={phone} onChange={(e) => setPhone(e.target.value)} inputMode="tel" />
         <TextField label={t('payments.send_money.bank')} readOnlyValue={recipient.bank} />

@@ -29,7 +29,7 @@ test('Master demo script, steps 0 → 7', async ({ page }) => {
   // ── Step 0: reset → seed ──────────────────────────────────────────────
   await launchFresh(page)
   await expectStep(page, 0)
-  await expectFirstFeedRow(page, 'Water', 'Bills · DAWASA', '20,000')
+  await expectFirstFeedRow(page, 'Water', 'Bills · DAWASA', 'TZS 20,000')
 
   // ── Step 1: Fund my account, scenarios 1 → 2 → 3 ──────────────────────
   // S1: 50,000 success
@@ -39,7 +39,7 @@ test('Master demo script, steps 0 → 7', async ({ page }) => {
   await typeAmount(page, 50_000)
   await fundSuccess(page, '50,000', '960,000')
   await goHome(page)
-  await expectFirstFeedRow(page, 'Top up from M-Pesa', 'Top up', '+50,000')
+  await expectFirstFeedRow(page, 'Top up from M-Pesa', 'Top up', '+TZS 50,000')
 
   // S2: over the limit, then chip 100,000
   await page.getByTestId('quick-fund').click()
@@ -104,7 +104,7 @@ test('Master demo script, steps 0 → 7', async ({ page }) => {
   await expect(page.getByTestId('save-contact')).toHaveCount(0)
   await page.getByTestId('receipt-done').click()
   await goHome(page)
-  await expectFirstFeedRow(page, 'Baraka M.', 'To Mo-Simba account', '50,000') // feed keeps the original name
+  await expectFirstFeedRow(page, 'Baraka M.', 'To Mo-Simba account', 'TZS 50,000') // feed keeps the original name
 
   // S4: saved recipient, no check sheet
   await page.getByTestId('quick-send').click()
@@ -170,7 +170,7 @@ test('Master demo script, steps 0 → 7', async ({ page }) => {
   await expectPush(page, 'TZS 25,000 sent to Mama Lishe Café')
   await page.getByTestId('receipt-done').click()
   await expectStep(page, 3)
-  await expectFirstFeedRow(page, 'Mama Lishe Café', 'QR payment', '25,000')
+  await expectFirstFeedRow(page, 'Mama Lishe Café', 'QR payment', 'TZS 25,000')
 
   // ── Step 4: Cash withdrawal, scenarios 2 → 1 (BRD v5: Done completes it and opens Home) ──
   await goPayments(page)
@@ -192,7 +192,7 @@ test('Master demo script, steps 0 → 7', async ({ page }) => {
   await expect(page.getByTestId('home')).toBeVisible() // Done → Home, no result screen
   await expectPush(page, 'TZS 50,000 withdrawn at Juma Shop')
   await expectStep(page, 4)
-  await expectFirstFeedRow(page, 'Cash withdrawal', 'Wakala agent, Juma Shop', '50,000')
+  await expectFirstFeedRow(page, 'Cash withdrawal', 'Wakala agent, Juma Shop', 'TZS 50,000')
   await page.getByTestId('feed-row').first().getByRole('button').click() // transaction details
   const details = page.getByTestId('transaction-details')
   await expect(details.getByTestId('receipt-status')).toContainText('Cash withdrawn')
@@ -227,7 +227,7 @@ test('Master demo script, steps 0 → 7', async ({ page }) => {
   await expectPush(page, 'TZS 5,000 airtime sent to +255 754 318 902')
   await page.getByTestId('receipt-done').click()
   await expectStep(page, 5)
-  await expectFirstFeedRow(page, 'Neema Mushi', 'Airtime · Vodacom', '5,000')
+  await expectFirstFeedRow(page, 'Neema Mushi', 'Airtime · Vodacom', 'TZS 5,000')
 
   // ── Step 6: Government bill (GePG), scenarios 2 → 1 ───────────────────
   await goPayments(page)
@@ -253,7 +253,7 @@ test('Master demo script, steps 0 → 7', async ({ page }) => {
   await page.getByTestId('receipt-done').click()
   await expect(page.getByTestId('home')).toBeVisible() // Done → Home
   await expectStep(page, 6)
-  await expectFirstFeedRow(page, 'TRA tax', 'Government payment', '200,000')
+  await expectFirstFeedRow(page, 'TRA tax', 'Government payment', 'TZS 200,000')
 
   // ── Step 7: Bill payments (LUKU), scenarios 2 → 3 → 4 → 1 ─────────────
   await goPayments(page)
@@ -287,7 +287,7 @@ test('Master demo script, steps 0 → 7', async ({ page }) => {
   await page.getByTestId('receipt-done').click()
   await expect(page.getByTestId('home')).toBeVisible() // Done → Home
   await expectStep(page, 7)
-  await expectFirstFeedRow(page, 'LUKU electricity', 'Bills · Meter 0123 4567 890', '20,000')
+  await expectFirstFeedRow(page, 'LUKU electricity', 'Bills · Meter 0123 4567 890', 'TZS 20,000')
 
   expect(errors, 'no console errors').toEqual([])
 })

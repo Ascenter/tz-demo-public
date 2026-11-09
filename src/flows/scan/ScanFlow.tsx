@@ -23,7 +23,7 @@ import { t } from '../../mock/texts'
 
 type Step = { name: 'scanner' } | { name: 'amount' } | { name: 'otp' } | { name: 'receipt' }
 
-const GRADIENT = 'var(--gradient-transfer)'
+const GRADIENT = 'var(--gradient-flow-header-blue)'
 
 /** Scan to pay, static TANQR (child BRD 3427598413). */
 export function ScanFlow() {
@@ -65,7 +65,7 @@ export function ScanFlow() {
           testId="scan-amount"
           gradient={GRADIENT}
           onBack={nav.pop} // back → scanner, amount not kept
-          header={{ leading: <Avatar initials={SCAN.initials} color="#39cc7e" />, title: SCAN.merchant, badge: <Badge>{SCAN.bank}</Badge> }}
+          header={{ leading: <Avatar initials={SCAN.initials} color="var(--color-turquoise)" />, title: SCAN.merchant, badge: <Badge>{SCAN.bank}</Badge> }}
           value={value}
           onChange={setValue}
           hints={[t('payments.common.balance', { available: formatNumber(avail) }), t('payments.common.no_fee')]}
@@ -96,7 +96,7 @@ export function ScanFlow() {
               [t('payments.scan_to_pay.receipt_fee'), t('payments.common.no_fee')],
               [t('payments.scan_to_pay.receipt_total'), formatTZS(done.amount)],
             ],
-            [[t('payments.scan_to_pay.tips_reference'), SCAN.tipsReference]],
+            [[t('payments.scan_to_pay.tips_reference'), SCAN.tipsReference, 'small']],
             [
               [t('payments.scan_to_pay.receipt_date'), done.date],
               [t('payments.scan_to_pay.receipt_comment'), done.comment || undefined], // Scan BR-10

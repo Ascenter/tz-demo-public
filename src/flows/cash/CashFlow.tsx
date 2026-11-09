@@ -25,7 +25,9 @@ import { t } from '../../mock/texts'
 
 type Step = { name: 'methods' } | { name: 'amount' } | { name: 'code'; until: string }
 
-const GRADIENT = 'var(--gradient-cash)'
+// Figma: the method list uses the method gradient, the amount screen the blue flow header.
+const GRADIENT = 'var(--gradient-flow-header-blue)'
+const METHOD_GRADIENT = 'var(--gradient-fund-cash-method-header)'
 
 /** Cash withdrawal at a Wakala agent (child BRD 3432644674, v5). */
 export function CashFlow() {
@@ -74,9 +76,10 @@ export function CashFlow() {
           gradient={GRADIENT}
           onBack={nav.pop} // typed amount is not kept
           header={{
-            leading: <Avatar icon="wallet" color="#88c758" />,
+            leading: <Avatar icon="user" />,
             title: t('payments.cash_withdrawal.amount_title'),
             subtitle: t('payments.cash_withdrawal.amount_subtitle'),
+            compact: true,
           }}
           value={value}
           onChange={setValue}
@@ -125,11 +128,11 @@ export function CashFlow() {
 function Methods({ onBack, onAgent }: { onBack: () => void; onAgent: () => void }) {
   useBack(onBack)
   return (
-    <Screen testId="cash-methods" gradient={GRADIENT} header={<><NavBar onBack={onBack} /><LargeTitle title={t('payments.cash_withdrawal.method_title')} /></>}>
-      <ListRow testId="cash-agent" icon="user" avatarColor="#88c758" title={t('payments.cash_withdrawal.agent')} subtitle={t('payments.cash_withdrawal.agent_subtitle')} onClick={onAgent} />
+    <Screen testId="cash-methods" gradient={METHOD_GRADIENT} gradientFull header={<><NavBar onBack={onBack} /><LargeTitle title={t('payments.cash_withdrawal.method_title')} /></>}>
+      <ListRow testId="cash-agent" icon="user" title={t('payments.cash_withdrawal.agent')} subtitle={t('payments.cash_withdrawal.agent_subtitle')} onClick={onAgent} />
       {/* Cash BR-02: inactive rows, a tap does nothing */}
-      <ListRow icon="card" avatarColor="#566dcc" title={t('payments.cash_withdrawal.atm')} subtitle={t('payments.cash_withdrawal.atm_subtitle')} />
-      <ListRow initials="M" avatarColor="#00a651" title={t('payments.cash_withdrawal.mpesa')} subtitle={t('payments.cash_withdrawal.mpesa_subtitle')} />
+      <ListRow icon="card" title={t('payments.cash_withdrawal.atm')} subtitle={t('payments.cash_withdrawal.atm_subtitle')} />
+      <ListRow icon="mobile" title={t('payments.cash_withdrawal.mpesa')} subtitle={t('payments.cash_withdrawal.mpesa_subtitle')} />
     </Screen>
   )
 }
@@ -145,13 +148,13 @@ function CodeScreen({ amount, until, onCancel, onDone }: { amount: number; until
       testId="cash-code"
       kind="cash"
       title={
-        <span data-testid="cash-code-value" className="font-display text-amount-input font-semibold">
+        <span data-testid="cash-code-value" className="t-display-40">
           {CASH.code}
         </span>
       }
       body={t('payments.cash_withdrawal.code_hint', { amount: formatNumber(amount), time: until })}
       extra={
-        <p className="w-full rounded-component bg-highlight px-4 py-3 text-center text-caption">{t('payments.cash_withdrawal.never_share')}</p>
+        <p className="w-full rounded-component bg-highlight px-4 py-3 text-center t-regular-13">{t('payments.cash_withdrawal.never_share')}</p>
       }
       secondary={{ label: t('payments.cash_withdrawal.cancel_code'), onClick: onCancel }}
       primary={{ label: t('payments.cash_withdrawal.done'), onClick: () => once.run(onDone) }}
