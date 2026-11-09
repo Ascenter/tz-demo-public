@@ -48,12 +48,13 @@ export function Home() {
               <span>TZS&nbsp;</span>
               <span data-testid="balance-available">{formatNumber(available(ledger))}</span>
             </div>
-            <div className="flex gap-2 t-regular-13 text-on-bg-secondary">
+            {/* Figma: a centred 179 pt block, labels left-aligned at x = 112, values right-aligned to x = 291. */}
+            <div className="flex min-w-[179px] justify-between gap-2 whitespace-nowrap t-regular-13 text-on-bg-secondary">
               <div className="flex flex-col items-start">
                 <span>{t('home.personal_funds')}</span>
                 <span>{t('home.credit_limit')}</span>
               </div>
-              <div className="flex flex-col items-start">
+              <div className="flex flex-col items-end">
                 <span data-testid="balance-own">{formatTZS(ledger.ownFunds)}</span>
                 <span data-testid="balance-credit">{formatTZS(ledger.creditLimit)}</span>
               </div>

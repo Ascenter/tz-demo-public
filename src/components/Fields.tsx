@@ -105,7 +105,7 @@ export function TextField({
 /** Red error line under a field or amount (parent BR-05 pattern). */
 export function RedLine({ children }: { children: ReactNode }) {
   return (
-    <p data-testid="red-line" role="alert" className="t-regular-13 text-error-hint">
+    <p data-testid="red-line" role="alert" className="text-center t-regular-13 text-error-hint">
       {children}
     </p>
   )

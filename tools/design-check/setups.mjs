@@ -41,6 +41,7 @@ const CASH_AMOUNT = ['payments', 'tap:pay-cash', 'cash.agent']
 const AIRTIME_AMOUNT = ['payments', 'tap:pay-airtime', 'tap:airtime-row@Neema Mushi']
 // Airtime: one hint line "Balance … · No fee" (ASSUMPTIONS V5) and one "Contacts" header for the letter groups (V4).
 const AIRTIME_HINT = { 'Balance TZS 900,000': 'Balance TZS 900,000 · No fee', 'No fee': null }
+const GOV_CONTROL = ['payments', 'tap:pay-gov', 'tap:inst-tra']
 const KEYBOARD_GLYPH = ['\u{100147}']
 
 export const SETUPS = {
@@ -162,4 +163,13 @@ export const SETUPS = {
   '243:20111': { step: 4, actions: [...AIRTIME_AMOUNT, 'amount:950000'], keyboard: true, known: RED_LINE_KNOWN('TZS 950,000', 'Balance TZS 900,000') },
   '222:2075': { step: 4, actions: [...AIRTIME_AMOUNT, 'amount:5000', 'continue', 'otp', 'push'] },
   '222:2267': { step: 5, actions: [], homeAfter: true },
+
+  // ── 06 Government bill, GePG (from step 5) ───────────────────────
+  '239:4123': { step: 5, actions: ['payments', 'tap:pay-gov'] },
+  '239:4506': { step: 5, actions: [...GOV_CONTROL, 'fill:gov-control-input=991081123890'], keyboard: true, known: { Continue: ABOVE_KEYBOARD } },
+  '239:6979': { step: 5, actions: [...GOV_CONTROL, 'fill:gov-control-input=991081123809'], keyboard: true, known: { Continue: ABOVE_KEYBOARD } },
+  '239:5938': { step: 5, actions: [...GOV_CONTROL, 'fill:gov-control-input=991081123890', 'blur', 'tap:gov-continue'] },
+  '239:6670': { step: 5, actions: [...GOV_CONTROL, 'fill:gov-control-input=991081123890', 'blur', 'tap:gov-continue', 'tap:gov-pay', 'otp', 'push'] },
+  // This Home frame puts the first row's text at x = 56 (other Home frames: 61–62) (A4).
+  '321:12104': { step: 6, actions: [], homeAfter: true, known: { 'TRA tax': 'Figma feed text x differs from other Home frames (A4)', 'Government payment': 'Figma feed text x differs from other Home frames (A4)' } },
 }

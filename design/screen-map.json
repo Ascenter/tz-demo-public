@@ -2269,6 +2269,163 @@
     ]
    ],
    "homeAfter": true
+  },
+  {
+   "figmaId": "239:5938",
+   "name": "Government payments - Bill details - Default",
+   "flow": "06-government-bill-gepg",
+   "png": "design/figma-export/screens-1x/06-government-bill-gepg/government-payments-bill-details-default__239-5938.png",
+   "spec": "design/figma-export/specs/06-government-bill-gepg/government-payments-bill-details-default__239-5938.json",
+   "setup": {
+    "step": 5,
+    "actions": [
+     "payments",
+     "tap:pay-gov",
+     "tap:inst-tra",
+     "fill:gov-control-input=991081123890",
+     "blur",
+     "tap:gov-continue"
+    ]
+   },
+   "mask": [
+    [
+     0,
+     0,
+     402,
+     44
+    ]
+   ]
+  },
+  {
+   "figmaId": "239:4506",
+   "name": "Government payments - Control number - Filled",
+   "flow": "06-government-bill-gepg",
+   "png": "design/figma-export/screens-1x/06-government-bill-gepg/government-payments-control-number-filled__239-4506.png",
+   "spec": "design/figma-export/specs/06-government-bill-gepg/government-payments-control-number-filled__239-4506.json",
+   "setup": {
+    "step": 5,
+    "actions": [
+     "payments",
+     "tap:pay-gov",
+     "tap:inst-tra",
+     "fill:gov-control-input=991081123890"
+    ]
+   },
+   "mask": [
+    [
+     0,
+     0,
+     402,
+     44
+    ]
+   ],
+   "keyboard": true,
+   "known": {
+    "Continue": "Figma places the button above the drawn iOS keyboard"
+   }
+  },
+  {
+   "figmaId": "239:6979",
+   "name": "Government payments - Control number - Not found",
+   "flow": "06-government-bill-gepg",
+   "png": "design/figma-export/screens-1x/06-government-bill-gepg/government-payments-control-number-not-found__239-6979.png",
+   "spec": "design/figma-export/specs/06-government-bill-gepg/government-payments-control-number-not-found__239-6979.json",
+   "setup": {
+    "step": 5,
+    "actions": [
+     "payments",
+     "tap:pay-gov",
+     "tap:inst-tra",
+     "fill:gov-control-input=991081123809"
+    ]
+   },
+   "mask": [
+    [
+     0,
+     0,
+     402,
+     44
+    ]
+   ],
+   "keyboard": true,
+   "known": {
+    "Continue": "Figma places the button above the drawn iOS keyboard"
+   }
+  },
+  {
+   "figmaId": "239:4123",
+   "name": "Government payments - Institutions - Default",
+   "flow": "06-government-bill-gepg",
+   "png": "design/figma-export/screens-1x/06-government-bill-gepg/government-payments-institutions-default__239-4123.png",
+   "spec": "design/figma-export/specs/06-government-bill-gepg/government-payments-institutions-default__239-4123.json",
+   "setup": {
+    "step": 5,
+    "actions": [
+     "payments",
+     "tap:pay-gov"
+    ]
+   },
+   "mask": [
+    [
+     0,
+     0,
+     402,
+     44
+    ]
+   ]
+  },
+  {
+   "figmaId": "239:6670",
+   "name": "Government payments - Success - Default",
+   "flow": "06-government-bill-gepg",
+   "png": "design/figma-export/screens-1x/06-government-bill-gepg/government-payments-success-default__239-6670.png",
+   "spec": "design/figma-export/specs/06-government-bill-gepg/government-payments-success-default__239-6670.json",
+   "setup": {
+    "step": 5,
+    "actions": [
+     "payments",
+     "tap:pay-gov",
+     "tap:inst-tra",
+     "fill:gov-control-input=991081123890",
+     "blur",
+     "tap:gov-continue",
+     "tap:gov-pay",
+     "otp",
+     "push"
+    ]
+   },
+   "mask": [
+    [
+     0,
+     0,
+     402,
+     44
+    ]
+   ]
+  },
+  {
+   "figmaId": "321:12104",
+   "name": "Home - Main - After government payment",
+   "flow": "06-government-bill-gepg",
+   "png": "design/figma-export/screens-1x/06-government-bill-gepg/home-main-after-government-payment__321-12104.png",
+   "spec": "design/figma-export/specs/06-government-bill-gepg/home-main-after-government-payment__321-12104.json",
+   "setup": {
+    "step": 6,
+    "actions": []
+   },
+   "mask": [
+    [
+     0,
+     0,
+     402,
+     44
+    ]
+   ],
+   "known": {
+    "TRA tax": "Figma feed text x differs from other Home frames (A4)",
+    "Government payment": "Figma feed text x differs from other Home frames (A4)"
+   },
+   "homeAfter": true
   }
  ]
 }
