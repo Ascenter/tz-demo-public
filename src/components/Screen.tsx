@@ -11,13 +11,15 @@ interface Props {
   /** Sheet scrolls by default; amount screens lay out without scrolling. */
   scroll?: boolean
   testId?: string
+  /** 12 pt above the sheet content (lists). Amount screens lay out from the sheet edge. */
+  sheetPadding?: boolean
 }
 
 /**
  * Screen frame used by every flow: gradient header, white rounded sheet (radius 32) holding the content,
  * optional fixed footer. Absolutely fills the phone viewport.
  */
-export function Screen({ gradient, header, children, footer, scroll = true, testId }: Props) {
+export function Screen({ gradient, header, children, footer, scroll = true, testId, sheetPadding = true }: Props) {
   return (
     <div data-testid={testId} className="absolute inset-0 flex flex-col overflow-hidden bg-surface">
       {gradient && <div className="absolute inset-x-0 top-0 h-[300px]" style={{ background: gradient }} />}
@@ -25,7 +27,7 @@ export function Screen({ gradient, header, children, footer, scroll = true, test
       <div
         className={`relative flex min-h-0 flex-1 flex-col bg-surface ${gradient ? 'rounded-t-container' : ''}`}
       >
-        <div className={`flex min-h-0 flex-1 flex-col ${scroll ? 'scroll-y' : ''} ${gradient ? 'pt-3' : ''}`}>{children}</div>
+        <div className={`flex min-h-0 flex-1 flex-col ${scroll ? 'scroll-y' : ''} ${gradient && sheetPadding ? 'pt-3' : ''}`}>{children}</div>
         {footer}
       </div>
     </div>

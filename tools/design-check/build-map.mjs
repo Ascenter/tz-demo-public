@@ -14,7 +14,7 @@ for (const f of m.flows) {
       missing.push(`${s.id} ${s.name}`)
       continue
     }
-    const { step, actions, mask, keyboard, deviations, ignore, settleMs } = setup
+    const { step, actions, mask, keyboard, deviations, ignore, known, settleMs } = setup
     screens.push({
       figmaId: s.id,
       name: s.name,
@@ -26,6 +26,7 @@ for (const f of m.flows) {
       ...(keyboard ? { keyboard: true } : {}),
       ...(deviations ? { deviations } : {}),
       ...(ignore ? { ignore } : {}),
+      ...(known ? { known } : {}),
     })
   }
 }

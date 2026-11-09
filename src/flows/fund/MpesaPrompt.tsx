@@ -9,7 +9,7 @@ export function MpesaPrompt({ open, amount, onCancel, onSend }: { open: boolean;
     <AnimatePresence>
       {open && (
         <motion.div
-          className="absolute inset-0 z-30 grid place-items-center bg-black/40 px-[66px]"
+          className="absolute inset-0 z-30 grid place-items-center bg-modal-bg px-[66px]"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -24,16 +24,16 @@ export function MpesaPrompt({ open, amount, onCancel, onSend }: { open: boolean;
             transition={{ type: 'spring', damping: 22, stiffness: 380 }}
           >
             <div className="px-4 pb-4 pt-5">
-              <p className="text-[17px] font-semibold tracking-[0.5px] text-[#00a651]">{t('payments.fund_account.prompt_title')}</p>
-              <p className="mt-1 text-[13px] leading-[18px]">
+              <p className="t-semibold-16 text-on-bg-primary">{t('payments.fund_account.prompt_title')}</p>
+              <p className="mt-2 t-regular-13 text-on-bg-primary">
                 {t('payments.fund_account.prompt_body', { amount: formatNumber(amount), merchant: FUND.merchantName, ref: FUND.promptRef })}
               </p>
             </div>
             <div className="flex border-t border-black/15">
-              <button type="button" data-testid="mpesa-cancel" onClick={onCancel} className="h-11 flex-1 border-r border-black/15 text-[17px] text-[#007aff] active:bg-black/5">
+              <button type="button" data-testid="mpesa-cancel" onClick={onCancel} className="h-11 flex-1 border-r border-black/15 t-ios-alert-button text-cobalt-blue active:bg-black/5">
                 {t('payments.fund_account.cancel')}
               </button>
-              <button type="button" data-testid="mpesa-send" onClick={onSend} className="h-11 flex-1 text-[17px] font-semibold text-[#007aff] active:bg-black/5">
+              <button type="button" data-testid="mpesa-send" onClick={onSend} className="h-11 flex-1 t-ios-alert-button text-cobalt-blue active:bg-black/5">
                 {t('payments.fund_account.send')}
               </button>
             </div>

@@ -52,7 +52,6 @@ function SheetBody({ onDismiss, children, testId }: Omit<Props, 'open'>) {
         dragElastic={{ top: 0, bottom: 0.6 }}
         onDragEnd={onDragEnd}
       >
-        <div className="absolute left-1/2 top-2 h-[5px] w-9 -translate-x-1/2 rounded-full bg-black/15" />
         {children}
       </motion.div>
     </div>

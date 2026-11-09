@@ -202,7 +202,8 @@ function Waiting({ amount, onSend, onCancel }: { amount: number; onSend: () => P
   return (
     <div className="absolute inset-0" data-testid="fund-waiting">
       <Screen header={<NavBar />} scroll={false}>
-        <div className="flex flex-1 flex-col items-center justify-center gap-6 px-10 text-center">
+        {/* Same layout as a result screen with one button; the button area stays empty (Fund: no "Send prompt again"). */}
+        <div className="flex flex-1 flex-col items-center justify-center gap-6 px-10 text-center" style={{ paddingBottom: 'calc(var(--safe-bottom) + 72px)' }}>
           <Illustration kind="phone" />
           <div className="flex flex-col gap-2">
             <h1 className="t-display-23">{t('payments.fund_account.check_phone')}</h1>

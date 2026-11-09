@@ -11,7 +11,7 @@ import { now } from '../engine/clock'
 interface AmountStepProps extends ComponentProps<typeof AmountEntry> {
   gradient: string
   onBack: () => void
-  header: { leading: ReactNode; title: ReactNode; badge?: ReactNode; subtitle?: ReactNode }
+  header: { leading: ReactNode; title: ReactNode; badge?: ReactNode; subtitle?: ReactNode; compact?: boolean }
   testId?: string
 }
 
@@ -23,6 +23,7 @@ export function AmountStep({ gradient, onBack, header, testId, ...entry }: Amoun
       testId={testId ?? 'amount-screen'}
       gradient={gradient}
       scroll={false}
+      sheetPadding={false}
       header={
         <>
           <NavBar onBack={onBack} />

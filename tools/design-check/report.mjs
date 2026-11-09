@@ -36,7 +36,7 @@ ${rows
       .map((k) => `<figure><img loading="lazy" src="${esc(r.dir)}${k}.png" alt="${k}"><figcaption>${k === 'app' ? 'app (402 × 874)' : k}</figcaption></figure>`)
       .join('')}<figure class="w430"><img loading="lazy" src="${esc(r.dir)}app-430.png" alt="iPhone 15 Plus"><figcaption>iPhone 15 Plus (430 × 932)</figcaption></figure></div>
 ${fails.length ? `<details open><summary class="bad">${fails.length} mismatch(es)</summary><table><tr><th>text</th><th>expected (Figma)</th><th>actual</th><th>problem</th></tr>${fails.map((t) => `<tr><td>${esc(t.text)}${t.deviation ? ` → ${esc(t.appText)}` : ''}</td><td>${esc(t.expected)}</td><td>${esc(t.actual)}</td><td>${esc((t.problems ?? []).join('; '))}</td></tr>`).join('')}</table></details>` : ''}
-${expected.length ? `<details><summary class="muted">${expected.length} expected deviation(s) (BRD / ASSUMPTIONS.md)</summary><table>${expected.map((t) => `<tr><td>${esc(t.text)}</td><td>${t.status === 'expected' ? 'not shown' : `→ ${esc(t.appText)}`}</td><td>${esc(t.status)}</td></tr>`).join('')}</table></details>` : ''}
+${expected.length ? `<details><summary class="muted">${expected.length} expected deviation(s) (BRD / ASSUMPTIONS.md)</summary><table>${expected.map((t) => `<tr><td>${esc(t.text)}</td><td>${t.status === 'expected' ? esc(t.note ?? 'not shown') : `→ ${esc(t.appText)}`}</td><td>${esc(t.status)}</td></tr>`).join('')}</table></details>` : ''}
 ${(r.layout430 ?? []).length ? `<details><summary class="warn">iPhone 15 Plus layout</summary><ul>${r.layout430.map((x) => `<li>${esc(x)}</li>`).join('')}</ul></details>` : ''}
 </div>`
   })

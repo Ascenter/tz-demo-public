@@ -122,6 +122,318 @@
      34
     ]
    ]
+  },
+  {
+   "figmaId": "55:12543",
+   "name": "Fund my account - Amount - Above limit",
+   "flow": "01-fund-my-account",
+   "png": "design/figma-export/screens-1x/01-fund-my-account/fund-my-account-amount-above-limit__55-12543.png",
+   "spec": "design/figma-export/specs/01-fund-my-account/fund-my-account-amount-above-limit__55-12543.json",
+   "setup": {
+    "step": 0,
+    "actions": [
+     "tap:quick-fund",
+     "tap:fund-mpesa",
+     "amount:6000000"
+    ]
+   },
+   "mask": [
+    [
+     0,
+     0,
+     402,
+     44
+    ]
+   ],
+   "keyboard": true,
+   "deviations": {
+    "M-Pesa": "Top up from M-Pesa"
+   },
+   "known": {
+    "Top up from M-Pesa": "Figma header x differs between Fund frames (A1)",
+    "+255 75• ••• 412": "Figma header x differs between Fund frames (A1)"
+   }
+  },
+  {
+   "figmaId": "49:4304",
+   "name": "Fund my account - Amount - Filled",
+   "flow": "01-fund-my-account",
+   "png": "design/figma-export/screens-1x/01-fund-my-account/fund-my-account-amount-filled__49-4304.png",
+   "spec": "design/figma-export/specs/01-fund-my-account/fund-my-account-amount-filled__49-4304.json",
+   "setup": {
+    "step": 0,
+    "actions": [
+     "tap:quick-fund",
+     "tap:fund-mpesa",
+     "amount:50000"
+    ]
+   },
+   "mask": [
+    [
+     0,
+     0,
+     402,
+     44
+    ]
+   ],
+   "keyboard": true,
+   "deviations": {
+    "M-Pesa": "Top up from M-Pesa"
+   }
+  },
+  {
+   "figmaId": "50:3093",
+   "name": "Fund my account - Confirm - Default",
+   "flow": "01-fund-my-account",
+   "png": "design/figma-export/screens-1x/01-fund-my-account/fund-my-account-confirm-default__50-3093.png",
+   "spec": "design/figma-export/specs/01-fund-my-account/fund-my-account-confirm-default__50-3093.json",
+   "setup": {
+    "step": 0,
+    "actions": [
+     "tap:quick-fund",
+     "tap:fund-mpesa",
+     "amount:50000",
+     "continue"
+    ]
+   },
+   "mask": [
+    [
+     0,
+     0,
+     402,
+     44
+    ]
+   ],
+   "deviations": {
+    "M-Pesa": "Top up from M-Pesa"
+   },
+   "known": {
+    "Top up from M-Pesa": "Figma sheet text at x = 36, all other sheets x = 28 (A2)",
+    "Amount": "Figma sheet text at x = 36, all other sheets x = 28 (A2)",
+    "From": "Figma sheet text at x = 36, all other sheets x = 28 (A2)",
+    "M-Pesa +255 75• ••• 412": "Figma sheet text at x = 36, all other sheets x = 28 (A2)",
+    "Fee": "Figma sheet text at x = 36, all other sheets x = 28 (A2)",
+    "No fee": "Figma sheet text at x = 36, all other sheets x = 28 (A2)"
+   }
+  },
+  {
+   "figmaId": "67:3935",
+   "name": "Fund my account - Home - Topped up",
+   "flow": "01-fund-my-account",
+   "png": "design/figma-export/screens-1x/01-fund-my-account/fund-my-account-home-topped-up__67-3935.png",
+   "spec": "design/figma-export/specs/01-fund-my-account/fund-my-account-home-topped-up__67-3935.json",
+   "setup": {
+    "step": 0,
+    "actions": [
+     "tap:quick-fund",
+     "tap:fund-mpesa",
+     "amount:50000",
+     "continue",
+     "confirm",
+     "tap:mpesa-send",
+     "push",
+     "tap:result-primary",
+     "push"
+    ]
+   },
+   "mask": [
+    [
+     0,
+     0,
+     402,
+     44
+    ]
+   ]
+  },
+  {
+   "figmaId": "49:10338",
+   "name": "Fund my account - Method - Default",
+   "flow": "01-fund-my-account",
+   "png": "design/figma-export/screens-1x/01-fund-my-account/fund-my-account-method-default__49-10338.png",
+   "spec": "design/figma-export/specs/01-fund-my-account/fund-my-account-method-default__49-10338.json",
+   "setup": {
+    "step": 0,
+    "actions": [
+     "tap:quick-fund"
+    ]
+   },
+   "mask": [
+    [
+     0,
+     0,
+     402,
+     44
+    ]
+   ],
+   "deviations": {
+    "Transfer to your account number via TIPS": "Instant via TIPS"
+   }
+  },
+  {
+   "figmaId": "50:1357",
+   "name": "Fund my account - Result - Cancelled",
+   "flow": "01-fund-my-account",
+   "png": "design/figma-export/screens-1x/01-fund-my-account/fund-my-account-result-cancelled__50-1357.png",
+   "spec": "design/figma-export/specs/01-fund-my-account/fund-my-account-result-cancelled__50-1357.json",
+   "setup": {
+    "step": 0,
+    "actions": [
+     "tap:quick-fund",
+     "tap:fund-mpesa",
+     "amount:50000",
+     "continue",
+     "confirm",
+     "tap:mpesa-cancel"
+    ]
+   },
+   "mask": [
+    [
+     0,
+     0,
+     402,
+     44
+    ]
+   ],
+   "deviations": {
+    "The M-Pesa prompt was declined or the PIN was wrong. No money was taken": "The M-Pesa prompt was declined or the PIN was wrong. No money was taken."
+   }
+  },
+  {
+   "figmaId": "50:2011",
+   "name": "Fund my account - Result - Not enough money",
+   "flow": "01-fund-my-account",
+   "png": "design/figma-export/screens-1x/01-fund-my-account/fund-my-account-result-not-enough-money__50-2011.png",
+   "spec": "design/figma-export/specs/01-fund-my-account/fund-my-account-result-not-enough-money__50-2011.json",
+   "setup": {
+    "step": 0,
+    "actions": [
+     "tap:quick-fund",
+     "tap:fund-mpesa",
+     "amount:600000",
+     "continue",
+     "confirm",
+     "tap:mpesa-send",
+     "push"
+    ]
+   },
+   "mask": [
+    [
+     0,
+     0,
+     402,
+     44
+    ]
+   ]
+  },
+  {
+   "figmaId": "50:2455",
+   "name": "Fund my account - Result - Processing",
+   "flow": "01-fund-my-account",
+   "png": "design/figma-export/screens-1x/01-fund-my-account/fund-my-account-result-processing__50-2455.png",
+   "spec": "design/figma-export/specs/01-fund-my-account/fund-my-account-result-processing__50-2455.json",
+   "setup": {
+    "step": 0,
+    "actions": [
+     "tap:quick-fund",
+     "tap:fund-mpesa",
+     "amount:25000",
+     "continue",
+     "confirm",
+     "tap:mpesa-send",
+     "push"
+    ]
+   },
+   "mask": [
+    [
+     0,
+     0,
+     402,
+     44
+    ]
+   ]
+  },
+  {
+   "figmaId": "49:4942",
+   "name": "Fund my account - Result - Success",
+   "flow": "01-fund-my-account",
+   "png": "design/figma-export/screens-1x/01-fund-my-account/fund-my-account-result-success__49-4942.png",
+   "spec": "design/figma-export/specs/01-fund-my-account/fund-my-account-result-success__49-4942.json",
+   "setup": {
+    "step": 0,
+    "actions": [
+     "tap:quick-fund",
+     "tap:fund-mpesa",
+     "amount:50000",
+     "continue",
+     "confirm",
+     "tap:mpesa-send",
+     "push"
+    ]
+   },
+   "mask": [
+    [
+     0,
+     0,
+     402,
+     44
+    ]
+   ]
+  },
+  {
+   "figmaId": "49:4738",
+   "name": "Fund my account - Waiting - Default",
+   "flow": "01-fund-my-account",
+   "png": "design/figma-export/screens-1x/01-fund-my-account/fund-my-account-waiting-default__49-4738.png",
+   "spec": "design/figma-export/specs/01-fund-my-account/fund-my-account-waiting-default__49-4738.json",
+   "setup": {
+    "step": 0,
+    "actions": [
+     "tap:quick-fund",
+     "tap:fund-mpesa",
+     "amount:50000",
+     "continue",
+     "confirm"
+    ]
+   },
+   "mask": [
+    [
+     0,
+     0,
+     402,
+     44
+    ],
+    [
+     0,
+     280,
+     402,
+     300
+    ]
+   ]
+  },
+  {
+   "figmaId": "50:3741",
+   "name": "Fund my account - Waiting - M-Pesa prompt",
+   "flow": "01-fund-my-account",
+   "png": "design/figma-export/screens-1x/01-fund-my-account/fund-my-account-waiting-m-pesa-prompt__50-3741.png",
+   "spec": "design/figma-export/specs/01-fund-my-account/fund-my-account-waiting-m-pesa-prompt__50-3741.json",
+   "setup": {
+    "step": 0,
+    "actions": [
+     "tap:quick-fund",
+     "tap:fund-mpesa",
+     "amount:50000",
+     "continue",
+     "confirm"
+    ]
+   },
+   "mask": [
+    [
+     0,
+     0,
+     402,
+     44
+    ]
+   ]
   }
  ]
 }

@@ -77,6 +77,7 @@ export function CashFlow() {
             leading: <Avatar icon="user" />,
             title: t('payments.cash_withdrawal.amount_title'),
             subtitle: t('payments.cash_withdrawal.amount_subtitle'),
+            compact: true,
           }}
           value={value}
           onChange={setValue}

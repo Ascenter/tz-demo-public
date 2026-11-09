@@ -115,6 +115,8 @@
 @utility t-semibold-13 { font-family: var(--font-sans); font-weight: 600; font-size: 13px; line-height: 18px; letter-spacing: -0.08px; }
 @utility t-semibold-12 { font-family: var(--font-sans); font-weight: 600; font-size: 12px; line-height: 16px; letter-spacing: 0; }
 @utility t-semibold-11 { font-family: var(--font-sans); font-weight: 600; font-size: 11px; line-height: 14px; letter-spacing: 0.07px; }
+/* iOS system alert buttons (Figma: Text Regular 17/22 ls-0.41, the emulated M-Pesa prompt). */
+@utility t-ios-alert-button { font-family: var(--font-sans); font-weight: 400; font-size: 17px; line-height: 22px; letter-spacing: -0.41px; }
 @utility t-medium-9 { font-family: var(--font-sans); font-weight: 500; font-size: 9px; line-height: 13px; letter-spacing: 0.12px; }
 
 /* ── gradients (tokens.json "gradient"): 180°, first stop at 0 %, second at 25 % ── */
