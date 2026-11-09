@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useSteps, StepHost } from '../steps'
-import { AmountStep, maskAccount, receiptDate } from '../shared'
+import { AmountStep, maskAccount, paidFromValue, receiptDate } from '../shared'
 import { useExitFlow } from '../exit'
 import { RecipientsScreen, SEND_GRADIENT, bankBadge } from './RecipientsScreen'
 import { BankForm, SelectBank } from './BankScreens'
@@ -138,8 +138,8 @@ export function SendFlow() {
               [t('payments.send_money.receipt_recipient'), done.name],
               [
                 t('payments.send_money.receipt_account'),
-                <span className="flex flex-col items-start gap-2">
-                  {t('payments.common.account_value', { account: maskAccount(r.account), bank: r.bank })}
+                <span className="flex flex-col items-start gap-3">
+                  <span>{t('payments.common.account_value', { account: maskAccount(r.account), bank: r.bank })}</span>
                   {canSave && (
                     <MiniButton testId="save-contact" onClick={() => nav.push({ name: 'save' })}>
                       {t('payments.send_money.save_contact_action')}
@@ -147,13 +147,18 @@ export function SendFlow() {
                   )}
                 </span>,
               ],
-              [t('payments.send_money.receipt_sender'), tips ? undefined : CUSTOMER.name],
             ],
+            // Figma 12:5552 / 1:10250: internal transfers show the sender and their account, no fee lines.
             [
-              [t('payments.send_money.receipt_fee'), t('payments.common.no_fee')],
-              [t('payments.send_money.receipt_total'), formatTZS(done.amount)],
+              [t('payments.send_money.receipt_sender'), tips ? undefined : CUSTOMER.name],
+              [t('payments.send_money.receipt_account'), tips ? undefined : paidFromValue()],
             ],
-            [[t('payments.send_money.tips_reference'), tips ? SEND.tipsReference : undefined]],
+            // Figma 42:5875: TIPS shows Fee and Total (FIGMA_VS_BRD leaves it open; ASSUMPTIONS A6).
+            [
+              [t('payments.send_money.receipt_fee'), tips ? t('payments.common.no_fee') : undefined],
+              [t('payments.send_money.receipt_total'), tips ? formatTZS(done.amount) : undefined],
+            ],
+            [[t('payments.send_money.tips_reference'), tips ? SEND.tipsReference : undefined, 'small']],
             [
               [t('payments.send_money.receipt_date'), done.date],
               [t('payments.send_money.receipt_comment'), done.comment || undefined],
@@ -188,8 +193,8 @@ export function SendFlow() {
               rows={[
                 [t('payments.send_money.receipt_recipient'), displayName(r, saved)],
                 [t('payments.send_money.receipt_phone'), r.kind === 'tips' ? undefined : r.phone],
-                [t('payments.send_money.receipt_account'), r.kind === 'tips' ? maskAccount(r.account) : undefined],
                 [t('payments.send_money.receipt_bank'), r.bank],
+                [t('payments.send_money.receipt_account'), r.kind === 'tips' ? maskAccount(r.account) : undefined],
                 [t('payments.send_money.receipt_amount'), formatTZS(amount)],
                 [t('payments.send_money.receipt_fee'), t('payments.common.no_fee')],
               ]}

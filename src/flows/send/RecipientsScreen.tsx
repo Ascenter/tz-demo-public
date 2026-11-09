@@ -6,11 +6,12 @@ import { CapsHeader, ListRow } from '../../components/ListRow'
 import { SearchField } from '../../components/Fields'
 import { Avatar, colorFor, initialsOf } from '../../components/Avatar'
 import { Badge } from '../../components/Badge'
+import { Icon } from '../../components/icons'
 import { useBack } from '../../app/back'
 import { useDemo, displayName } from '../../app/store'
 import { simulateInline } from '../../engine/delay'
 import { t } from '../../mock/texts'
-import { MO_SIMBA, type SendRecipient } from '../../mock/recipients'
+import { MO_SIMBA, SEED_RECENT, type SendRecipient } from '../../mock/recipients'
 import { searchRecipients, type SearchResult } from './search'
 import { maskAccount } from '../shared'
 
@@ -30,6 +31,14 @@ export function RecipientsScreen({ onBack, onPick, onOtherBank }: Props) {
   const [query, setQuery] = useState('')
   const [result, setResult] = useState<SearchResult | null>(null)
   const [loading, setLoading] = useState(false)
+  // Focused search: the large title collapses into the nav bar and a Cancel button appears (Figma 1:10181).
+  const [focused, setFocused] = useState(false)
+  const searching = focused || !!query.trim()
+  const cancel = () => {
+    setQuery('')
+    setFocused(false)
+    ;(document.activeElement as HTMLElement | null)?.blur()
+  }
 
   // Send BR-10: search shows a loader of at least 200 ms (inline, so typing is not blocked).
   useEffect(() => {
@@ -53,25 +62,18 @@ export function RecipientsScreen({ onBack, onPick, onOtherBank }: Props) {
     }
   }, [query, recent, saved])
 
-  const row = (r: SendRecipient, isNew = false) => {
+  // Rows as in Figma 124:11212 / 12:4246: Mo-Simba recipients carry a "Simba" badge; TIPS rows show bank and account.
+  const row = (r: SendRecipient, withPhone = false) => {
     const name = displayName(r, saved)
+    const internal = r.kind === 'internal'
     return (
       <ListRow
         key={r.account}
         testId="recipient-row"
         leading={<Avatar initials={initialsOf(name)} color={colorFor(name)} />}
         title={name}
-        subtitle={
-          isNew ? (
-            <span className="flex items-center gap-2">
-              {r.phone} <Badge>Simba</Badge>
-            </span>
-          ) : r.kind === 'tips' ? (
-            `${maskAccount(r.account)} · ${r.bank}`
-          ) : (
-            r.phone ?? r.bank
-          )
-        }
+        subtitle={internal ? (withPhone ? r.phone : undefined) : `${r.bank} ${maskAccount(r.account)}`}
+        below={internal ? <Badge>{SIMBA_BADGE}</Badge> : undefined}
         onClick={() => onPick(r)}
       />
     )
@@ -83,17 +85,25 @@ export function RecipientsScreen({ onBack, onPick, onOtherBank }: Props) {
       gradient={SEND_GRADIENT}
       header={
         <>
-          <NavBar onBack={onBack} />
-          <LargeTitle title={t('payments.send_money.title')} />
-          <div className="pb-6">
+          <NavBar onBack={onBack} title={searching ? t('payments.send_money.title') : undefined} />
+          {!searching && <LargeTitle title={t('payments.send_money.title')} tight />}
+          <div className={`flex items-center gap-3 px-5 pb-[34px] ${searching ? 'pt-[2px]' : ''}`}>
             <SearchField
+              className="flex-1"
               data-testid="send-search"
               placeholder={t('payments.send_money.search_hint')}
               value={query}
               onChange={(e) => setQuery(e.target.value)}
+              onFocus={() => setFocused(true)}
+              onClear={() => setQuery('')}
               inputMode="search"
               autoComplete="off"
             />
+            {searching && (
+              <button type="button" data-testid="search-cancel" onClick={cancel} className="pressable w-[78px] shrink-0 text-left t-regular-16 text-on-bg-primary">
+                {t('payments.send_money.cancel')}
+              </button>
+            )}
           </div>
         </>
       }
@@ -103,14 +113,15 @@ export function RecipientsScreen({ onBack, onPick, onOtherBank }: Props) {
           <ListRow
             testId="send-other-bank"
             icon="bank"
-            avatarColor="#000"
+            right={<Icon name="chevronRight" size={16} color="var(--color-icon-30)" />}
             title={t('payments.send_money.other_bank_title')}
             subtitle={t('payments.send_money.other_bank_subtitle')}
             onClick={onOtherBank}
           />
           <div className="h-6" />
           <CapsHeader>{t('payments.send_money.recent')}</CapsHeader>
-          <div data-testid="send-recent">{recent.map((r) => row(r))}</div>
+          {/* Address-book recipients show name and badge; a recipient found by number and not saved also shows the phone (Figma 12:6295). */}
+          <div data-testid="send-recent">{recent.map((r) => row(r, !(r.account in saved) && !SEED_RECENT.some((x) => x.account === r.account)))}</div>
         </>
       ) : loading ? (
         <div className="flex justify-center py-10" data-testid="search-loader">
@@ -127,7 +138,7 @@ export function RecipientsScreen({ onBack, onPick, onOtherBank }: Props) {
           {result && result.contacts.length > 0 && (
             <>
               <CapsHeader>{t('payments.send_money.results')}</CapsHeader>
-              {result.contacts.map((r) => row(r))}
+              {result.contacts.map((r) => row(r, true))}
             </>
           )}
         </div>
@@ -136,4 +147,7 @@ export function RecipientsScreen({ onBack, onPick, onOtherBank }: Props) {
   )
 }
 
-export const bankBadge = (bank: string) => <Badge>{bank === MO_SIMBA ? 'Mo-Simba' : bank}</Badge>
+/** Badge label for Mo-Simba accounts, as drawn in Figma ("Simba"). */
+export const SIMBA_BADGE = 'Simba'
+
+export const bankBadge = (bank: string) => <Badge>{bank === MO_SIMBA ? SIMBA_BADGE : bank}</Badge>

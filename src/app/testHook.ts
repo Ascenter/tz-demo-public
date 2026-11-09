@@ -69,13 +69,13 @@ async function keys(digits: string) {
  *   tap:<testid>            click the element with this data-testid (tap:<testid>@<text> = the one containing text)
  *   text:<label>            click the button whose text is exactly <label>
  *   fill:<testid>=<value>   type into an input
- *   focus:<testid>          focus an input (search field focused state)
+ *   focus:<testid>          focus an input (search field focused state);  blur = drop the focus
  *   amount:<n>              type n on the in-app keypad;  clear = delete the whole amount
  *   otp                     enter the scripted OTP
  *   push                    dismiss the push banner if shown
  *   simulateQr              presenter "Simulate QR scan" on the scanner
  *   home | payments         switch tab
- *   wait:<ms>               pause;  settle = wait for transitions
+ *   wait:<ms>               pause;  settle = wait for transitions;  loader:<ms> = presenter loader duration
  * Shortcuts used in design/screen-map.json: openPayments, continue (amount-primary), confirm (sheet-confirm),
  * done (receipt-done), cash.agent, getCode.
  */
@@ -95,6 +95,8 @@ async function runOne(a: Action) {
       el.focus()
       return fill(el, v.join('='))
     }
+    case 'blur':
+      return (document.activeElement as HTMLElement | null)?.blur()
     case 'focus':
       return (await waitFor(() => byTestId(arg) as HTMLInputElement | null, `input ${arg}`)).focus()
     case 'amount':
@@ -129,6 +131,8 @@ async function runOne(a: Action) {
       return tap('cash-agent')
     case 'getCode':
       return tap('sheet-confirm')
+    case 'loader':
+      return useDemo.getState().setLoaderMs(Number(arg))
     case 'wait':
       return sleep(Number(arg))
     case 'settle':
@@ -150,7 +154,10 @@ export function installTestHook() {
         await sleep(a.startsWith('amount') || a.startsWith('fill') ? 60 : SETTLE_MS)
       }
       // Wait for any loader to finish so the screenshot shows the answer, not the loader.
-      await waitFor(() => (useUi.getState().loaderVisible ? null : true), 'loader to hide', 10000)
+      // (unless the setup slowed the loader on purpose to show a "checking" state).
+      if (!actions.some((a) => a.startsWith('loader:'))) {
+        await waitFor(() => (useUi.getState().loaderVisible ? null : true), 'loader to hide', 10000)
+      }
     },
   }
   ;(window as unknown as { __demo: DemoHook }).__demo = hook

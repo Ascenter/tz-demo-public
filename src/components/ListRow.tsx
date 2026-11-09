@@ -30,12 +30,12 @@ export function ListRow({ title, subtitle, icon, iconColor, initials, avatarColo
       <span className="flex min-w-0 flex-1 flex-col items-start text-left">
         <span className="w-full truncate t-regular-16 text-on-bg-primary">{title}</span>
         {subtitle !== undefined && <span className="w-full t-regular-14 text-on-bg-secondary">{subtitle}</span>}
-        {below && <span className="mt-1">{below}</span>}
+        {below && <span className="mt-1 flex">{below}</span>}
       </span>
       {right}
     </>
   )
-  const cls = `flex min-h-[62px] w-full items-center px-5 py-[10px] ${dimmed ? 'opacity-40' : ''}`
+  const cls = `flex min-h-[60px] w-full items-center px-5 py-[10px] ${dimmed ? 'opacity-40' : ''}`
   return onClick ? (
     <button type="button" data-testid={testId} onClick={onClick} className={`${cls} row-pressable`} style={{ columnGap: gap }}>
       {content}

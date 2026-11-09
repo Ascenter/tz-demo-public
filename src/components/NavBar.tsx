@@ -37,11 +37,12 @@ export function NavBar({ onBack, title, right, close }: Props) {
 }
 
 /** Big left title under the toolbar (Figma navBar "left title"), with optional subtitle. */
-export function LargeTitle({ title, subtitle }: { title: ReactNode; subtitle?: ReactNode }) {
+export function LargeTitle({ title, subtitle, tight }: { title: ReactNode; subtitle?: ReactNode; tight?: boolean }) {
+  // tight: 8 pt below (a search field follows), otherwise 24 pt down to the sheet.
   return (
-    <div className="flex flex-col gap-1 px-5 pb-6 pt-2">
+    <div className={`flex flex-col gap-1 px-5 pt-2 ${tight ? 'pb-2' : 'pb-6'}`}>
       <h1 className="t-display-26">{title}</h1>
-      {subtitle && <p className="t-regular-14 text-on-bg-secondary">{subtitle}</p>}
+      {subtitle && <p className="t-regular-16 text-on-bg-secondary">{subtitle}</p>}
     </div>
   )
 }
@@ -69,7 +70,7 @@ export function HeaderItem({
       <span className={`flex shrink-0 justify-end pt-[2px] ${compact ? '' : 'w-[54px]'}`}>{leading}</span>
       <div className="flex min-w-0 flex-col items-start">
         <span data-testid="header-title" className="truncate t-semibold-16">{title}</span>
-        {badge && <span className="mt-[3px]">{badge}</span>}
+        {badge && <span className="mt-[3px] flex">{badge}</span>}
         {subtitle && <span className="t-regular-14 text-on-bg-secondary">{subtitle}</span>}
       </div>
     </div>

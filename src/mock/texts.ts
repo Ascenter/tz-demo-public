@@ -122,6 +122,7 @@ export const TEXTS = {
   'payments.send_money.other_bank_title': 'Transfer to another bank',
   'payments.send_money.other_bank_subtitle': 'Bank account, instant via TIPS',
   'payments.send_money.select_bank': 'Select bank',
+  'payments.send_money.bank_search_hint': 'Bank name', // Figma 42:5319 (shown inactive, like Gov BR-10)
   'payments.send_money.banks': 'Banks',
   'payments.send_money.bank_transfer_title': 'Bank transfer',
   'payments.send_money.bank_transfer_subtitle': 'Instant via TIPS, 24/7',

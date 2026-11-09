@@ -7,7 +7,8 @@ import { Icon } from './icons'
 import { formatTZS } from '../engine/format'
 import { useBack } from '../app/back'
 
-export type ReceiptRow = [label: string, value: ReactNode | undefined]
+/** `small`: the row is set in 14/20 instead of 15/20 (Figma: "TIPS reference" rows). */
+export type ReceiptRow = [label: string, value: ReactNode | undefined, small?: 'small']
 
 interface Props {
   amount: number
@@ -51,37 +52,41 @@ export function Receipt({ amount, status, blocks, actions, onDone, doneLabel, se
         </ButtonBar>
       }
     >
-      <div className="flex min-h-full flex-col items-center gap-6 pt-2">
+      <div className="flex min-h-full flex-col items-center gap-6">
         <Illustration kind="receipt" />
         <div className="flex flex-col items-center gap-2 px-5">
           <p data-testid="receipt-amount" className="t-display-23">
             {formatTZS(amount)}
           </p>
           <p data-testid="receipt-status" className="flex items-center gap-1 t-regular-14 text-on-bg-secondary">
-            <span className="text-[13px]">✅</span>
-            {status}
+            <span aria-hidden="true" className="text-[13px]">✅</span>
+            <span>{status}</span>
           </p>
         </div>
-        <div className="receipt-paper w-full flex-1 px-5 pb-8 pt-10" data-testid="receipt-rows">
-          <div className="flex flex-col gap-6">
-            {blocks.map((rows, i) => {
-              const visible = rows.filter(([, v]) => v !== undefined && v !== '')
-              if (!visible.length) return null
-              return (
-                <div key={i} className="flex flex-col gap-2">
-                  {visible.map(([label, value]) => (
-                    <div key={label} className="flex gap-6 t-regular-15">
-                      <span className="w-[116px] shrink-0 text-on-bg-secondary">{label}</span>
-                      <span className="min-w-0 flex-1 break-words text-on-bg-primary">{value}</span>
-                    </div>
-                  ))}
-                </div>
-              )
-            })}
-            {actions}
+        {/* Label column as wide as the longest label + 24 pt (Figma: values at x = 112, or 140 with "TIPS reference"). */}
+        <div className="receipt-paper w-full flex-1 px-5 pb-8 pt-12" data-testid="receipt-rows">
+          <div className="grid grid-cols-[max-content_minmax(0,1fr)] gap-x-6">
+            {blocks
+              .map((rows) => rows.filter(([, v]) => v !== undefined && v !== ''))
+              .filter((rows) => rows.length)
+              .flatMap((rows, i) =>
+                rows.map(([label, value, small], j) => (
+                  <div key={`${i}-${label}`} className={`contents ${small ? 't-regular-14' : 't-regular-15'}`}>
+                    <span className={`text-on-bg-secondary ${rowGap(i, j)}`}>{label}</span>
+                    <span className={`min-w-0 break-words text-on-bg-primary ${rowGap(i, j)}`}>{value}</span>
+                  </div>
+                )),
+              )}
           </div>
+          {actions && <div className="mt-6">{actions}</div>}
         </div>
       </div>
     </Screen>
   )
+}
+
+/** 8 pt between rows of a block, 24 pt between blocks. */
+function rowGap(block: number, row: number): string {
+  if (block === 0 && row === 0) return ''
+  return row === 0 ? 'mt-6' : 'mt-2'
 }

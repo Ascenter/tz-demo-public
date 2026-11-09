@@ -84,21 +84,20 @@ export function AmountEntry({ value, onChange, hints, error, comment, chips = []
           {button.label}
         </PrimaryButton>
       </div>
-      {chips.length > 0 && (
-        <div className="flex justify-center gap-[10px] px-5 pb-[10px]">
-          {chips.map((c) => (
-            <button
-              key={c}
-              type="button"
-              data-testid={`chip-${c}`}
-              onClick={() => onChange(String(c))}
-              className="pressable rounded-full bg-chips-bg px-3 py-2 t-regular-13 text-chips-text"
-            >
-              {formatTZS(c)}
-            </button>
-          ))}
-        </div>
-      )}
+      {/* Chips row (34 pt + 10 pt). Flows without chips (Send, Scan) keep the space so the button stays put. */}
+      <div className="flex h-[44px] shrink-0 justify-center gap-[10px] px-5 pb-[10px]">
+        {chips.map((c) => (
+          <button
+            key={c}
+            type="button"
+            data-testid={`chip-${c}`}
+            onClick={() => onChange(String(c))}
+            className="pressable rounded-full bg-chips-bg px-3 py-2 t-regular-13 text-chips-text"
+          >
+            {formatTZS(c)}
+          </button>
+        ))}
+      </div>
       <Keypad onDigit={onDigit} onDelete={onDelete} />
     </div>
   )

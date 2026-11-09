@@ -243,7 +243,8 @@
      402,
      44
     ]
-   ]
+   ],
+   "homeAfter": true
   },
   {
    "figmaId": "49:10338",
@@ -434,6 +435,1224 @@
      44
     ]
    ]
+  },
+  {
+   "figmaId": "42:6269",
+   "name": "Home - Main - After transfer",
+   "flow": "02-send-money",
+   "png": "design/figma-export/screens-1x/02-send-money/home-main-after-transfer__42-6269.png",
+   "spec": "design/figma-export/specs/02-send-money/home-main-after-transfer__42-6269.json",
+   "setup": {
+    "step": 2,
+    "actions": []
+   },
+   "mask": [
+    [
+     0,
+     0,
+     402,
+     44
+    ]
+   ],
+   "homeAfter": true
+  },
+  {
+   "figmaId": "43:7309",
+   "name": "Send money - Bank recipient - Checking",
+   "flow": "02-send-money",
+   "png": "design/figma-export/screens-1x/02-send-money/send-money-bank-recipient-checking__43-7309.png",
+   "spec": "design/figma-export/specs/02-send-money/send-money-bank-recipient-checking__43-7309.json",
+   "setup": {
+    "step": 1,
+    "actions": [
+     "loader:1500",
+     "tap:quick-send",
+     "tap:send-other-bank",
+     "tap:bank-CRDB Bank",
+     "fill:bank-account=0152 4876 39100",
+     "fill:bank-name=Baraka Mwakyusa",
+     "blur",
+     "tap:bank-continue",
+     "wait:300"
+    ],
+    "settleMs": 100
+   },
+   "mask": [
+    [
+     0,
+     0,
+     402,
+     44
+    ]
+   ]
+  },
+  {
+   "figmaId": "42:6548",
+   "name": "Send money - Bank recipient - Empty",
+   "flow": "02-send-money",
+   "png": "design/figma-export/screens-1x/02-send-money/send-money-bank-recipient-empty__42-6548.png",
+   "spec": "design/figma-export/specs/02-send-money/send-money-bank-recipient-empty__42-6548.json",
+   "setup": {
+    "step": 1,
+    "actions": [
+     "tap:quick-send",
+     "tap:send-other-bank",
+     "tap:bank-CRDB Bank",
+     "focus:bank-account"
+    ]
+   },
+   "mask": [
+    [
+     0,
+     0,
+     402,
+     44
+    ]
+   ],
+   "keyboard": true,
+   "known": {
+    "Continue": "Figma places the button above the drawn iOS keyboard"
+   }
+  },
+  {
+   "figmaId": "43:6975",
+   "name": "Send money - Bank recipient - Name confirmed",
+   "flow": "02-send-money",
+   "png": "design/figma-export/screens-1x/02-send-money/send-money-bank-recipient-name-confirmed__43-6975.png",
+   "spec": "design/figma-export/specs/02-send-money/send-money-bank-recipient-name-confirmed__43-6975.json",
+   "setup": {
+    "step": 1,
+    "actions": [
+     "tap:quick-send",
+     "tap:send-other-bank",
+     "tap:bank-CRDB Bank",
+     "fill:bank-account=0152 4876 39100",
+     "fill:bank-name=Baraka Mwakyusa",
+     "blur",
+     "tap:bank-continue"
+    ]
+   },
+   "mask": [
+    [
+     0,
+     0,
+     402,
+     44
+    ]
+   ]
+  },
+  {
+   "figmaId": "42:5343",
+   "name": "Send money - Confirmation - Bank transfer",
+   "flow": "02-send-money",
+   "png": "design/figma-export/screens-1x/02-send-money/send-money-confirmation-bank-transfer__42-5343.png",
+   "spec": "design/figma-export/specs/02-send-money/send-money-confirmation-bank-transfer__42-5343.json",
+   "setup": {
+    "step": 1,
+    "actions": [
+     "tap:quick-send",
+     "fill:send-search=0784 552 019",
+     "tap:recipient-row@Baraka M.",
+     "amount:50000",
+     "fill:comment=For the order",
+     "continue",
+     "confirm",
+     "otp",
+     "push",
+     "done",
+     "tap:quick-send",
+     "fill:send-search=Nee",
+     "tap:recipient-row@Neema Mushi",
+     "amount:35000",
+     "fill:comment=For lunch",
+     "continue",
+     "otp",
+     "push",
+     "done",
+     "tap:quick-send",
+     "tap:send-other-bank",
+     "tap:bank-CRDB Bank",
+     "fill:bank-account=0152 4876 39100",
+     "fill:bank-name=Baraka Mwakyusa",
+     "blur",
+     "tap:bank-continue",
+     "tap:bank-continue",
+     "amount:50000",
+     "fill:comment=For the order",
+     "continue"
+    ]
+   },
+   "mask": [
+    [
+     0,
+     0,
+     402,
+     44
+    ]
+   ],
+   "deviations": {
+    "TZS 10,000@520": null,
+    "TZS 20,000@520": null,
+    "TZS 50,000@520": null,
+    "Baraka Mwakyusa@90": "BARAKA JOHN MWAKYUSA",
+    "BM@100": "BJ",
+    "Recipient (name at the bank)": "Recipient",
+    "Account number": "Account",
+    "0152 4876 39100": "•••• 9100"
+   }
+  },
+  {
+   "figmaId": "42:5337",
+   "name": "Send money - Enter amount - Filled",
+   "flow": "02-send-money",
+   "png": "design/figma-export/screens-1x/02-send-money/send-money-enter-amount-filled__42-5337.png",
+   "spec": "design/figma-export/specs/02-send-money/send-money-enter-amount-filled__42-5337.json",
+   "setup": {
+    "step": 1,
+    "actions": [
+     "tap:quick-send",
+     "fill:send-search=0784 552 019",
+     "tap:recipient-row@Baraka M.",
+     "amount:50000",
+     "fill:comment=For the order",
+     "continue",
+     "confirm",
+     "otp",
+     "push",
+     "done",
+     "tap:quick-send",
+     "fill:send-search=Nee",
+     "tap:recipient-row@Neema Mushi",
+     "amount:35000",
+     "fill:comment=For lunch",
+     "continue",
+     "otp",
+     "push",
+     "done",
+     "tap:quick-send",
+     "tap:send-other-bank",
+     "tap:bank-CRDB Bank",
+     "fill:bank-account=0152 4876 39100",
+     "fill:bank-name=Baraka Mwakyusa",
+     "blur",
+     "tap:bank-continue",
+     "tap:bank-continue",
+     "amount:50000",
+     "fill:comment=For the order"
+    ]
+   },
+   "mask": [
+    [
+     0,
+     0,
+     402,
+     44
+    ]
+   ],
+   "keyboard": true,
+   "deviations": {
+    "TZS 10,000@520": null,
+    "TZS 20,000@520": null,
+    "TZS 50,000@520": null,
+    "Baraka Mwakyusa@90": "BARAKA JOHN MWAKYUSA",
+    "BM@100": "BJ",
+    "Recipient (name at the bank)": "Recipient",
+    "Account number": "Account",
+    "0152 4876 39100": "•••• 9100"
+   }
+  },
+  {
+   "figmaId": "51:15006",
+   "name": "Send money - Recipients - After first transfer",
+   "flow": "02-send-money",
+   "png": "design/figma-export/screens-1x/02-send-money/send-money-recipients-after-first-transfer__51-15006.png",
+   "spec": "design/figma-export/specs/02-send-money/send-money-recipients-after-first-transfer__51-15006.json",
+   "setup": {
+    "step": 2,
+    "actions": [
+     "tap:quick-send"
+    ]
+   },
+   "mask": [
+    [
+     0,
+     0,
+     402,
+     44
+    ]
+   ],
+   "deviations": {
+    "Simba@649": null,
+    "Simba@853": null,
+    "A": null,
+    "B": null,
+    "Athumani Bakari": null,
+    "+255 768 220 415": null,
+    "Asha Mwinyi": null,
+    "+255 655 903 118": null,
+    "Bahati Mollel": null,
+    "+255 742 610 093": null,
+    "AB": null,
+    "AM": null,
+    "BM": null
+   },
+   "known": {
+    "Baraka Mwakyusa": "Recent list holds the real Master-script recipients",
+    "CRDB Bank •••• 9100": "Recent list holds the real Master-script recipients",
+    "NM": "Recent list holds the real Master-script recipients",
+    "Neema Mushi": "Recent list holds the real Master-script recipients",
+    "JK": "Recent list holds the real Master-script recipients",
+    "Joseph Kimaro": "Recent list holds the real Master-script recipients",
+    "Simba": "Recent list holds the real Master-script recipients"
+   }
+  },
+  {
+   "figmaId": "42:5301",
+   "name": "Send money - Recipients - Default",
+   "flow": "02-send-money",
+   "png": "design/figma-export/screens-1x/02-send-money/send-money-recipients-default__42-5301.png",
+   "spec": "design/figma-export/specs/02-send-money/send-money-recipients-default__42-5301.json",
+   "setup": {
+    "step": 1,
+    "actions": [
+     "tap:quick-send"
+    ]
+   },
+   "mask": [
+    [
+     0,
+     0,
+     402,
+     44
+    ]
+   ],
+   "deviations": {
+    "Simba@649": null,
+    "Simba@853": null,
+    "A": null,
+    "B": null,
+    "Athumani Bakari": null,
+    "+255 768 220 415": null,
+    "Asha Mwinyi": null,
+    "+255 655 903 118": null,
+    "Bahati Mollel": null,
+    "+255 742 610 093": null,
+    "AB": null,
+    "AM": null,
+    "BM": null
+   }
+  },
+  {
+   "figmaId": "42:5319",
+   "name": "Send money - Select bank - Default",
+   "flow": "02-send-money",
+   "png": "design/figma-export/screens-1x/02-send-money/send-money-select-bank-default__42-5319.png",
+   "spec": "design/figma-export/specs/02-send-money/send-money-select-bank-default__42-5319.json",
+   "setup": {
+    "step": 1,
+    "actions": [
+     "tap:quick-send",
+     "tap:send-other-bank"
+    ]
+   },
+   "mask": [
+    [
+     0,
+     0,
+     402,
+     44
+    ]
+   ],
+   "deviations": {
+    "ALL BANKS": "BANKS"
+   }
+  },
+  {
+   "figmaId": "42:5875",
+   "name": "Send money - Success - Bank transfer",
+   "flow": "02-send-money",
+   "png": "design/figma-export/screens-1x/02-send-money/send-money-success-bank-transfer__42-5875.png",
+   "spec": "design/figma-export/specs/02-send-money/send-money-success-bank-transfer__42-5875.json",
+   "setup": {
+    "step": 1,
+    "actions": [
+     "tap:quick-send",
+     "fill:send-search=0784 552 019",
+     "tap:recipient-row@Baraka M.",
+     "amount:50000",
+     "fill:comment=For the order",
+     "continue",
+     "confirm",
+     "otp",
+     "push",
+     "done",
+     "tap:quick-send",
+     "fill:send-search=Nee",
+     "tap:recipient-row@Neema Mushi",
+     "amount:35000",
+     "fill:comment=For lunch",
+     "continue",
+     "otp",
+     "push",
+     "done",
+     "tap:quick-send",
+     "tap:send-other-bank",
+     "tap:bank-CRDB Bank",
+     "fill:bank-account=0152 4876 39100",
+     "fill:bank-name=Baraka Mwakyusa",
+     "blur",
+     "tap:bank-continue",
+     "tap:bank-continue",
+     "amount:50000",
+     "fill:comment=For the order",
+     "continue",
+     "confirm",
+     "otp",
+     "push"
+    ]
+   },
+   "mask": [
+    [
+     0,
+     0,
+     402,
+     44
+    ]
+   ],
+   "knownFrom": {
+    "y": 500,
+    "note": "Save recipient is hidden (FIGMA_VS_BRD), so the rows below move up"
+   }
+  },
+  {
+   "figmaId": "1:10251",
+   "name": "Home - Main - After transfer",
+   "flow": "02-send-money",
+   "png": "design/figma-export/screens-1x/02-send-money/home-main-after-transfer__1-10251.png",
+   "spec": "design/figma-export/specs/02-send-money/home-main-after-transfer__1-10251.json",
+   "setup": {
+    "step": 1,
+    "actions": [
+     "tap:quick-send",
+     "fill:send-search=0784 552 019",
+     "tap:recipient-row@Baraka M.",
+     "amount:50000",
+     "fill:comment=For the order",
+     "continue",
+     "confirm",
+     "otp",
+     "push",
+     "done",
+     "tap:quick-send",
+     "fill:send-search=Nee",
+     "tap:recipient-row@Neema Mushi",
+     "amount:35000",
+     "fill:comment=For lunch",
+     "continue",
+     "otp",
+     "push",
+     "done",
+     "home"
+    ]
+   },
+   "mask": [
+    [
+     0,
+     0,
+     402,
+     44
+    ]
+   ],
+   "homeAfter": true
+  },
+  {
+   "figmaId": "1:10296",
+   "name": "Send money - Enter amount - Above limit",
+   "flow": "02-send-money",
+   "png": "design/figma-export/screens-1x/02-send-money/send-money-enter-amount-above-limit__1-10296.png",
+   "spec": "design/figma-export/specs/02-send-money/send-money-enter-amount-above-limit__1-10296.json",
+   "setup": {
+    "step": 1,
+    "actions": [
+     "tap:quick-send",
+     "fill:send-search=0784 552 019",
+     "tap:recipient-row@Baraka M.",
+     "amount:50000",
+     "fill:comment=For the order",
+     "continue",
+     "confirm",
+     "otp",
+     "push",
+     "done",
+     "tap:quick-send",
+     "fill:send-search=Nee",
+     "tap:recipient-row@Neema Mushi",
+     "amount:6000000",
+     "fill:comment=For lunch"
+    ]
+   },
+   "mask": [
+    [
+     0,
+     0,
+     402,
+     44
+    ]
+   ],
+   "keyboard": true,
+   "deviations": {
+    "TZS 10,000@520": null,
+    "TZS 20,000@520": null,
+    "TZS 50,000@520": null
+   },
+   "known": {
+    "TZS 6,000,000": "BRD red line replaces the hints (parent BR-05), so the block is one line shorter",
+    "Balance TZS 1,060,000": "BRD red line replaces the hints (parent BR-05), so the block is one line shorter",
+    "No fee": "BRD red line replaces the hints (parent BR-05), so the block is one line shorter"
+   }
+  },
+  {
+   "figmaId": "1:10238",
+   "name": "Send money - Enter amount - Empty",
+   "flow": "02-send-money",
+   "png": "design/figma-export/screens-1x/02-send-money/send-money-enter-amount-empty__1-10238.png",
+   "spec": "design/figma-export/specs/02-send-money/send-money-enter-amount-empty__1-10238.json",
+   "setup": {
+    "step": 1,
+    "actions": [
+     "tap:quick-send",
+     "fill:send-search=0784 552 019",
+     "tap:recipient-row@Baraka M.",
+     "amount:50000",
+     "fill:comment=For the order",
+     "continue",
+     "confirm",
+     "otp",
+     "push",
+     "done",
+     "tap:quick-send",
+     "fill:send-search=Nee",
+     "tap:recipient-row@Neema Mushi"
+    ]
+   },
+   "mask": [
+    [
+     0,
+     0,
+     402,
+     44
+    ]
+   ],
+   "keyboard": true,
+   "deviations": {
+    "TZS 10,000@520": null,
+    "TZS 20,000@520": null,
+    "TZS 50,000@520": null
+   }
+  },
+  {
+   "figmaId": "1:10244",
+   "name": "Send money - Enter amount - Filled",
+   "flow": "02-send-money",
+   "png": "design/figma-export/screens-1x/02-send-money/send-money-enter-amount-filled__1-10244.png",
+   "spec": "design/figma-export/specs/02-send-money/send-money-enter-amount-filled__1-10244.json",
+   "setup": {
+    "step": 1,
+    "actions": [
+     "tap:quick-send",
+     "fill:send-search=0784 552 019",
+     "tap:recipient-row@Baraka M.",
+     "amount:50000",
+     "fill:comment=For the order",
+     "continue",
+     "confirm",
+     "otp",
+     "push",
+     "done",
+     "tap:quick-send",
+     "fill:send-search=Nee",
+     "tap:recipient-row@Neema Mushi",
+     "amount:35000",
+     "fill:comment=For lunch"
+    ]
+   },
+   "mask": [
+    [
+     0,
+     0,
+     402,
+     44
+    ]
+   ],
+   "keyboard": true,
+   "deviations": {
+    "TZS 10,000@520": null,
+    "TZS 20,000@520": null,
+    "TZS 50,000@520": null
+   }
+  },
+  {
+   "figmaId": "1:10289",
+   "name": "Send money - Enter amount - Not enough money",
+   "flow": "02-send-money",
+   "png": "design/figma-export/screens-1x/02-send-money/send-money-enter-amount-not-enough-money__1-10289.png",
+   "spec": "design/figma-export/specs/02-send-money/send-money-enter-amount-not-enough-money__1-10289.json",
+   "setup": {
+    "step": 1,
+    "actions": [
+     "tap:quick-send",
+     "fill:send-search=0784 552 019",
+     "tap:recipient-row@Baraka M.",
+     "amount:50000",
+     "fill:comment=For the order",
+     "continue",
+     "confirm",
+     "otp",
+     "push",
+     "done",
+     "tap:quick-send",
+     "fill:send-search=Nee",
+     "tap:recipient-row@Neema Mushi",
+     "amount:1200000",
+     "fill:comment=For lunch"
+    ]
+   },
+   "mask": [
+    [
+     0,
+     0,
+     402,
+     44
+    ]
+   ],
+   "keyboard": true,
+   "deviations": {
+    "TZS 10,000@520": null,
+    "TZS 20,000@520": null,
+    "TZS 50,000@520": null
+   },
+   "known": {
+    "TZS 1,200,000": "BRD red line replaces the hints (parent BR-05), so the block is one line shorter",
+    "Balance TZS 1,060,000": "BRD red line replaces the hints (parent BR-05), so the block is one line shorter",
+    "No fee": "BRD red line replaces the hints (parent BR-05), so the block is one line shorter"
+   }
+  },
+  {
+   "figmaId": "106:11008",
+   "name": "Send money - Recipients - Default",
+   "flow": "02-send-money",
+   "png": "design/figma-export/screens-1x/02-send-money/send-money-recipients-default__106-11008.png",
+   "spec": "design/figma-export/specs/02-send-money/send-money-recipients-default__106-11008.json",
+   "setup": {
+    "step": 1,
+    "actions": [
+     "tap:quick-send"
+    ]
+   },
+   "mask": [
+    [
+     0,
+     0,
+     402,
+     44
+    ]
+   ],
+   "deviations": {
+    "Simba@649": null,
+    "Simba@853": null,
+    "A": null,
+    "B": null,
+    "Athumani Bakari": null,
+    "+255 768 220 415": null,
+    "Asha Mwinyi": null,
+    "+255 655 903 118": null,
+    "Bahati Mollel": null,
+    "+255 742 610 093": null,
+    "AB": null,
+    "AM": null,
+    "BM": null
+   }
+  },
+  {
+   "figmaId": "1:10222",
+   "name": "Send money - Recipients - Found by account",
+   "flow": "02-send-money",
+   "png": "design/figma-export/screens-1x/02-send-money/send-money-recipients-found-by-account__1-10222.png",
+   "spec": "design/figma-export/specs/02-send-money/send-money-recipients-found-by-account__1-10222.json",
+   "setup": {
+    "step": 1,
+    "actions": [
+     "tap:quick-send",
+     "fill:send-search=0784 552 019",
+     "tap:recipient-row@Baraka M.",
+     "amount:50000",
+     "fill:comment=For the order",
+     "continue",
+     "confirm",
+     "otp",
+     "push",
+     "done",
+     "tap:quick-send",
+     "fill:send-search=0150 2345 6789"
+    ]
+   },
+   "mask": [
+    [
+     0,
+     0,
+     402,
+     44
+    ]
+   ],
+   "keyboard": true,
+   "deviations": {
+    "CONTACTS": "RESULTS",
+    "MO-SIMBA CUSTOMER": "RESULTS",
+    "Account •••• 6789": "+255 784 552 019"
+   }
+  },
+  {
+   "figmaId": "1:10196",
+   "name": "Send money - Recipients - Found by name",
+   "flow": "02-send-money",
+   "png": "design/figma-export/screens-1x/02-send-money/send-money-recipients-found-by-name__1-10196.png",
+   "spec": "design/figma-export/specs/02-send-money/send-money-recipients-found-by-name__1-10196.json",
+   "setup": {
+    "step": 1,
+    "actions": [
+     "tap:quick-send",
+     "fill:send-search=Nee"
+    ]
+   },
+   "mask": [
+    [
+     0,
+     0,
+     402,
+     44
+    ]
+   ],
+   "keyboard": true,
+   "deviations": {
+    "CONTACTS": "RESULTS",
+    "MO-SIMBA CUSTOMER": "RESULTS",
+    "Neema Lyimo": null,
+    "NL": null,
+    "+255 689 334 120": null
+   },
+   "ignore": [
+    "􀅇"
+   ]
+  },
+  {
+   "figmaId": "1:10213",
+   "name": "Send money - Recipients - Found by phone",
+   "flow": "02-send-money",
+   "png": "design/figma-export/screens-1x/02-send-money/send-money-recipients-found-by-phone__1-10213.png",
+   "spec": "design/figma-export/specs/02-send-money/send-money-recipients-found-by-phone__1-10213.json",
+   "setup": {
+    "step": 1,
+    "actions": [
+     "tap:quick-send",
+     "fill:send-search=0784 552 019",
+     "tap:recipient-row@Baraka M.",
+     "amount:50000",
+     "fill:comment=For the order",
+     "continue",
+     "confirm",
+     "otp",
+     "push",
+     "done",
+     "tap:quick-send",
+     "fill:send-search=0754 318 902"
+    ]
+   },
+   "mask": [
+    [
+     0,
+     0,
+     402,
+     44
+    ]
+   ],
+   "keyboard": true,
+   "deviations": {
+    "CONTACTS": "RESULTS",
+    "MO-SIMBA CUSTOMER": "RESULTS"
+   }
+  },
+  {
+   "figmaId": "1:10231",
+   "name": "Send money - Recipients - Not found",
+   "flow": "02-send-money",
+   "png": "design/figma-export/screens-1x/02-send-money/send-money-recipients-not-found__1-10231.png",
+   "spec": "design/figma-export/specs/02-send-money/send-money-recipients-not-found__1-10231.json",
+   "setup": {
+    "step": 1,
+    "actions": [
+     "tap:quick-send",
+     "fill:send-search=0712 000 111"
+    ]
+   },
+   "mask": [
+    [
+     0,
+     0,
+     402,
+     44
+    ]
+   ],
+   "keyboard": true,
+   "deviations": {
+    "No Mo-Simba customer found": null,
+    "Check the phone or account number and try again": null
+   }
+  },
+  {
+   "figmaId": "1:10181",
+   "name": "Send money - Recipients - Search focused",
+   "flow": "02-send-money",
+   "png": "design/figma-export/screens-1x/02-send-money/send-money-recipients-search-focused__1-10181.png",
+   "spec": "design/figma-export/specs/02-send-money/send-money-recipients-search-focused__1-10181.json",
+   "setup": {
+    "step": 1,
+    "actions": [
+     "tap:quick-send",
+     "focus:send-search"
+    ]
+   },
+   "mask": [
+    [
+     0,
+     0,
+     402,
+     44
+    ]
+   ],
+   "keyboard": true,
+   "ignore": [
+    "􀅇"
+   ],
+   "knownFrom": {
+    "y": 190,
+    "note": "Figma list offset differs from 12:4246 (A4)"
+   }
+  },
+  {
+   "figmaId": "1:10206",
+   "name": "Send money - Recipients - Searching by phone",
+   "flow": "02-send-money",
+   "png": "design/figma-export/screens-1x/02-send-money/send-money-recipients-searching-by-phone__1-10206.png",
+   "spec": "design/figma-export/specs/02-send-money/send-money-recipients-searching-by-phone__1-10206.json",
+   "setup": {
+    "step": 1,
+    "actions": [
+     "loader:1500",
+     "tap:quick-send",
+     "fill:send-search=0754 318 902",
+     "wait:350"
+    ],
+    "settleMs": 100
+   },
+   "mask": [
+    [
+     0,
+     0,
+     402,
+     44
+    ]
+   ],
+   "keyboard": true
+  },
+  {
+   "figmaId": "1:10250",
+   "name": "Send money - Success - Default",
+   "flow": "02-send-money",
+   "png": "design/figma-export/screens-1x/02-send-money/send-money-success-default__1-10250.png",
+   "spec": "design/figma-export/specs/02-send-money/send-money-success-default__1-10250.json",
+   "setup": {
+    "step": 1,
+    "actions": [
+     "tap:quick-send",
+     "fill:send-search=0784 552 019",
+     "tap:recipient-row@Baraka M.",
+     "amount:50000",
+     "fill:comment=For the order",
+     "continue",
+     "confirm",
+     "otp",
+     "push",
+     "done",
+     "tap:quick-send",
+     "fill:send-search=Nee",
+     "tap:recipient-row@Neema Mushi",
+     "amount:35000",
+     "fill:comment=For lunch",
+     "continue",
+     "otp",
+     "push"
+    ]
+   },
+   "mask": [
+    [
+     0,
+     0,
+     402,
+     44
+    ]
+   ]
+  },
+  {
+   "figmaId": "12:5946",
+   "name": "Home - Main - After transfer",
+   "flow": "02-send-money",
+   "png": "design/figma-export/screens-1x/02-send-money/home-main-after-transfer__12-5946.png",
+   "spec": "design/figma-export/specs/02-send-money/home-main-after-transfer__12-5946.json",
+   "setup": {
+    "step": 1,
+    "actions": [
+     "tap:quick-send",
+     "fill:send-search=0784 552 019",
+     "tap:recipient-row@Baraka M.",
+     "amount:50000",
+     "fill:comment=For the order",
+     "continue",
+     "confirm",
+     "otp",
+     "push",
+     "done",
+     "home"
+    ]
+   },
+   "mask": [
+    [
+     0,
+     0,
+     402,
+     44
+    ]
+   ],
+   "homeAfter": true
+  },
+  {
+   "figmaId": "13:5899",
+   "name": "Send money - Confirmation - New recipient",
+   "flow": "02-send-money",
+   "png": "design/figma-export/screens-1x/02-send-money/send-money-confirmation-new-recipient__13-5899.png",
+   "spec": "design/figma-export/specs/02-send-money/send-money-confirmation-new-recipient__13-5899.json",
+   "setup": {
+    "step": 1,
+    "actions": [
+     "tap:quick-send",
+     "fill:send-search=0784 552 019",
+     "tap:recipient-row@Baraka M.",
+     "amount:50000",
+     "fill:comment=For the order",
+     "continue"
+    ]
+   },
+   "mask": [
+    [
+     0,
+     0,
+     402,
+     44
+    ]
+   ],
+   "deviations": {
+    "TZS 10,000@520": null,
+    "TZS 20,000@520": null,
+    "TZS 50,000@520": null,
+    "Phone number": "Phone"
+   }
+  },
+  {
+   "figmaId": "12:4358",
+   "name": "Send money - Enter amount - Empty",
+   "flow": "02-send-money",
+   "png": "design/figma-export/screens-1x/02-send-money/send-money-enter-amount-empty__12-4358.png",
+   "spec": "design/figma-export/specs/02-send-money/send-money-enter-amount-empty__12-4358.json",
+   "setup": {
+    "step": 1,
+    "actions": [
+     "tap:quick-send",
+     "fill:send-search=0784 552 019",
+     "tap:recipient-row@Baraka M."
+    ]
+   },
+   "mask": [
+    [
+     0,
+     0,
+     402,
+     44
+    ]
+   ],
+   "keyboard": true,
+   "deviations": {
+    "TZS 10,000@520": null,
+    "TZS 20,000@520": null,
+    "TZS 50,000@520": null
+   }
+  },
+  {
+   "figmaId": "12:4812",
+   "name": "Send money - Enter amount - Filled",
+   "flow": "02-send-money",
+   "png": "design/figma-export/screens-1x/02-send-money/send-money-enter-amount-filled__12-4812.png",
+   "spec": "design/figma-export/specs/02-send-money/send-money-enter-amount-filled__12-4812.json",
+   "setup": {
+    "step": 1,
+    "actions": [
+     "tap:quick-send",
+     "fill:send-search=0784 552 019",
+     "tap:recipient-row@Baraka M.",
+     "amount:50000",
+     "fill:comment=For the order"
+    ]
+   },
+   "mask": [
+    [
+     0,
+     0,
+     402,
+     44
+    ]
+   ],
+   "keyboard": true,
+   "deviations": {
+    "TZS 10,000@520": null,
+    "TZS 20,000@520": null,
+    "TZS 50,000@520": null
+   }
+  },
+  {
+   "figmaId": "12:6295",
+   "name": "Send money - Recipients - After first transfer",
+   "flow": "02-send-money",
+   "png": "design/figma-export/screens-1x/02-send-money/send-money-recipients-after-first-transfer__12-6295.png",
+   "spec": "design/figma-export/specs/02-send-money/send-money-recipients-after-first-transfer__12-6295.json",
+   "setup": {
+    "step": 1,
+    "actions": [
+     "tap:quick-send",
+     "fill:send-search=0784 552 019",
+     "tap:recipient-row@Baraka M.",
+     "amount:50000",
+     "fill:comment=For the order",
+     "continue",
+     "confirm",
+     "otp",
+     "push",
+     "done",
+     "tap:quick-send"
+    ]
+   },
+   "mask": [
+    [
+     0,
+     0,
+     402,
+     44
+    ]
+   ],
+   "deviations": {
+    "Simba@649": null,
+    "Simba@853": null,
+    "A": null,
+    "B": null,
+    "Athumani Bakari": null,
+    "+255 768 220 415": null,
+    "Asha Mwinyi": null,
+    "+255 655 903 118": null,
+    "Bahati Mollel": null,
+    "+255 742 610 093": null,
+    "AB": null,
+    "AM": null,
+    "BM": null
+   },
+   "knownFrom": {
+    "y": 230,
+    "note": "Figma list offset differs from 124:11212 (A4)"
+   }
+  },
+  {
+   "figmaId": "124:11212",
+   "name": "Send money - Recipients - Default",
+   "flow": "02-send-money",
+   "png": "design/figma-export/screens-1x/02-send-money/send-money-recipients-default__124-11212.png",
+   "spec": "design/figma-export/specs/02-send-money/send-money-recipients-default__124-11212.json",
+   "setup": {
+    "step": 1,
+    "actions": [
+     "tap:quick-send"
+    ]
+   },
+   "mask": [
+    [
+     0,
+     0,
+     402,
+     44
+    ]
+   ],
+   "deviations": {
+    "Simba@649": null,
+    "Simba@853": null,
+    "A": null,
+    "B": null,
+    "Athumani Bakari": null,
+    "+255 768 220 415": null,
+    "Asha Mwinyi": null,
+    "+255 655 903 118": null,
+    "Bahati Mollel": null,
+    "+255 742 610 093": null,
+    "AB": null,
+    "AM": null,
+    "BM": null
+   }
+  },
+  {
+   "figmaId": "12:5035",
+   "name": "Send money - Recipients - New recipient by account",
+   "flow": "02-send-money",
+   "png": "design/figma-export/screens-1x/02-send-money/send-money-recipients-new-recipient-by-account__12-5035.png",
+   "spec": "design/figma-export/specs/02-send-money/send-money-recipients-new-recipient-by-account__12-5035.json",
+   "setup": {
+    "step": 1,
+    "actions": [
+     "tap:quick-send",
+     "fill:send-search=0150 2345 6789"
+    ]
+   },
+   "mask": [
+    [
+     0,
+     0,
+     402,
+     44
+    ]
+   ],
+   "keyboard": true,
+   "deviations": {
+    "Account •••• 6789": "+255 784 552 019"
+   }
+  },
+  {
+   "figmaId": "12:4246",
+   "name": "Send money - Recipients - New recipient found",
+   "flow": "02-send-money",
+   "png": "design/figma-export/screens-1x/02-send-money/send-money-recipients-new-recipient-found__12-4246.png",
+   "spec": "design/figma-export/specs/02-send-money/send-money-recipients-new-recipient-found__12-4246.json",
+   "setup": {
+    "step": 1,
+    "actions": [
+     "tap:quick-send",
+     "fill:send-search=0784 552 019"
+    ]
+   },
+   "mask": [
+    [
+     0,
+     0,
+     402,
+     44
+    ]
+   ],
+   "keyboard": true
+  },
+  {
+   "figmaId": "12:4034",
+   "name": "Send money - Recipients - Searching by phone",
+   "flow": "02-send-money",
+   "png": "design/figma-export/screens-1x/02-send-money/send-money-recipients-searching-by-phone__12-4034.png",
+   "spec": "design/figma-export/specs/02-send-money/send-money-recipients-searching-by-phone__12-4034.json",
+   "setup": {
+    "step": 1,
+    "actions": [
+     "loader:1500",
+     "tap:quick-send",
+     "fill:send-search=0784 552 019",
+     "wait:350"
+    ],
+    "settleMs": 100
+   },
+   "mask": [
+    [
+     0,
+     0,
+     402,
+     44
+    ]
+   ],
+   "keyboard": true
+  },
+  {
+   "figmaId": "19:7357",
+   "name": "Send money - Save contact - Name entered",
+   "flow": "02-send-money",
+   "png": "design/figma-export/screens-1x/02-send-money/send-money-save-contact-name-entered__19-7357.png",
+   "spec": "design/figma-export/specs/02-send-money/send-money-save-contact-name-entered__19-7357.json",
+   "setup": {
+    "step": 1,
+    "actions": [
+     "tap:quick-send",
+     "fill:send-search=0784 552 019",
+     "tap:recipient-row@Baraka M.",
+     "amount:50000",
+     "fill:comment=For the order",
+     "continue",
+     "confirm",
+     "otp",
+     "push",
+     "tap:save-contact",
+     "fill:contact-name=Baraka Mwakyusa"
+    ]
+   },
+   "mask": [
+    [
+     0,
+     0,
+     402,
+     44
+    ]
+   ],
+   "keyboard": true,
+   "known": {
+    "Save": "Figma places the button above the drawn iOS keyboard"
+   }
+  },
+  {
+   "figmaId": "12:5552",
+   "name": "Send money - Success - Save contact",
+   "flow": "02-send-money",
+   "png": "design/figma-export/screens-1x/02-send-money/send-money-success-save-contact__12-5552.png",
+   "spec": "design/figma-export/specs/02-send-money/send-money-success-save-contact__12-5552.json",
+   "setup": {
+    "step": 1,
+    "actions": [
+     "tap:quick-send",
+     "fill:send-search=0784 552 019",
+     "tap:recipient-row@Baraka M.",
+     "amount:50000",
+     "fill:comment=For the order",
+     "continue",
+     "confirm",
+     "otp",
+     "push"
+    ]
+   },
+   "mask": [
+    [
+     0,
+     0,
+     402,
+     44
+    ]
+   ],
+   "deviations": {
+    "🤓 Save contact": "Save contact"
+   }
   }
  ]
 }

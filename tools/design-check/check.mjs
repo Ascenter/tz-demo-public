@@ -26,6 +26,11 @@ const opt = (name) => {
 const flag = (name) => args.includes(`--${name}`)
 
 const TOL_POS = 3
+// Home "after" frames: below the first feed row the app shows the real Master-script history (FIGMA_VS_BRD.md).
+const HOME_AFTER_Y = 500
+const HOME_AFTER_NOTE = 'real Master-script history below the first row (FIGMA_VS_BRD)'
+// Device time: receipt dates and "until HH:MM" differ from the Figma placeholders.
+const DYNAMIC = /^\d{1,2}:\d{2}, \d{2}\.\d{2}\.\d{4}$/
 const TOL_LS = 0.1
 const GATE = 0.95
 const MAC = flag('mac')
@@ -140,7 +145,13 @@ async function conformance(page, s) {
     // Status bar time, the drawn keyboard and texts below the frame (scrolled out) are not compared.
     if (t.text === '9:41' || t.y >= ignoreBelow || t.y >= 874 - 4 || (s.ignore ?? []).includes(t.text)) continue
     const figmaText = normalise(t.text)
-    const appText = Object.hasOwn(dev, figmaText) ? dev[figmaText] : figmaText
+    // Deviations are keyed by text, or text@y when the same string appears twice on a screen.
+    const key = Object.hasOwn(dev, `${figmaText}@${t.y}`) ? `${figmaText}@${t.y}` : figmaText
+    const appText = Object.hasOwn(dev, key) ? dev[key] : figmaText
+    if (DYNAMIC.test(figmaText)) {
+      items.push({ text: figmaText, status: 'expected', note: 'device date and time' })
+      continue
+    }
     if (appText === null) {
       items.push({ text: figmaText, status: 'expected', note: 'not shown in the app (BRD / ASSUMPTIONS.md)' })
       continue
@@ -152,9 +163,11 @@ async function conformance(page, s) {
   for (const it of items) {
     if (it.status !== 'pending') continue
     const { cands } = measured[k++]
+    const known = s.known?.[it.text] ?? s.known?.[it.appText] ?? (s.homeAfter && it.spec.y >= HOME_AFTER_Y ? HOME_AFTER_NOTE : null) ?? (s.knownFrom && it.spec.y >= s.knownFrom.y ? s.knownFrom.note : null)
     if (!cands.length) {
-      it.status = 'fail'
+      it.status = known ? 'expected' : 'fail'
       it.problems = ['not found in the app']
+      if (known) it.note = `${known}: not found`
       continue
     }
     // Several hits (e.g. the same amount twice): take the one closest to the Figma position.
@@ -164,7 +177,6 @@ async function conformance(page, s) {
     it.actual = summarise(best)
     it.status = it.problems.length ? 'fail' : 'pass'
     // Known Figma inconsistencies (logged in ASSUMPTIONS.md) are listed, not counted.
-    const known = s.known?.[it.text] ?? s.known?.[it.appText]
     if (it.status === 'fail' && known) {
       it.status = 'expected'
       it.note = `${known}: ${it.problems.join('; ')}`

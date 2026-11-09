@@ -3,7 +3,7 @@
  * file ihcteWxkN7OtuBaC3Q4RVA). Names follow the Figma variables; the Figma name is in each comment.
  * Refresh: replace design/figma-export/ with a new export, then update the values here.
  */
-@theme {
+@theme static {
   /* Fonts: SF Pro Display for 20 pt and above, SF Pro Text below (Apple's optical-size split). */
   --font-sans: -apple-system, 'SF Pro Text', system-ui, sans-serif;
   --font-display: -apple-system, 'SF Pro Display', system-ui, sans-serif;

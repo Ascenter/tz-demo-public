@@ -11,6 +11,18 @@ export const BANKS = [
   'DTB Bank',
 ] as const
 
+/** Initials on the bank avatars, as drawn in Figma 42:5319. */
+export const BANK_INITIALS: Record<string, string> = {
+  'CRDB Bank': 'CR',
+  'NMB Bank': 'NM',
+  'NBC Bank': 'NB',
+  'Stanbic Bank': 'SB',
+  'Absa Bank Tanzania': 'AB',
+  'Exim Bank': 'EX',
+  'Equity Bank': 'EQ',
+  'DTB Bank': 'DT',
+}
+
 export const BANK_COLORS: Record<string, string> = {
   'CRDB Bank': '#1f9e48',
   'NMB Bank': '#0060a9',
