@@ -2426,6 +2426,271 @@
     "Government payment": "Figma feed text x differs from other Home frames (A4)"
    },
    "homeAfter": true
+  },
+  {
+   "figmaId": "234:772",
+   "name": "Bill payments - Billers - Default",
+   "flow": "07-bill-payments-luku",
+   "png": "design/figma-export/screens-1x/07-bill-payments-luku/bill-payments-billers-default__234-772.png",
+   "spec": "design/figma-export/specs/07-bill-payments-luku/bill-payments-billers-default__234-772.json",
+   "setup": {
+    "step": 6,
+    "actions": [
+     "payments",
+     "tap:pay-bills"
+    ]
+   },
+   "mask": [
+    [
+     0,
+     0,
+     402,
+     44
+    ]
+   ]
+  },
+  {
+   "figmaId": "234:804",
+   "name": "Bill payments - Confirmation - LUKU",
+   "flow": "07-bill-payments-luku",
+   "png": "design/figma-export/screens-1x/07-bill-payments-luku/bill-payments-confirmation-luku__234-804.png",
+   "spec": "design/figma-export/specs/07-bill-payments-luku/bill-payments-confirmation-luku__234-804.json",
+   "setup": {
+    "step": 6,
+    "actions": [
+     "payments",
+     "tap:pay-bills",
+     "tap:biller-luku",
+     "fill:meter-input=01234567890",
+     "blur",
+     "tap:meter-continue",
+     "amount:20000",
+     "continue"
+    ]
+   },
+   "mask": [
+    [
+     0,
+     0,
+     402,
+     44
+    ]
+   ],
+   "deviations": {
+    "Balance TZS 695,000": "Balance TZS 695,000 · No fee",
+    "No fee@306": null
+   },
+   "known": {
+    "Balance TZS 695,000 · No fee": "one hint line (as Airtime, V5) sits 8 pt under the amount"
+   }
+  },
+  {
+   "figmaId": "234:798",
+   "name": "Bill payments - LUKU amount - Filled",
+   "flow": "07-bill-payments-luku",
+   "png": "design/figma-export/screens-1x/07-bill-payments-luku/bill-payments-luku-amount-filled__234-798.png",
+   "spec": "design/figma-export/specs/07-bill-payments-luku/bill-payments-luku-amount-filled__234-798.json",
+   "setup": {
+    "step": 6,
+    "actions": [
+     "payments",
+     "tap:pay-bills",
+     "tap:biller-luku",
+     "fill:meter-input=01234567890",
+     "blur",
+     "tap:meter-continue",
+     "amount:20000"
+    ]
+   },
+   "mask": [
+    [
+     0,
+     0,
+     402,
+     44
+    ]
+   ],
+   "keyboard": true,
+   "deviations": {
+    "Balance TZS 695,000": "Balance TZS 695,000 · No fee",
+    "No fee@306": null
+   },
+   "known": {
+    "Balance TZS 695,000 · No fee": "one hint line (as Airtime, V5) sits 8 pt under the amount"
+   }
+  },
+  {
+   "figmaId": "245:2831",
+   "name": "Bill payments - LUKU amount - Not enough money",
+   "flow": "07-bill-payments-luku",
+   "png": "design/figma-export/screens-1x/07-bill-payments-luku/bill-payments-luku-amount-not-enough-money__245-2831.png",
+   "spec": "design/figma-export/specs/07-bill-payments-luku/bill-payments-luku-amount-not-enough-money__245-2831.json",
+   "setup": {
+    "step": 6,
+    "actions": [
+     "payments",
+     "tap:pay-bills",
+     "tap:biller-luku",
+     "fill:meter-input=01234567890",
+     "blur",
+     "tap:meter-continue",
+     "amount:900000"
+    ]
+   },
+   "mask": [
+    [
+     0,
+     0,
+     402,
+     44
+    ]
+   ],
+   "keyboard": true,
+   "known": {
+    "TZS 900,000": "Figma amount y differs from the other amount frames (A4)"
+   }
+  },
+  {
+   "figmaId": "245:2943",
+   "name": "Bill payments - LUKU amount - Over limit",
+   "flow": "07-bill-payments-luku",
+   "png": "design/figma-export/screens-1x/07-bill-payments-luku/bill-payments-luku-amount-over-limit__245-2943.png",
+   "spec": "design/figma-export/specs/07-bill-payments-luku/bill-payments-luku-amount-over-limit__245-2943.json",
+   "setup": {
+    "step": 6,
+    "actions": [
+     "payments",
+     "tap:pay-bills",
+     "tap:biller-luku",
+     "fill:meter-input=01234567890",
+     "blur",
+     "tap:meter-continue",
+     "amount:1500000"
+    ]
+   },
+   "mask": [
+    [
+     0,
+     0,
+     402,
+     44
+    ]
+   ],
+   "keyboard": true,
+   "known": {
+    "TZS 1,500,000": "Figma amount y differs from the other amount frames (A4)"
+   }
+  },
+  {
+   "figmaId": "234:792",
+   "name": "Bill payments - LUKU meter - Filled",
+   "flow": "07-bill-payments-luku",
+   "png": "design/figma-export/screens-1x/07-bill-payments-luku/bill-payments-luku-meter-filled__234-792.png",
+   "spec": "design/figma-export/specs/07-bill-payments-luku/bill-payments-luku-meter-filled__234-792.json",
+   "setup": {
+    "step": 6,
+    "actions": [
+     "payments",
+     "tap:pay-bills",
+     "tap:biller-luku",
+     "fill:meter-input=01234567890"
+    ]
+   },
+   "mask": [
+    [
+     0,
+     0,
+     402,
+     44
+    ]
+   ],
+   "keyboard": true,
+   "known": {
+    "Continue": "Figma places the button above the drawn iOS keyboard"
+   }
+  },
+  {
+   "figmaId": "245:2733",
+   "name": "Bill payments - LUKU meter - Not found",
+   "flow": "07-bill-payments-luku",
+   "png": "design/figma-export/screens-1x/07-bill-payments-luku/bill-payments-luku-meter-not-found__245-2733.png",
+   "spec": "design/figma-export/specs/07-bill-payments-luku/bill-payments-luku-meter-not-found__245-2733.json",
+   "setup": {
+    "step": 6,
+    "actions": [
+     "payments",
+     "tap:pay-bills",
+     "tap:biller-luku",
+     "fill:meter-input=01234567899"
+    ]
+   },
+   "mask": [
+    [
+     0,
+     0,
+     402,
+     44
+    ]
+   ],
+   "keyboard": true,
+   "known": {
+    "Continue": "Figma places the button above the drawn iOS keyboard"
+   }
+  },
+  {
+   "figmaId": "234:1227",
+   "name": "Bill payments - Success - LUKU token",
+   "flow": "07-bill-payments-luku",
+   "png": "design/figma-export/screens-1x/07-bill-payments-luku/bill-payments-success-luku-token__234-1227.png",
+   "spec": "design/figma-export/specs/07-bill-payments-luku/bill-payments-success-luku-token__234-1227.json",
+   "setup": {
+    "step": 6,
+    "actions": [
+     "payments",
+     "tap:pay-bills",
+     "tap:biller-luku",
+     "fill:meter-input=01234567890",
+     "blur",
+     "tap:meter-continue",
+     "amount:20000",
+     "continue",
+     "confirm",
+     "otp",
+     "push"
+    ]
+   },
+   "mask": [
+    [
+     0,
+     0,
+     402,
+     44
+    ]
+   ]
+  },
+  {
+   "figmaId": "246:2881",
+   "name": "Home - Main - After LUKU payment",
+   "flow": "07-bill-payments-luku",
+   "png": "design/figma-export/screens-1x/07-bill-payments-luku/home-main-after-luku-payment__246-2881.png",
+   "spec": "design/figma-export/specs/07-bill-payments-luku/home-main-after-luku-payment__246-2881.json",
+   "setup": {
+    "step": 7,
+    "actions": []
+   },
+   "mask": [
+    [
+     0,
+     0,
+     402,
+     44
+    ]
+   ],
+   "known": {
+    "LUKU electricity": "Figma feed text x differs from other Home frames (A4)",
+    "Bills · Meter 0123 4567 890": "Figma feed text x differs from other Home frames (A4)"
+   },
+   "homeAfter": true
   }
  ]
 }

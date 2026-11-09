@@ -3,6 +3,7 @@ import { useSteps, StepHost } from '../steps'
 import { paidFromValue, receiptDate } from '../shared'
 import { useExitFlow, useExitToHome } from '../exit'
 import { Screen } from '../../components/Screen'
+import { CodeEntry } from '../../components/CodeEntry'
 import { LargeTitle, NavBar } from '../../components/NavBar'
 import { CapsHeader, ListRow } from '../../components/ListRow'
 import { SearchField, RedLine } from '../../components/Fields'
@@ -174,19 +175,16 @@ function ControlNumber({ value, onChange, onBack, onContinue }: { value: string;
         </ButtonBar>
       }
     >
-      {/* Figma 239:4506: centred caps label, the number in Display 32/40 like an amount, hint under it. */}
-      <p className="pt-[10px] text-center t-semibold-12 text-sticky-header uppercase">{t('payments.gov.control_number')}</p>
-      <div className="flex flex-col items-center gap-3 px-5 pt-[10px]">
-        <input
-          data-testid="gov-control-input"
-          inputMode="numeric"
-          autoComplete="off"
-          autoFocus
-          placeholder={t('payments.gov.control_number_placeholder')}
-          value={groupDigits(value, [4, 4, 4])}
-          onChange={(e) => onChange(digitsOnly(e.target.value).slice(0, 12))}
-          className="h-10 w-full bg-transparent text-center t-display-32 text-on-bg-primary caret-on-bg-primary outline-none placeholder:text-on-bg-disabled"
-        />
+      <CodeEntry
+        label={t('payments.gov.control_number')}
+        data-testid="gov-control-input"
+        inputMode="numeric"
+        autoComplete="off"
+        autoFocus
+        placeholder={t('payments.gov.control_number_placeholder')}
+        value={groupDigits(value, [4, 4, 4])}
+        onChange={(e) => onChange(digitsOnly(e.target.value).slice(0, 12))}
+      >
         {complete &&
           (found ? (
             <p data-testid="gov-found" className="text-center t-regular-13 text-on-bg-secondary">
@@ -195,7 +193,7 @@ function ControlNumber({ value, onChange, onBack, onContinue }: { value: string;
           ) : (
             <RedLine>{t('payments.gov.not_found')}</RedLine>
           ))}
-      </div>
+      </CodeEntry>
     </Screen>
   )
 }

@@ -42,6 +42,12 @@ const AIRTIME_AMOUNT = ['payments', 'tap:pay-airtime', 'tap:airtime-row@Neema Mu
 // Airtime: one hint line "Balance … · No fee" (ASSUMPTIONS V5) and one "Contacts" header for the letter groups (V4).
 const AIRTIME_HINT = { 'Balance TZS 900,000': 'Balance TZS 900,000 · No fee', 'No fee': null }
 const GOV_CONTROL = ['payments', 'tap:pay-gov', 'tap:inst-tra']
+const LUKU_METER = ['payments', 'tap:pay-bills', 'tap:biller-luku']
+const LUKU_AMOUNT = [...LUKU_METER, 'fill:meter-input=01234567890', 'blur', 'tap:meter-continue']
+const BILLS_HINT = { 'Balance TZS 695,000': 'Balance TZS 695,000 · No fee', 'No fee@306': null }
+const BILLS_HINT_KNOWN = { 'Balance TZS 695,000 · No fee': 'one hint line (as Airtime, V5) sits 8 pt under the amount' }
+// LUKU error frames put the amount 7 pt lower than every other amount screen (A4).
+const LUKU_ERROR_Y = 'Figma amount y differs from the other amount frames (A4)'
 const KEYBOARD_GLYPH = ['\u{100147}']
 
 export const SETUPS = {
@@ -172,4 +178,15 @@ export const SETUPS = {
   '239:6670': { step: 5, actions: [...GOV_CONTROL, 'fill:gov-control-input=991081123890', 'blur', 'tap:gov-continue', 'tap:gov-pay', 'otp', 'push'] },
   // This Home frame puts the first row's text at x = 56 (other Home frames: 61–62) (A4).
   '321:12104': { step: 6, actions: [], homeAfter: true, known: { 'TRA tax': 'Figma feed text x differs from other Home frames (A4)', 'Government payment': 'Figma feed text x differs from other Home frames (A4)' } },
+
+  // ── 07 Bill payments, LUKU (from step 6) ─────────────────────────
+  '234:772': { step: 6, actions: ['payments', 'tap:pay-bills'] },
+  '245:2733': { step: 6, actions: [...LUKU_METER, 'fill:meter-input=01234567899'], keyboard: true, known: { Continue: ABOVE_KEYBOARD } },
+  '234:792': { step: 6, actions: [...LUKU_METER, 'fill:meter-input=01234567890'], keyboard: true, known: { Continue: ABOVE_KEYBOARD } },
+  '234:798': { step: 6, actions: [...LUKU_AMOUNT, 'amount:20000'], keyboard: true, deviations: BILLS_HINT, known: BILLS_HINT_KNOWN },
+  '245:2943': { step: 6, actions: [...LUKU_AMOUNT, 'amount:1500000'], keyboard: true, known: { 'TZS 1,500,000': LUKU_ERROR_Y } },
+  '245:2831': { step: 6, actions: [...LUKU_AMOUNT, 'amount:900000'], keyboard: true, known: { 'TZS 900,000': LUKU_ERROR_Y } },
+  '234:804': { step: 6, actions: [...LUKU_AMOUNT, 'amount:20000', 'continue'], deviations: BILLS_HINT, known: BILLS_HINT_KNOWN },
+  '234:1227': { step: 6, actions: [...LUKU_AMOUNT, 'amount:20000', 'continue', 'confirm', 'otp', 'push'] },
+  '246:2881': { step: 7, actions: [], homeAfter: true, known: { 'LUKU electricity': 'Figma feed text x differs from other Home frames (A4)', 'Bills · Meter 0123 4567 890': 'Figma feed text x differs from other Home frames (A4)' } },
 }
