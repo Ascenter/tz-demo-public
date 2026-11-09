@@ -32,7 +32,7 @@ type Step = { name: 'billers' } | { name: 'meter' } | { name: 'amount' } | { nam
 type Lookup = 'idle' | 'found' | 'not_found'
 
 const GRADIENT = 'var(--gradient-flow-header-blue)' // Figma: same lilac header as transfers
-const LukuAvatar = () => <Avatar icon="flash" color="#7a80ff" />
+const LukuAvatar = () => <Avatar icon="flash" color="var(--color-slate-blue)" />
 const meterText = (m: string) => groupDigits(m, [4, 4, 3])
 const tokenText = (tk: string) => groupDigits(tk, [4, 4, 4, 4, 4])
 
@@ -251,7 +251,7 @@ function Billers({ onBack, onSaved, onLuku }: { onBack: () => void; onSaved: () 
           avatarColor={b.color}
           title={t(b.titleKey as TextKey)}
           subtitle={t(b.subtitleKey as TextKey)}
-          below={b.active ? undefined : <Badge tone="custom" color="rgba(0,0,0,0.45)">{t('payments.bills.soon')}</Badge>}
+          below={b.active ? undefined : <Badge tone="custom" color="var(--color-on-bg-secondary)">{t('payments.bills.soon')}</Badge>}
           dimmed={!b.active}
           onClick={b.active ? onLuku : undefined} // Bills BR-02: Soon billers do not open
         />

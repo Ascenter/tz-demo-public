@@ -9,16 +9,16 @@ import { TransactionDetails } from '../components/TransactionDetails'
 import { t } from '../mock/texts'
 
 // Category icon and colour as in the Figma "Transaction_list_item" rows.
-const CATEGORY: Record<Category, { icon: IconName; color: string }> = {
-  transfer: { icon: 'arrowRight', color: '#7a80ff' },
-  topup: { icon: 'plus', color: '#000000' },
-  cash: { icon: 'wallet', color: '#88c758' },
-  bills: { icon: 'flash', color: '#18ccb4' },
-  water: { icon: 'drop', color: '#4bc5eb' },
-  gov: { icon: 'gov', color: '#c7c758' },
-  card: { icon: 'apple', color: '#ff9d57' },
-  qr: { icon: 'qr', color: '#39cc7e' },
-  airtime: { icon: 'phone', color: '#39cc7e' },
+const CATEGORY: Record<Category, { icon: IconName; color?: string }> = {
+  transfer: { icon: 'arrowRight' },
+  topup: { icon: 'plus', color: 'var(--color-on-bg-primary)' },
+  cash: { icon: 'wallet' },
+  bills: { icon: 'flash' },
+  water: { icon: 'drop' },
+  gov: { icon: 'gov', color: 'var(--color-olive)' },
+  card: { icon: 'apple' },
+  qr: { icon: 'qr', color: 'var(--color-turquoise)' },
+  airtime: { icon: 'phone' },
 }
 
 function dayHeader(day: number, sum: number): string {

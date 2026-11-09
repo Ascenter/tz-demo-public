@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import { AnimatePresence, motion } from 'motion/react'
 import { useUi } from './ui'
 import { t } from '../mock/texts'
+import { PawLoader } from '../components/Loader'
 
 /** Blocking loader for every simulated backend answer (parent BR-03). */
 export function LoaderOverlay() {
@@ -11,18 +12,19 @@ export function LoaderOverlay() {
       {loaderVisible && (
         <motion.div
           data-testid="loader"
-          className="absolute inset-0 z-[70] grid place-items-center bg-white/70 backdrop-blur-[2px]"
+          className="absolute inset-0 z-[70] grid place-items-center bg-white/40"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.12 }}
         >
-          <div className="flex flex-col items-center gap-4">
-            <span
-              className="size-10 rounded-full border-[3px] border-black/10 border-t-black"
-              style={{ animation: 'spin 0.8s linear infinite' }}
-            />
-            <span className="t-regular-14 text-on-bg-secondary">{loaderLabel ?? t('payments.common.loading')}</span>
+          <div className="flex flex-col items-center gap-2">
+            <PawLoader />
+            {loaderLabel ? (
+              <span className="t-semibold-16 text-on-bg-primary">{loaderLabel}</span>
+            ) : (
+              <span className="sr-only">{t('payments.common.loading')}</span>
+            )}
           </div>
         </motion.div>
       )}

@@ -52,6 +52,10 @@
   --color-blue-ocean: #5297ff; /* Secondary colors/Blue Ocean */
   --color-turkish: #18ccb4; /* secondary colors/turkish_8 */
   --color-cobalt-blue: #0974ff; /* Base Colors/Light Mode/Cobalt Blue */
+  --color-lime: #88c758; /* category icon withdraw_cash */
+  --color-sky: #4bc5eb; /* category icon communal */
+  --color-olive: #c7c758; /* Payments: Government payments circle (Figma 1:4211) */
+  --color-indigo: #566dcc; /* Payments: Scan QR circle (Figma 1:4211) */
   --color-highlight: #7a80ff33; /* Slate Blue 20%: the "never share the code" banner */
 
   /* ── radius ───────────────────────────────────────────────── */

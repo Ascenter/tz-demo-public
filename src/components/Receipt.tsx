@@ -52,7 +52,7 @@ export function Receipt({ amount, status, blocks, actions, onDone, doneLabel, se
       }
     >
       <div className="flex min-h-full flex-col items-center gap-6 pt-2">
-        <Illustration kind="success" size={140} />
+        <Illustration kind="receipt" />
         <div className="flex flex-col items-center gap-2 px-5">
           <p data-testid="receipt-amount" className="t-display-23">
             {formatTZS(amount)}

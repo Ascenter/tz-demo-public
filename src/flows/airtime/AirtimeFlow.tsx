@@ -80,7 +80,7 @@ export function AirtimeFlow() {
           gradient={GRADIENT}
           onBack={nav.pop}
           header={{
-            leading: target.name ? <Avatar initials={initialsOf(target.name)} color={colorFor(target.name)} /> : <Avatar icon="phone" color="#39cc7e" />,
+            leading: target.name ? <Avatar initials={initialsOf(target.name)} color={colorFor(target.name)} /> : <Avatar icon="phone" />,
             title,
             badge: <Badge tone="custom" color={OPERATOR_COLORS[target.operator]}>{target.operator}</Badge>,
           }}
@@ -159,7 +159,7 @@ function Recipients({ onBack, onPick }: { onBack: () => void; onPick: (t: Target
       <ListRow
         key={c.phone + title}
         testId={testId}
-        leading={c === AIRTIME_MY_NUMBER ? <Avatar icon="phone" color="#39cc7e" /> : <Avatar initials={initialsOf(c.name)} color={colorFor(c.name)} />}
+        leading={c === AIRTIME_MY_NUMBER ? <Avatar icon="phone" /> : <Avatar initials={initialsOf(c.name)} color={colorFor(c.name)} />}
         title={title}
         subtitle={t('payments.airtime.row_subtitle', { phone: c.phone, operator })}
         onClick={() => onPick({ name: c === AIRTIME_MY_NUMBER ? t('payments.airtime.my_number') : c.name, phone: c.phone, operator })}
@@ -196,7 +196,7 @@ function Recipients({ onBack, onPick }: { onBack: () => void; onPick: (t: Target
       {view.kind === 'number' && (
         <ListRow
           testId="airtime-number-row"
-          leading={<Avatar icon="phone" color="#39cc7e" />}
+          leading={<Avatar icon="phone" />}
           title={view.target.name ?? view.target.phone}
           subtitle={t('payments.airtime.row_subtitle', { phone: view.target.phone, operator: view.target.operator })}
           onClick={() => onPick(view.target)}

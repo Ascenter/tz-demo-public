@@ -61,7 +61,7 @@ export function AmountEntry({ value, onChange, hints, error, comment, chips = []
 
       {comment && (
         <label className="mx-5 mb-3 flex items-center gap-2 rounded-field bg-field-bg py-[7px] pl-3 pr-5">
-          <Icon name="chat" size={20} color="rgba(0,0,0,0.3)" />
+          <Icon name="chat" size={20} color="var(--color-icon-30)" />
           <input
             data-testid="comment"
             value={comment.value}

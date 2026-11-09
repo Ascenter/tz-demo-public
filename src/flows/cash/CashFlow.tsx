@@ -74,7 +74,7 @@ export function CashFlow() {
           gradient={GRADIENT}
           onBack={nav.pop} // typed amount is not kept
           header={{
-            leading: <Avatar icon="wallet" color="#88c758" />,
+            leading: <Avatar icon="user" />,
             title: t('payments.cash_withdrawal.amount_title'),
             subtitle: t('payments.cash_withdrawal.amount_subtitle'),
           }}
@@ -126,10 +126,10 @@ function Methods({ onBack, onAgent }: { onBack: () => void; onAgent: () => void 
   useBack(onBack)
   return (
     <Screen testId="cash-methods" gradient={GRADIENT} header={<><NavBar onBack={onBack} /><LargeTitle title={t('payments.cash_withdrawal.method_title')} /></>}>
-      <ListRow testId="cash-agent" icon="user" avatarColor="#88c758" title={t('payments.cash_withdrawal.agent')} subtitle={t('payments.cash_withdrawal.agent_subtitle')} onClick={onAgent} />
+      <ListRow testId="cash-agent" icon="user" title={t('payments.cash_withdrawal.agent')} subtitle={t('payments.cash_withdrawal.agent_subtitle')} onClick={onAgent} />
       {/* Cash BR-02: inactive rows, a tap does nothing */}
-      <ListRow icon="card" avatarColor="#566dcc" title={t('payments.cash_withdrawal.atm')} subtitle={t('payments.cash_withdrawal.atm_subtitle')} />
-      <ListRow initials="M" avatarColor="#00a651" title={t('payments.cash_withdrawal.mpesa')} subtitle={t('payments.cash_withdrawal.mpesa_subtitle')} />
+      <ListRow icon="card" title={t('payments.cash_withdrawal.atm')} subtitle={t('payments.cash_withdrawal.atm_subtitle')} />
+      <ListRow icon="mobile" title={t('payments.cash_withdrawal.mpesa')} subtitle={t('payments.cash_withdrawal.mpesa_subtitle')} />
     </Screen>
   )
 }

@@ -4,7 +4,7 @@ import { useDemo } from '../app/store'
 import { useUi } from '../app/ui'
 import { available } from '../engine/money'
 import { formatNumber, formatTZS } from '../engine/format'
-import { RoundIcon52, type IconName } from '../components/icons'
+import { RoundIcon52, VisaLogo, type IconName } from '../components/icons'
 import { t, type TextKey } from '../mock/texts'
 import { Feed } from './Feed'
 
@@ -77,7 +77,7 @@ export function Home() {
 
           {/* Card is visual only (not in this demo). */}
           <div className="relative mx-auto mt-7 h-[186px] w-[295px] rounded-component border-[0.5px] border-white-20 bg-black-card px-4 py-[10px]">
-            <span className="absolute right-4 top-[14px] font-display text-[22px] font-black italic tracking-tight text-white">VISA</span>
+            <VisaLogo className="absolute right-4 top-[14px]" />
           </div>
         </div>
 

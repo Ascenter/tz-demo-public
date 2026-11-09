@@ -2,11 +2,11 @@ import type { ReactNode } from 'react'
 import { Screen } from './Screen'
 import { NavBar } from './NavBar'
 import { ButtonBar, PrimaryButton } from './PrimaryButton'
-import { Illustration } from './Illustration'
+import { Illustration, type IllustrationKind } from './Illustration'
 import { useBack } from '../app/back'
 
 interface Props {
-  kind: 'success' | 'error' | 'phone' | 'pending' | 'cash'
+  kind: IllustrationKind
   title: ReactNode
   body?: ReactNode
   /** Big content under the illustration, e.g. the withdrawal code. */

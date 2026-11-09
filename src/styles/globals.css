@@ -119,3 +119,12 @@ button:disabled {
 .caret {
   animation: caret 1s step-end infinite;
 }
+@keyframes paw-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(0.92);
+  }
+}

@@ -1,3 +1,4 @@
+import { Spinner } from '../../components/Loader'
 import { useEffect, useState } from 'react'
 import { Screen } from '../../components/Screen'
 import { LargeTitle, NavBar } from '../../components/NavBar'
@@ -113,7 +114,7 @@ export function RecipientsScreen({ onBack, onPick, onOtherBank }: Props) {
         </>
       ) : loading ? (
         <div className="flex justify-center py-10" data-testid="search-loader">
-          <span className="size-7 rounded-full border-[3px] border-black/10 border-t-black" style={{ animation: 'spin 0.8s linear infinite' }} />
+          <Spinner size={28} />
         </div>
       ) : (
         <div data-testid="search-results">

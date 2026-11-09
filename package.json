@@ -14,7 +14,8 @@
     "format": "prettier --write .",
     "qa": "node scripts/qa-shots.mjs",
     "icons": "node scripts/make-icons.mjs",
-    "typecheck": "tsc -b"
+    "typecheck": "tsc -b",
+    "design:assets": "node scripts/sync-design-assets.mjs"
   },
   "dependencies": {
     "motion": "14.10.1",
@@ -36,12 +37,16 @@
     "eslint": "10.14.0",
     "eslint-plugin-react-hooks": "7.1.1",
     "globals": "17.14.0",
+    "pixelmatch": "8.0.0",
+    "pngjs": "7.0.0",
     "prettier": "3.9.10",
+    "sharp": "0.35.5",
     "tailwindcss": "4.3.5",
     "typescript": "6.0.3",
     "typescript-eslint": "8.72.1",
     "vite": "8.3.6",
     "vite-plugin-pwa": "2.0.0",
+    "vite-plugin-svgr": "5.2.0",
     "vitest": "5.1.0"
   },
   "engines": {

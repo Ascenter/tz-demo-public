@@ -3,6 +3,7 @@ import { useSteps, StepHost } from '../steps'
 import { AmountStep } from '../shared'
 import { useExitFlow } from '../exit'
 import { MpesaPrompt } from './MpesaPrompt'
+import { Illustration } from '../../components/Illustration'
 import { Screen } from '../../components/Screen'
 import { LargeTitle, NavBar } from '../../components/NavBar'
 import { ListRow } from '../../components/ListRow'
@@ -31,7 +32,7 @@ type Step =
   | { name: 'success' | 'declined' | 'not_enough' | 'in_progress' }
 
 const GRADIENT = 'var(--gradient-fund-cash-method-header)'
-const MpesaAvatar = () => <Avatar initials="M" color="#00a651" />
+const MpesaAvatar = () => <Avatar icon="mobile" />
 
 /** Route entry: Done/Close/Got it return to the screen the flow started from (Fund BR-10). */
 export function FundRoute() {
@@ -165,8 +166,8 @@ function Methods({ onBack, onMpesa }: { onBack: () => void; onMpesa: () => void 
     <Screen testId="fund-methods" gradient={GRADIENT} header={<><NavBar onBack={onBack} /><LargeTitle title={t('payments.fund_account.title')} /></>}>
       <ListRow testId="fund-mpesa" leading={<MpesaAvatar />} title={t('payments.fund_account.mpesa')} subtitle={t('payments.fund_account.mpesa_subtitle')} onClick={onMpesa} />
       {/* Fund OQ-1 a): shown as in Figma, a tap does nothing */}
-      <ListRow leading={<Avatar initials="A" color="#e40000" />} title={t('payments.fund_account.airtel')} subtitle={t('payments.fund_account.airtel_subtitle')} />
-      <ListRow icon="bank" avatarColor="#566dcc" title={t('payments.fund_account.bank')} subtitle={t('payments.fund_account.bank_subtitle')} />
+      <ListRow leading={<Avatar icon="airtelWallet" />} title={t('payments.fund_account.airtel')} subtitle={t('payments.fund_account.airtel_subtitle')} />
+      <ListRow icon="bank" title={t('payments.fund_account.bank')} subtitle={t('payments.fund_account.bank_subtitle')} />
     </Screen>
   )
 }
@@ -202,7 +203,7 @@ function Waiting({ amount, onSend, onCancel }: { amount: number; onSend: () => P
     <div className="absolute inset-0" data-testid="fund-waiting">
       <Screen header={<NavBar />} scroll={false}>
         <div className="flex flex-1 flex-col items-center justify-center gap-6 px-10 text-center">
-          <span className="grid size-40 place-items-center rounded-full bg-[linear-gradient(135deg,#e5ecff,#b8b8ff)] text-[64px]">📱</span>
+          <Illustration kind="phone" />
           <div className="flex flex-col gap-2">
             <h1 className="t-display-23">{t('payments.fund_account.check_phone')}</h1>
             <p className="t-regular-14 text-on-bg-secondary">{t('payments.fund_account.check_phone_body', { amount: formatNumber(amount) })}</p>

@@ -8,7 +8,7 @@ export function SearchField({
 }: InputHTMLAttributes<HTMLInputElement> & { inactive?: boolean }) {
   return (
     <label className="mx-5 flex h-10 items-center gap-2 rounded-full bg-field-bg px-3">
-      <Icon name="search" size={20} color="rgba(0,0,0,0.35)" />
+      <Icon name="search" size={24} color="var(--color-on-bg-secondary)" />
       <input
         {...rest}
         readOnly={inactive || rest.readOnly}

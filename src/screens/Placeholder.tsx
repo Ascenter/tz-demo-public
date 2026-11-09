@@ -16,7 +16,7 @@ export function Placeholder({ kind }: { kind: 'credit' | 'savings' | 'more' }) {
           <LargeTitle title={t(`placeholder.${kind}_title` as TextKey)} />
         </div>
         <div className="relative flex min-h-[720px] flex-col items-center gap-4 rounded-t-container bg-surface px-10 pb-32 pt-16 text-center">
-          <Illustration kind="pending" size={120} />
+          <Illustration kind="pending" />
           <p className="t-display-20">{t('placeholder.soon')}</p>
           <p className="t-regular-14 text-on-bg-secondary">
             {t(`placeholder.${kind}_body` as TextKey, { limit: formatNumber(limit) })}
