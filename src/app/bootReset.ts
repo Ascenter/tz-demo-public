@@ -8,7 +8,9 @@ if (params.has('reset')) {
   } catch {
     /* storage blocked */
   }
-  history.replaceState(null, '', location.pathname)
+  params.delete('reset') // keep the other flags (?device, ?bare, ?e2e)
+  const rest = params.toString()
+  history.replaceState(null, '', location.pathname + (rest ? `?${rest}` : ''))
 }
 
 // Installed PWA or a phone browser: no device frame, real safe areas.

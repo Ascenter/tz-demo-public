@@ -30,7 +30,7 @@ type Step =
   | { name: 'waiting' }
   | { name: 'success' | 'declined' | 'not_enough' | 'in_progress' }
 
-const GRADIENT = 'var(--gradient-fund)'
+const GRADIENT = 'var(--gradient-fund-cash-method-header)'
 const MpesaAvatar = () => <Avatar initials="M" color="#00a651" />
 
 /** Route entry: Done/Close/Got it return to the screen the flow started from (Fund BR-10). */
@@ -204,8 +204,8 @@ function Waiting({ amount, onSend, onCancel }: { amount: number; onSend: () => P
         <div className="flex flex-1 flex-col items-center justify-center gap-6 px-10 text-center">
           <span className="grid size-40 place-items-center rounded-full bg-[linear-gradient(135deg,#e5ecff,#b8b8ff)] text-[64px]">📱</span>
           <div className="flex flex-col gap-2">
-            <h1 className="font-display text-fraction font-semibold">{t('payments.fund_account.check_phone')}</h1>
-            <p className="text-body-m text-secondary">{t('payments.fund_account.check_phone_body', { amount: formatNumber(amount) })}</p>
+            <h1 className="t-display-23">{t('payments.fund_account.check_phone')}</h1>
+            <p className="t-regular-14 text-on-bg-secondary">{t('payments.fund_account.check_phone_body', { amount: formatNumber(amount) })}</p>
           </div>
         </div>
       </Screen>

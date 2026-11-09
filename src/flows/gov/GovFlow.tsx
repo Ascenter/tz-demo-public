@@ -25,7 +25,7 @@ import { t, type TextKey } from '../../mock/texts'
 
 type Step = { name: 'institutions' } | { name: 'control' } | { name: 'otp' } | { name: 'receipt' }
 
-const GRADIENT = 'var(--gradient-transfer)' // Figma: same lilac header as transfers
+const GRADIENT = 'var(--gradient-flow-header-blue)' // Figma: same lilac header as transfers
 const GovAvatar = () => <Avatar icon={TRA.icon} color={TRA.color} />
 
 /** Government bill via GePG (child BRD 3447390224). Done on the receipt opens Home (BR-09). */
@@ -183,11 +183,11 @@ function ControlNumber({ value, onChange, onBack, onContinue }: { value: string;
           placeholder={t('payments.gov.control_number_placeholder')}
           value={groupDigits(value, [4, 4, 4])}
           onChange={(e) => onChange(digitsOnly(e.target.value).slice(0, 12))}
-          className="h-14 rounded-field bg-tertiary-bg px-4 font-display text-[24px] font-semibold tracking-[1px] outline-none placeholder:text-black/20"
+          className="h-14 rounded-field bg-field-bg px-4 font-display text-[24px] font-semibold tracking-[1px] outline-none placeholder:text-black/20"
         />
         {complete &&
           (found ? (
-            <p data-testid="gov-found" className="text-caption text-secondary">
+            <p data-testid="gov-found" className="t-regular-13 text-on-bg-secondary">
               {t('payments.gov.found', { institution: GOV.institution, payer: GOV.payer })}
             </p>
           ) : (

@@ -23,7 +23,7 @@ export function StatusBar({ fake }: { fake: boolean }) {
       style={{ height: 'var(--safe-top)' }}
     >
       {fake && (
-        <div className="pointer-events-none relative h-full text-primary">
+        <div className="pointer-events-none relative h-full text-on-bg-primary">
           <span className="absolute left-10 top-1/2 -translate-y-1/2 text-[15px] font-semibold tracking-[-0.23px]">9:41</span>
           <span className="absolute right-[40px] top-1/2 flex -translate-y-1/2 items-center gap-[5px]">
             <svg width="17" height="11" viewBox="0 0 17 11" aria-hidden="true">

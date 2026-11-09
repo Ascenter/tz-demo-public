@@ -13,7 +13,7 @@ import { MO_SIMBA, type SendRecipient } from '../../mock/recipients'
 import { searchRecipients, type SearchResult } from './search'
 import { maskAccount } from '../shared'
 
-export const SEND_GRADIENT = 'var(--gradient-transfer)'
+export const SEND_GRADIENT = 'var(--gradient-flow-header-blue)'
 
 interface Props {
   onBack: () => void

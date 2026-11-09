@@ -31,7 +31,7 @@ import { t, type TextKey } from '../../mock/texts'
 type Step = { name: 'billers' } | { name: 'meter' } | { name: 'amount' } | { name: 'otp' } | { name: 'receipt' }
 type Lookup = 'idle' | 'found' | 'not_found'
 
-const GRADIENT = 'var(--gradient-transfer)' // Figma: same lilac header as transfers
+const GRADIENT = 'var(--gradient-flow-header-blue)' // Figma: same lilac header as transfers
 const LukuAvatar = () => <Avatar icon="flash" color="#7a80ff" />
 const meterText = (m: string) => groupDigits(m, [4, 4, 3])
 const tokenText = (tk: string) => groupDigits(tk, [4, 4, 4, 4, 4])
@@ -312,10 +312,10 @@ function MeterScreen(props: {
               onChange(m)
             }
           }}
-          className="h-14 rounded-field bg-tertiary-bg px-4 font-display text-[24px] font-semibold tracking-[1px] outline-none placeholder:text-black/20"
+          className="h-14 rounded-field bg-field-bg px-4 font-display text-[24px] font-semibold tracking-[1px] outline-none placeholder:text-black/20"
         />
         {lookup === 'found' && (
-          <p data-testid="meter-owner" className="text-caption text-secondary">
+          <p data-testid="meter-owner" className="t-regular-13 text-on-bg-secondary">
             {t('payments.bills.meter_owner', { name: BILLS.owner })}
           </p>
         )}

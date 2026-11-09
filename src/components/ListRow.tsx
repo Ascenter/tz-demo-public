@@ -26,8 +26,8 @@ export function ListRow({ title, subtitle, icon, iconColor, initials, avatarColo
     <>
       {leading ?? <Avatar icon={icon} initials={initials} color={avatarColor} iconColor={iconColor} />}
       <span className="flex min-w-0 flex-1 flex-col items-start text-left">
-        <span className="w-full truncate text-body-l text-primary">{title}</span>
-        {subtitle !== undefined && <span className="w-full text-body-m text-secondary">{subtitle}</span>}
+        <span className="w-full truncate t-regular-16 text-on-bg-primary">{title}</span>
+        {subtitle !== undefined && <span className="w-full t-regular-14 text-on-bg-secondary">{subtitle}</span>}
         {below && <span className="mt-1">{below}</span>}
       </span>
       {right}
@@ -49,7 +49,7 @@ export function ListRow({ title, subtitle, icon, iconColor, initials, avatarColo
 export function CapsHeader({ children, right, testId }: { children: ReactNode; right?: ReactNode; testId?: string }) {
   return (
     <div className="flex h-9 items-center justify-between px-5 py-[6px]">
-      <span data-testid={testId} className="text-sticky font-semibold text-sticky-header uppercase">
+      <span data-testid={testId} className="t-semibold-12 text-sticky-header uppercase">
         {children}
       </span>
       {right}

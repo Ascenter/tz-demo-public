@@ -1,82 +1,129 @@
-/* Design tokens from Figma variables (get_variable_defs on node 1:3556, file ihcteWxkN7OtuBaC3Q4RVA). */
+/*
+ * Design tokens from the offline Figma export (design/figma-export/tokens/tokens.json,
+ * file ihcteWxkN7OtuBaC3Q4RVA). Names follow the Figma variables; the Figma name is in each comment.
+ * Refresh: replace design/figma-export/ with a new export, then update the values here.
+ */
 @theme {
-  --font-sans: -apple-system, 'SF Pro Text', 'SF Pro Display', system-ui, 'Segoe UI', Roboto, sans-serif;
-  --font-display: -apple-system, 'SF Pro Display', 'SF Pro Text', system-ui, 'Segoe UI', Roboto, sans-serif;
+  /* Fonts: SF Pro Display for 20 pt and above, SF Pro Text below (Apple's optical-size split). */
+  --font-sans: -apple-system, 'SF Pro Text', system-ui, sans-serif;
+  --font-display: -apple-system, 'SF Pro Display', system-ui, sans-serif;
 
-  /* base */
-  --color-primary: #000000; /* base/onBackgroundPrimary */
-  --color-secondary: #00000080; /* base/onBackgroundSecondary, Black 50% */
-  --color-icon30: #0000004d; /* icon/Icon_30% */
+  /* ── colour: base ─────────────────────────────────────────── */
+  --color-on-bg-primary: #000000; /* base/onBackgroundPrimary, Labels/Primary */
+  --color-on-bg-secondary: #00000080; /* base/onBackgroundSecondary, textField/defaultHint, button/onNoBg */
+  --color-on-bg-disabled: #0000004d; /* textField/disabledHint, textInput/defaultHint (black 30%) */
   --color-sticky-header: #00000059; /* base/stickyHeader */
-  --color-tertiary-bg: #0000000f; /* base/onBackgroundTertiary, textfield/defaultBg */
+  --color-icon-30: #0000004d; /* icon/Icon_30% */
+  --color-icon-50: #00000080; /* icon/Icon_50% */
+  --color-border-unselected: #00000033; /* border/Unselected */
+  --color-field-bg: #0000000f; /* textField/defaultBg (search field, comment field) */
   --color-surface: #ffffff; /* background/Surface, background/Screen */
-  --color-black-card: #1a1a1a; /* Card/blackCard_BG */
-  --color-button: #000000; /* button/primaryBgEnabled */
-  --color-tab-selection: #ededed; /* tabBarLiquidGlass/SelectionBg */
-  --color-tab-active: #a983fb; /* IconColor / TextColor */
   --color-light-gray: #f0f3f7; /* background/lightGray (receipt) */
-  --color-chip-bg: #0974ff1f; /* chips/background */
-  --color-chip-text: #0974ff; /* chips/text */
-  --color-error: #ff3b30; /* red line */
-  --color-highlight: #7a80ff33; /* 20% slate blue banner */
-  --color-white20: #ffffff33; /* Dark mode/White 20% */
-  --color-modal-bg: #00000080; /* background/modalBg */
-  --color-keyboard: #e6e9ed;
-  --color-turquoise: #39cc7e;
+  --color-modal-bg: #00000080; /* background/modalBG */
+  --color-black-card: #1a1a1a; /* Card/blackCard_BG */
+  --color-white-20: #ffffff33; /* Base Colors/Dark mode/White 20% */
+  --color-badge-dark: #000000; /* badge/Dark */
 
-  /* radius */
-  --radius-full: 9999px;
-  --radius-container: 32px;
-  --radius-component: 20px;
-  --radius-field: 16px;
+  /* buttons */
+  --color-button-primary: #000000; /* button/primaryBgEnabled */
+  --color-on-button-primary: #ffffff; /* button/onPrimary */
+  --color-on-button-nobg: #00000080; /* button/onNoBg */
 
-  /* type scale: size / line-height / tracking / weight */
-  --text-main-amount: 48px; /* mainAmount — SF Pro Display Semibold 48/56 */
-  --text-main-amount--line-height: 56px;
-  --text-main-amount--letter-spacing: 0.38px;
-  --text-amount-input: 40px; /* textInput/textInputAmount 40/48 */
-  --text-amount-input--line-height: 48px;
-  --text-amount-input--letter-spacing: 0.4px;
-  --text-toolbar-expanded: 26px; /* toolbar/toolbarTitleExpanded 26/34 */
-  --text-toolbar-expanded--line-height: 34px;
-  --text-toolbar-expanded--letter-spacing: 0.35px;
-  --text-fraction: 23px; /* mainAmountFraction, content/contentTitle 23/30 */
-  --text-fraction--line-height: 30px;
-  --text-fraction--letter-spacing: 0.35px;
-  --text-header: 20px; /* header/headerTitle 20/28 */
-  --text-header--line-height: 28px;
-  --text-header--letter-spacing: 0.38px;
-  --text-xl-body: 18px; /* body/extraLarge 18/24 */
-  --text-xl-body--line-height: 24px;
-  --text-xl-body--letter-spacing: -0.45px;
-  --text-body-l: 16px; /* body/large 16/22 */
-  --text-body-l--line-height: 22px;
-  --text-body-l--letter-spacing: -0.32px;
-  --text-body-mp: 15px; /* body/mediumPlus 15/20 */
-  --text-body-mp--line-height: 20px;
-  --text-body-mp--letter-spacing: -0.23px;
-  --text-body-m: 14px; /* body/medium 14/20 */
-  --text-body-m--line-height: 20px;
-  --text-body-m--letter-spacing: -0.15px;
-  --text-caption: 13px; /* caption/mini 13/18 */
-  --text-caption--line-height: 18px;
-  --text-caption--letter-spacing: -0.08px;
-  --text-sticky: 12px; /* header/stickyHeader semibold 12/16 caps */
-  --text-sticky--line-height: 16px;
-  --text-nano: 11px; /* caption/nano semibold 11/14 */
-  --text-nano--line-height: 14px;
-  --text-nano--letter-spacing: 0.07px;
-  --text-tab: 9px; /* caption/atom medium 9/13 */
-  --text-tab--line-height: 13px;
-  --text-tab--letter-spacing: 0.12px;
+  /* chips, text fields */
+  --color-chips-bg: #0974ff1f; /* chips/background */
+  --color-chips-text: #0974ff; /* chips/text, Cobalt Blue */
+  --color-error-hint: #f5473b; /* textField/errorHint */
 
-  /* gradients (Figma "background gradients/1:4/…") */
-  --gradient-home: linear-gradient(to bottom, #feffd6 0%, #ffc3ad 25%);
-  --gradient-payments: linear-gradient(to bottom, #efffcc 0%, #a7f5ac 25%);
-  --gradient-transfer: linear-gradient(to bottom, #e5ecff 0%, #b8b8ff 25%);
-  --gradient-fund: linear-gradient(to bottom, #f3ffe0 0%, #c9f2a6 25%);
-  --gradient-cash: linear-gradient(to bottom, #f1ffe5 0%, #b9e88f 25%);
-  --gradient-bills: linear-gradient(to bottom, #e6fbff 0%, #a9e6f5 25%);
-  --gradient-gov: linear-gradient(to bottom, #fbffe0 0%, #e2e59a 25%);
-  --gradient-airtime: linear-gradient(to bottom, #e9fff2 0%, #a6ebc4 25%);
+  /* tab bar (liquid glass) */
+  --color-tab-selection: #ededed; /* tabBarLiquidGlass/SelectionBg */
+  --color-tab-active: #a983fb; /* IconColor, TextColor */
+
+  /* iOS number pad */
+  --color-keyboard: #e6e9ed; /* keyboard background */
+  --color-keyboard-glyph: #595959; /* Miscellaneous/Keyboards/Glyphs - Primary */
+
+  /* ── colour: categories (Secondary colors) ───────────────── */
+  --color-turquoise: #39cc7e; /* Secondary colors/Turquoise */
+  --color-hot-pink: #ff75d0; /* Secondary colors/Hot Pink */
+  --color-slate-blue: #7a80ff; /* Secondary colors/Slate Blue */
+  --color-light-orange: #ff9d57; /* Secondary colors/Light Orange */
+  --color-sweet-tomato: #ff7092; /* Secondary colors/Sweet Tomato */
+  --color-medium-purple: #a983fb; /* Secondary colors/Medium Purple */
+  --color-blue-ocean: #5297ff; /* Secondary colors/Blue Ocean */
+  --color-turkish: #18ccb4; /* secondary colors/turkish_8 */
+  --color-cobalt-blue: #0974ff; /* Base Colors/Light Mode/Cobalt Blue */
+  --color-highlight: #7a80ff33; /* Slate Blue 20%: the "never share the code" banner */
+
+  /* ── radius ───────────────────────────────────────────────── */
+  --radius-full: 9999px; /* full/circle */
+  --radius-container: 32px; /* container/32: sheets, list background */
+  --radius-component: 20px; /* component/20 */
+  --radius-field: 16px; /* component/16: search and comment fields */
+
+  /* ── type scale (Tailwind text-* sizes; full styles are the t-* utilities below) ── */
+  --text-display-48: 48px; /* mainAmount/mainAmount */
+  --text-display-48--line-height: 56px;
+  --text-display-40: 40px; /* textInput/textInputAmount */
+  --text-display-40--line-height: 48px;
+  --text-display-32: 32px;
+  --text-display-32--line-height: 40px;
+  --text-display-26: 26px; /* toolbar/toolbarTitleExpanded */
+  --text-display-26--line-height: 34px;
+  --text-display-23: 23px; /* content/contentTitle, mainAmount/mainAmountFraction */
+  --text-display-23--line-height: 30px;
+  --text-display-20: 20px; /* header/headerTitle */
+  --text-display-20--line-height: 28px;
+  --text-18: 18px; /* body/extraLarge */
+  --text-18--line-height: 24px;
+  --text-16: 16px; /* body/large, buttons/buttonPrimary, toolbar/toolbarTitle */
+  --text-16--line-height: 22px;
+  --text-15: 15px; /* body/mediumPlus */
+  --text-15--line-height: 20px;
+  --text-14: 14px; /* body/medium, content/contentSubtitle */
+  --text-14--line-height: 20px;
+  --text-13: 13px; /* caption/mini, buttons/roundButtonTitle */
+  --text-13--line-height: 18px;
+  --text-12: 12px; /* header/stickyHeader */
+  --text-12--line-height: 16px;
+  --text-11: 11px; /* caption/nano */
+  --text-11--line-height: 14px;
+  --text-9: 9px; /* caption/atom (tab bar labels) */
+  --text-9--line-height: 13px;
+}
+
+/* ── text styles (Figma "typography_used_in_screens"), exact size / line-height / tracking / weight ── */
+@utility t-display-48 { font-family: var(--font-display); font-weight: 600; font-size: 48px; line-height: 56px; letter-spacing: 0.38px; }
+@utility t-display-40 { font-family: var(--font-display); font-weight: 600; font-size: 40px; line-height: 48px; letter-spacing: 0.4px; }
+@utility t-display-32 { font-family: var(--font-display); font-weight: 600; font-size: 32px; line-height: 40px; letter-spacing: 0.38px; }
+@utility t-display-26 { font-family: var(--font-display); font-weight: 600; font-size: 26px; line-height: 34px; letter-spacing: 0.35px; }
+@utility t-display-23 { font-family: var(--font-display); font-weight: 600; font-size: 23px; line-height: 30px; letter-spacing: 0.35px; }
+@utility t-display-20 { font-family: var(--font-display); font-weight: 600; font-size: 20px; line-height: 28px; letter-spacing: 0.38px; }
+
+@utility t-regular-18 { font-family: var(--font-sans); font-weight: 400; font-size: 18px; line-height: 24px; letter-spacing: -0.45px; }
+@utility t-regular-16 { font-family: var(--font-sans); font-weight: 400; font-size: 16px; line-height: 22px; letter-spacing: -0.32px; }
+@utility t-regular-15 { font-family: var(--font-sans); font-weight: 400; font-size: 15px; line-height: 20px; letter-spacing: -0.23px; }
+@utility t-regular-14 { font-family: var(--font-sans); font-weight: 400; font-size: 14px; line-height: 20px; letter-spacing: -0.15px; }
+@utility t-regular-13 { font-family: var(--font-sans); font-weight: 400; font-size: 13px; line-height: 18px; letter-spacing: -0.08px; }
+@utility t-regular-12 { font-family: var(--font-sans); font-weight: 400; font-size: 12px; line-height: 16px; letter-spacing: 0; }
+
+@utility t-semibold-16 { font-family: var(--font-sans); font-weight: 600; font-size: 16px; line-height: 22px; letter-spacing: -0.32px; }
+@utility t-semibold-15 { font-family: var(--font-sans); font-weight: 600; font-size: 15px; line-height: 20px; letter-spacing: -0.23px; }
+@utility t-semibold-13 { font-family: var(--font-sans); font-weight: 600; font-size: 13px; line-height: 18px; letter-spacing: -0.08px; }
+@utility t-semibold-12 { font-family: var(--font-sans); font-weight: 600; font-size: 12px; line-height: 16px; letter-spacing: 0; }
+@utility t-semibold-11 { font-family: var(--font-sans); font-weight: 600; font-size: 11px; line-height: 14px; letter-spacing: 0.07px; }
+@utility t-medium-9 { font-family: var(--font-sans); font-weight: 500; font-size: 9px; line-height: 13px; letter-spacing: 0.12px; }
+
+/* ── gradients (tokens.json "gradient"): 180°, first stop at 0 %, second at 25 % ── */
+@utility bg-home-header { background-image: linear-gradient(180deg, #feffd6 0%, #ffc3ad 25%); }
+@utility bg-payments-header { background-image: linear-gradient(180deg, #efffcc 0%, #a7f5ac 25%); }
+@utility bg-flow-header-blue { background-image: linear-gradient(180deg, #e5ecff 0%, #b8b8ff 25%); }
+@utility bg-fund-cash-method-header { background-image: linear-gradient(180deg, #d6fffc 0%, #cab4fa 25%); }
+@utility bg-tabbar-fade { background-image: linear-gradient(180deg, #ffffff00 0%, #ffffff 100%); }
+
+/* The same gradients as values, for components that take a gradient prop. */
+:root {
+  --gradient-home-header: linear-gradient(180deg, #feffd6 0%, #ffc3ad 25%);
+  --gradient-payments-header: linear-gradient(180deg, #efffcc 0%, #a7f5ac 25%);
+  --gradient-flow-header-blue: linear-gradient(180deg, #e5ecff 0%, #b8b8ff 25%);
+  --gradient-fund-cash-method-header: linear-gradient(180deg, #d6fffc 0%, #cab4fa 25%);
 }

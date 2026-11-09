@@ -14,7 +14,7 @@ export function Badge({ children, tone = 'dark', color }: Props) {
   }
   return (
     <span
-      className="inline-flex h-4 items-center rounded-[5px] px-[5px] text-nano font-semibold whitespace-nowrap"
+      className="inline-flex h-4 items-center rounded-[5px] px-[5px] t-semibold-11 whitespace-nowrap"
       style={styles[tone]}
     >
       {children}

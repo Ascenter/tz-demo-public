@@ -25,7 +25,7 @@ import { t } from '../../mock/texts'
 
 type Step = { name: 'methods' } | { name: 'amount' } | { name: 'code'; until: string }
 
-const GRADIENT = 'var(--gradient-cash)'
+const GRADIENT = 'var(--gradient-flow-header-blue)'
 
 /** Cash withdrawal at a Wakala agent (child BRD 3432644674, v5). */
 export function CashFlow() {
@@ -145,13 +145,13 @@ function CodeScreen({ amount, until, onCancel, onDone }: { amount: number; until
       testId="cash-code"
       kind="cash"
       title={
-        <span data-testid="cash-code-value" className="font-display text-amount-input font-semibold">
+        <span data-testid="cash-code-value" className="t-display-40">
           {CASH.code}
         </span>
       }
       body={t('payments.cash_withdrawal.code_hint', { amount: formatNumber(amount), time: until })}
       extra={
-        <p className="w-full rounded-component bg-highlight px-4 py-3 text-center text-caption">{t('payments.cash_withdrawal.never_share')}</p>
+        <p className="w-full rounded-component bg-highlight px-4 py-3 text-center t-regular-13">{t('payments.cash_withdrawal.never_share')}</p>
       }
       secondary={{ label: t('payments.cash_withdrawal.cancel_code'), onClick: onCancel }}
       primary={{ label: t('payments.cash_withdrawal.done'), onClick: () => once.run(onDone) }}

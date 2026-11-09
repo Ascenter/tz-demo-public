@@ -10,7 +10,7 @@ export function Payments() {
   return (
     <div className="scroll-y absolute inset-0" data-testid="payments">
       <div className="relative min-h-full">
-        <div className="absolute inset-x-0 top-0 h-[260px]" style={{ background: 'var(--gradient-payments)' }} />
+        <div className="absolute inset-x-0 top-0 h-[260px]" style={{ background: 'var(--gradient-payments-header)' }} />
         <div className="relative" style={{ paddingTop: 'calc(var(--safe-top) + 52px)' }}>
           <LargeTitle title={t('payments.title')} />
         </div>

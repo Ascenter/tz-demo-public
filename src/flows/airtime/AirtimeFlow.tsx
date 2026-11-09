@@ -33,7 +33,7 @@ interface Target {
 
 type Step = { name: 'recipients' } | { name: 'amount' } | { name: 'otp' } | { name: 'receipt' }
 
-const GRADIENT = 'var(--gradient-transfer)' // Figma: same lilac header as transfers
+const GRADIENT = 'var(--gradient-flow-header-blue)' // Figma: same lilac header as transfers
 const ALL_CONTACTS = [AIRTIME_MY_NUMBER, ...AIRTIME_RECENT, ...AIRTIME_CONTACTS]
 
 /** Airtime (child BRD 3437592577): no Airtime/Data switch, no confirmation sheet (OQ-2 b). */
@@ -204,8 +204,8 @@ function Recipients({ onBack, onPick }: { onBack: () => void; onPick: (t: Target
       )}
       {view.kind === 'not_found' && (
         <div data-testid="airtime-not-found" className="flex flex-col items-center gap-2 px-10 pt-12 text-center">
-          <p className="font-display text-header font-semibold">{t('payments.airtime.not_found_title')}</p>
-          <p className="text-body-m text-secondary">{t('payments.airtime.not_found_hint')}</p>
+          <p className="t-display-20">{t('payments.airtime.not_found_title')}</p>
+          <p className="t-regular-14 text-on-bg-secondary">{t('payments.airtime.not_found_hint')}</p>
         </div>
       )}
     </Screen>

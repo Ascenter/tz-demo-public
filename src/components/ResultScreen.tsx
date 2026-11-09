@@ -42,11 +42,11 @@ export function ResultScreen({ kind, title, body, extra, primary, secondary, onB
       <div className="flex flex-1 flex-col items-center justify-center gap-6 px-10">
         <Illustration kind={kind} />
         <div className="flex flex-col items-center gap-2 text-center">
-          <h1 data-testid="result-title" className="font-display text-fraction font-semibold">
+          <h1 data-testid="result-title" className="t-display-23">
             {title}
           </h1>
           {body && (
-            <p data-testid="result-body" className="text-body-m text-secondary">
+            <p data-testid="result-body" className="t-regular-14 text-on-bg-secondary">
               {body}
             </p>
           )}

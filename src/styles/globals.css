@@ -22,7 +22,7 @@ body,
 body {
   font-family: var(--font-sans);
   background: #e9e9ee;
-  color: var(--color-primary);
+  color: var(--color-on-bg-primary);
   -webkit-font-smoothing: antialiased;
   -webkit-tap-highlight-color: transparent;
   -webkit-text-size-adjust: 100%;

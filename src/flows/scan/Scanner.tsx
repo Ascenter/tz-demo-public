@@ -74,7 +74,7 @@ export function Scanner({ onBack, onScanned }: { onBack: () => void; onScanned: 
       type="button"
       aria-label={label}
       onClick={onClick}
-      className={`flex flex-col items-center gap-2 text-caption text-white ${onClick ? 'pressable' : ''}`}
+      className={`flex flex-col items-center gap-2 t-regular-13 text-white ${onClick ? 'pressable' : ''}`}
     >
       <span className={`grid size-[52px] place-items-center rounded-full ${active ? 'bg-white text-black' : 'bg-white/15 backdrop-blur'}`}>
         <Icon name={icon} color={active ? '#000' : '#fff'} />
@@ -92,7 +92,7 @@ export function Scanner({ onBack, onScanned }: { onBack: () => void; onScanned: 
             <Icon name="close" color="#fff" />
           </button>
         </div>
-        <h1 className="px-5 pt-2 text-center font-display text-header font-semibold text-white">{t('payments.scan_to_pay.scanner_title')}</h1>
+        <h1 className="px-5 pt-2 text-center t-display-20 text-white">{t('payments.scan_to_pay.scanner_title')}</h1>
       </div>
 
       {/* viewfinder */}
@@ -102,8 +102,8 @@ export function Scanner({ onBack, onScanned }: { onBack: () => void; onScanned: 
         ))}
         {denied && (
           <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 text-center">
-            <p className="text-body-m text-white/80">{t('payments.scan_to_pay.camera_denied')}</p>
-            <button type="button" data-testid="simulate-scan" onClick={() => fire.current()} className="pressable rounded-full bg-white px-5 py-[10px] text-body-mp font-semibold">
+            <p className="t-regular-14 text-white/80">{t('payments.scan_to_pay.camera_denied')}</p>
+            <button type="button" data-testid="simulate-scan" onClick={() => fire.current()} className="pressable rounded-full bg-white px-5 py-[10px] t-semibold-15">
               {t('payments.scan_to_pay.simulate_scan')}
             </button>
           </div>

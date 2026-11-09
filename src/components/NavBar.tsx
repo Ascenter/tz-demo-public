@@ -28,7 +28,7 @@ export function NavBar({ onBack, title, right, close }: Props) {
           </button>
         )}
         {title && (
-          <span className="pointer-events-none absolute inset-x-16 truncate text-center text-body-l font-semibold">{title}</span>
+          <span className="pointer-events-none absolute inset-x-16 truncate text-center t-semibold-16">{title}</span>
         )}
         <span className="ml-auto flex items-center gap-5">{right}</span>
       </div>
@@ -40,8 +40,8 @@ export function NavBar({ onBack, title, right, close }: Props) {
 export function LargeTitle({ title, subtitle }: { title: ReactNode; subtitle?: ReactNode }) {
   return (
     <div className="flex flex-col gap-1 px-5 pb-6">
-      <h1 className="font-display text-toolbar-expanded font-semibold">{title}</h1>
-      {subtitle && <p className="text-body-m text-secondary">{subtitle}</p>}
+      <h1 className="t-display-26">{title}</h1>
+      {subtitle && <p className="t-regular-14 text-on-bg-secondary">{subtitle}</p>}
     </div>
   )
 }
@@ -52,9 +52,9 @@ export function HeaderItem({ leading, title, badge, subtitle }: { leading: React
     <div className="flex items-center gap-5 px-5 pb-6 pt-1">
       {leading}
       <div className="flex min-w-0 flex-col items-start gap-1">
-        <span data-testid="header-title" className="truncate text-body-l font-semibold">{title}</span>
+        <span data-testid="header-title" className="truncate t-semibold-16">{title}</span>
         {badge}
-        {subtitle && <span className="text-body-m text-secondary">{subtitle}</span>}
+        {subtitle && <span className="t-regular-14 text-on-bg-secondary">{subtitle}</span>}
       </div>
     </div>
   )

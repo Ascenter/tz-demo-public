@@ -32,7 +32,7 @@ export function Home() {
   return (
     <div className="scroll-y absolute inset-0" data-testid="home">
       <div className="relative min-h-full">
-        <div className="absolute inset-x-0 top-0 h-[460px]" style={{ background: 'var(--gradient-home)' }} />
+        <div className="absolute inset-x-0 top-0 h-[460px]" style={{ background: 'var(--gradient-home-header)' }} />
         <div className="relative" style={{ paddingTop: 'calc(var(--safe-top) + 60px)' }}>
           <div
             data-testid="balance"
@@ -44,11 +44,11 @@ export function Home() {
             onContextMenu={(e) => e.preventDefault()}
           >
             {/* Figma 176:4682 (8 Nov): currency first, same size as the amount (parent BR-14). */}
-            <div className="flex w-full items-end justify-start px-[25px] font-display text-main-amount font-normal">
+            <div className="flex w-full items-end justify-start px-[25px] t-display-48">
               <span>TZS&nbsp;</span>
               <span data-testid="balance-available">{formatNumber(available(ledger))}</span>
             </div>
-            <div className="flex gap-2 text-caption text-secondary">
+            <div className="flex gap-2 t-regular-13 text-on-bg-secondary">
               <div className="flex flex-col items-start">
                 <span>{t('home.personal_funds')}</span>
                 <span>{t('home.credit_limit')}</span>
@@ -70,13 +70,13 @@ export function Home() {
                 className="pressable flex flex-1 flex-col items-center gap-2"
               >
                 <RoundIcon52 name={a.icon} />
-                <span className="whitespace-pre-line text-center text-caption">{t(a.label)}</span>
+                <span className="whitespace-pre-line text-center t-regular-13">{t(a.label)}</span>
               </button>
             ))}
           </div>
 
           {/* Card is visual only (not in this demo). */}
-          <div className="relative mx-auto mt-7 h-[186px] w-[295px] rounded-component border-[0.5px] border-white20 bg-black-card px-4 py-[10px]">
+          <div className="relative mx-auto mt-7 h-[186px] w-[295px] rounded-component border-[0.5px] border-white-20 bg-black-card px-4 py-[10px]">
             <span className="absolute right-4 top-[14px] font-display text-[22px] font-black italic tracking-tight text-white">VISA</span>
           </div>
         </div>

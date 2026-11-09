@@ -54,10 +54,10 @@ export function Receipt({ amount, status, blocks, actions, onDone, doneLabel, se
       <div className="flex min-h-full flex-col items-center gap-6 pt-2">
         <Illustration kind="success" size={140} />
         <div className="flex flex-col items-center gap-2 px-5">
-          <p data-testid="receipt-amount" className="font-display text-fraction font-semibold">
+          <p data-testid="receipt-amount" className="t-display-23">
             {formatTZS(amount)}
           </p>
-          <p data-testid="receipt-status" className="flex items-center gap-1 text-body-m text-secondary">
+          <p data-testid="receipt-status" className="flex items-center gap-1 t-regular-14 text-on-bg-secondary">
             <span className="text-[13px]">✅</span>
             {status}
           </p>
@@ -70,9 +70,9 @@ export function Receipt({ amount, status, blocks, actions, onDone, doneLabel, se
               return (
                 <div key={i} className="flex flex-col gap-2">
                   {visible.map(([label, value]) => (
-                    <div key={label} className="flex gap-6 text-body-mp">
-                      <span className="w-[116px] shrink-0 text-secondary">{label}</span>
-                      <span className="min-w-0 flex-1 break-words text-primary">{value}</span>
+                    <div key={label} className="flex gap-6 t-regular-15">
+                      <span className="w-[116px] shrink-0 text-on-bg-secondary">{label}</span>
+                      <span className="min-w-0 flex-1 break-words text-on-bg-primary">{value}</span>
                     </div>
                   ))}
                 </div>

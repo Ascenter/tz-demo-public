@@ -45,7 +45,7 @@ export function Feed() {
             testId={startOfDay(now()) === g.day ? 'today-header' : undefined}
             right={
               i === 0 ? (
-                <span className="flex gap-5 text-icon30">
+                <span className="flex gap-5 text-icon-30">
                   <Icon name="diagram" />
                   <Icon name="search" />
                 </span>
@@ -59,7 +59,7 @@ export function Feed() {
           ))}
         </section>
       ))}
-      {groups.length === 0 && <p className="px-5 py-10 text-center text-body-m text-secondary">{t('home.history_empty')}</p>}
+      {groups.length === 0 && <p className="px-5 py-10 text-center t-regular-14 text-on-bg-secondary">{t('home.history_empty')}</p>}
     </div>
   )
 }
@@ -76,7 +76,7 @@ function FeedRow({ op, onOpen }: { op: Operation; onOpen?: () => void }) {
         avatarColor={c.color}
         onClick={onOpen} // only entries with details open (Cash v5)
         right={
-          <span data-testid="feed-amount" className="text-xl-body whitespace-nowrap">
+          <span data-testid="feed-amount" className="t-regular-18 whitespace-nowrap">
             {formatFeedAmount(op.amount, op.direction)}
           </span>
         }

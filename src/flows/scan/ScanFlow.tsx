@@ -23,7 +23,7 @@ import { t } from '../../mock/texts'
 
 type Step = { name: 'scanner' } | { name: 'amount' } | { name: 'otp' } | { name: 'receipt' }
 
-const GRADIENT = 'var(--gradient-transfer)'
+const GRADIENT = 'var(--gradient-flow-header-blue)'
 
 /** Scan to pay, static TANQR (child BRD 3427598413). */
 export function ScanFlow() {

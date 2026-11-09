@@ -7,7 +7,7 @@ export function SearchField({
   ...rest
 }: InputHTMLAttributes<HTMLInputElement> & { inactive?: boolean }) {
   return (
-    <label className="mx-5 flex h-10 items-center gap-2 rounded-full bg-tertiary-bg px-3">
+    <label className="mx-5 flex h-10 items-center gap-2 rounded-full bg-field-bg px-3">
       <Icon name="search" size={20} color="rgba(0,0,0,0.35)" />
       <input
         {...rest}
@@ -32,18 +32,18 @@ export function TextField({
     <div className="flex flex-col gap-1">
       <label
         className={`flex h-14 flex-col justify-center rounded-field px-4 ${
-          error ? 'bg-error/10' : 'bg-tertiary-bg'
+          error ? 'bg-error-hint/10' : 'bg-field-bg'
         } ${readOnlyValue !== undefined ? 'opacity-70' : ''}`}
       >
-        <span className="text-[12px] leading-4 text-secondary">{label}</span>
+        <span className="text-[12px] leading-4 text-on-bg-secondary">{label}</span>
         {readOnlyValue !== undefined ? (
-          <span className="text-body-l">{readOnlyValue}</span>
+          <span className="t-regular-16">{readOnlyValue}</span>
         ) : (
           <input {...rest} className="min-w-0 bg-transparent text-[16px] leading-[22px] outline-none placeholder:text-black/30" />
         )}
       </label>
       {error && (
-        <p data-testid="red-line" role="alert" className="px-4 text-caption text-error">
+        <p data-testid="red-line" role="alert" className="px-4 t-regular-13 text-error-hint">
           {error}
         </p>
       )}
@@ -55,7 +55,7 @@ export function TextField({
 /** Red error line under a field or amount (parent BR-05 pattern). */
 export function RedLine({ children }: { children: ReactNode }) {
   return (
-    <p data-testid="red-line" role="alert" className="text-caption text-error">
+    <p data-testid="red-line" role="alert" className="t-regular-13 text-error-hint">
       {children}
     </p>
   )

@@ -37,21 +37,21 @@ export function AmountEntry({ value, onChange, hints, error, comment, chips = []
         <div className="flex items-center gap-[2px]" data-testid="amount-display">
           <span
             data-testid="amount-value"
-            className={`font-display text-amount-input font-semibold ${value ? 'text-primary' : 'text-black/25'}`}
+            className={`t-display-40 ${value ? 'text-on-bg-primary' : 'text-black/25'}`}
           >
             {value ? formatNumber(amount) : '0'}
           </span>
           <span className="caret h-9 w-[2px] rounded bg-black" />
-          <span className="font-display text-amount-input font-semibold">&nbsp;TZS</span>
+          <span className="t-display-40">&nbsp;TZS</span>
         </div>
         <div className="mt-[2px] flex flex-col items-center">
           {error ? (
-            <p data-testid="red-line" role="alert" className="text-center text-caption text-error">
+            <p data-testid="red-line" role="alert" className="text-center t-regular-13 text-error-hint">
               {error}
             </p>
           ) : (
             hints.map((h) => (
-              <p key={h} data-testid="amount-hint" className="text-center text-caption text-secondary">
+              <p key={h} data-testid="amount-hint" className="text-center t-regular-13 text-on-bg-secondary">
                 {h}
               </p>
             ))
@@ -60,7 +60,7 @@ export function AmountEntry({ value, onChange, hints, error, comment, chips = []
       </div>
 
       {comment && (
-        <label className="mx-5 mb-3 flex items-center gap-2 rounded-field bg-tertiary-bg py-[7px] pl-3 pr-5">
+        <label className="mx-5 mb-3 flex items-center gap-2 rounded-field bg-field-bg py-[7px] pl-3 pr-5">
           <Icon name="chat" size={20} color="rgba(0,0,0,0.3)" />
           <input
             data-testid="comment"
@@ -88,7 +88,7 @@ export function AmountEntry({ value, onChange, hints, error, comment, chips = []
               type="button"
               data-testid={`chip-${c}`}
               onClick={() => onChange(String(c))}
-              className="pressable rounded-component bg-chip-bg px-3 py-2 text-caption text-chip-text"
+              className="pressable rounded-component bg-chips-bg px-3 py-2 t-regular-13 text-chips-text"
             >
               {formatTZS(c)}
             </button>

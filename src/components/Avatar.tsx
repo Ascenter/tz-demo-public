@@ -16,7 +16,7 @@ export function Avatar({ icon, initials, color = '#7a80ff', iconColor = '#fff', 
       style={{ width: size, height: size, background: color, border: initials ? '0.5px solid rgba(0,0,0,0.2)' : undefined }}
     >
       {initials ? (
-        <span className="text-body-l font-normal text-white">{initials}</span>
+        <span className="t-regular-16 text-white">{initials}</span>
       ) : icon ? (
         <Icon name={icon} size={size * 0.6} color={iconColor} />
       ) : null}

@@ -5,9 +5,11 @@ import { DemoMenu } from './DemoMenu'
 import { goBack } from './back'
 import { useDemo } from './store'
 import { IS_FULLSCREEN } from './bootReset'
+import { BARE, DEVICE } from './device'
 
 /**
- * Desktop: a centred 402 × 874 device frame with a fake status bar (rehearsal, backup screen share).
+ * Desktop: a centred iPhone 15 Plus frame (430 × 932, see device.ts) with a fake status bar (rehearsal, backup screen share).
+ * `?bare=1`: the screen alone at the device size, for screenshots and design:check.
  * iPhone (installed PWA or phone browser): full screen, real safe areas, no frame.
  */
 export function PhoneShell({ children }: { children: ReactNode }) {
@@ -48,19 +50,29 @@ export function PhoneShell({ children }: { children: ReactNode }) {
 
   if (IS_FULLSCREEN) return <div className="fixed inset-0">{screen}</div>
 
+  const size = { width: DEVICE.width, height: DEVICE.height }
+  const insets = { '--safe-top': `${DEVICE.safeTop}px`, '--safe-bottom': `${DEVICE.safeBottom}px` } as React.CSSProperties
+  if (BARE) {
+    return (
+      <div className="relative overflow-hidden" style={{ ...size, ...insets }}>
+        {screen}
+      </div>
+    )
+  }
+
   return (
     <div className="flex min-h-full items-center justify-center p-6">
       <div
         className={showFrame ? 'rounded-[68px] bg-[#111] p-[12px] shadow-[0_30px_80px_rgba(0,0,0,0.35)]' : ''}
-        style={{ width: 402 + (showFrame ? 24 : 0) }}
+        style={{ width: DEVICE.width + (showFrame ? 24 : 0), ...insets }}
       >
         <div
           className={`relative overflow-hidden ${showFrame ? 'rounded-[56px]' : ''}`}
-          style={{ width: 402, height: 874 }}
+          style={size}
         >
           {screen}
           {showFrame && (
-            <div className="pointer-events-none absolute left-1/2 top-[11px] z-[100] h-[34px] w-[124px] -translate-x-1/2 rounded-full bg-black" />
+            <div className="pointer-events-none absolute left-1/2 top-[11px] z-[100] h-[37px] w-[126px] -translate-x-1/2 rounded-full bg-black" />
           )}
         </div>
       </div>
