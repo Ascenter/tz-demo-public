@@ -74,6 +74,7 @@ function FeedRow({ op, onOpen }: { op: Operation; onOpen?: () => void }) {
         icon={op.initials ? undefined : c.icon}
         initials={op.initials}
         avatarColor={c.color}
+        gap={2}
         onClick={onOpen} // only entries with details open (Cash v5)
         right={
           <span data-testid="feed-amount" className="t-regular-18 whitespace-nowrap">

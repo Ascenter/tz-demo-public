@@ -44,7 +44,7 @@ export function Home() {
             onContextMenu={(e) => e.preventDefault()}
           >
             {/* Figma 176:4682 (8 Nov): currency first, same size as the amount (parent BR-14). */}
-            <div className="flex w-full items-end justify-start px-[25px] t-display-48">
+            <div className="flex w-full items-end justify-center px-5 t-display-48">
               <span>TZS&nbsp;</span>
               <span data-testid="balance-available">{formatNumber(available(ledger))}</span>
             </div>
@@ -53,7 +53,7 @@ export function Home() {
                 <span>{t('home.personal_funds')}</span>
                 <span>{t('home.credit_limit')}</span>
               </div>
-              <div className="flex flex-col items-end">
+              <div className="flex flex-col items-start">
                 <span data-testid="balance-own">{formatTZS(ledger.ownFunds)}</span>
                 <span data-testid="balance-credit">{formatTZS(ledger.creditLimit)}</span>
               </div>

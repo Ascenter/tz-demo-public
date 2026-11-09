@@ -13,7 +13,8 @@ export function formatTZS(n: number): string {
 
 /** Feed rows: outgoing "20,000", incoming "+150,000" (as in Figma). */
 export function formatFeedAmount(n: number, direction: 'in' | 'out'): string {
-  return direction === 'in' ? `+${formatNumber(n)}` : formatNumber(n)
+  // Figma feed style (FIGMA_VS_BRD.md): currency first, "+" for money in, no minus for money out.
+  return direction === 'in' ? `+${formatTZS(n)}` : formatTZS(n)
 }
 
 /** Keep digits only. */

@@ -18,10 +18,12 @@ interface Props {
   dimmed?: boolean
   /** Extra line under the subtitle (e.g. a "Soon" badge). */
   below?: ReactNode
+  /** Gap between the icon and the text: 20 pt in lists, 2 pt in the Home feed (Figma Transaction_list_item). */
+  gap?: number
 }
 
 /** List row: icon 40, title 16, subtitle 14 (Figma "List_item" / "Transaction_list_item"). */
-export function ListRow({ title, subtitle, icon, iconColor, initials, avatarColor, leading, right, onClick, testId, dimmed, below }: Props) {
+export function ListRow({ title, subtitle, icon, iconColor, initials, avatarColor, leading, right, onClick, testId, dimmed, below, gap = 20 }: Props) {
   const content = (
     <>
       {leading ?? <Avatar icon={icon} initials={initials} color={avatarColor} iconColor={iconColor} />}
@@ -33,13 +35,13 @@ export function ListRow({ title, subtitle, icon, iconColor, initials, avatarColo
       {right}
     </>
   )
-  const cls = `flex min-h-[60px] w-full items-center gap-5 px-5 py-[10px] ${dimmed ? 'opacity-40' : ''}`
+  const cls = `flex min-h-[62px] w-full items-center px-5 py-[10px] ${dimmed ? 'opacity-40' : ''}`
   return onClick ? (
-    <button type="button" data-testid={testId} onClick={onClick} className={`${cls} row-pressable`}>
+    <button type="button" data-testid={testId} onClick={onClick} className={`${cls} row-pressable`} style={{ columnGap: gap }}>
       {content}
     </button>
   ) : (
-    <div data-testid={testId} className={cls} aria-disabled="true">
+    <div data-testid={testId} className={cls} style={{ columnGap: gap }} aria-disabled="true">
       {content}
     </div>
   )

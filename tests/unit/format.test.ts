@@ -17,8 +17,8 @@ describe('formatTZS (parent BR-14)', () => {
 describe('feed amounts', () => {
   it('shows bare outgoing and +incoming', () => {
     expect(formatNumber(103500)).toBe('103,500')
-    expect(formatFeedAmount(20000, 'out')).toBe('20,000')
-    expect(formatFeedAmount(150000, 'in')).toBe('+150,000')
+    expect(formatFeedAmount(20000, 'out')).toBe('TZS 20,000')
+    expect(formatFeedAmount(150000, 'in')).toBe('+TZS 150,000')
   })
 })
 
