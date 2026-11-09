@@ -25,7 +25,9 @@ import { t } from '../../mock/texts'
 
 type Step = { name: 'methods' } | { name: 'amount' } | { name: 'code'; until: string }
 
+// Figma: the method list uses the method gradient, the amount screen the blue flow header.
 const GRADIENT = 'var(--gradient-flow-header-blue)'
+const METHOD_GRADIENT = 'var(--gradient-fund-cash-method-header)'
 
 /** Cash withdrawal at a Wakala agent (child BRD 3432644674, v5). */
 export function CashFlow() {
@@ -126,7 +128,7 @@ export function CashFlow() {
 function Methods({ onBack, onAgent }: { onBack: () => void; onAgent: () => void }) {
   useBack(onBack)
   return (
-    <Screen testId="cash-methods" gradient={GRADIENT} header={<><NavBar onBack={onBack} /><LargeTitle title={t('payments.cash_withdrawal.method_title')} /></>}>
+    <Screen testId="cash-methods" gradient={METHOD_GRADIENT} gradientFull header={<><NavBar onBack={onBack} /><LargeTitle title={t('payments.cash_withdrawal.method_title')} /></>}>
       <ListRow testId="cash-agent" icon="user" title={t('payments.cash_withdrawal.agent')} subtitle={t('payments.cash_withdrawal.agent_subtitle')} onClick={onAgent} />
       {/* Cash BR-02: inactive rows, a tap does nothing */}
       <ListRow icon="card" title={t('payments.cash_withdrawal.atm')} subtitle={t('payments.cash_withdrawal.atm_subtitle')} />

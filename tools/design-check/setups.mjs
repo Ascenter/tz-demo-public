@@ -37,6 +37,7 @@ const ABOVE_KEYBOARD = 'Figma places the button above the drawn iOS keyboard'
 const RED_LINE_STATE = 'BRD red line replaces the hints (parent BR-05), so the block is one line shorter'
 const RED_LINE_KNOWN = (amount, balance = 'Balance TZS 1,060,000') => ({ [amount]: RED_LINE_STATE, [balance]: RED_LINE_STATE, 'No fee': RED_LINE_STATE })
 const SCAN_AMOUNT = ['tap:quick-scan', 'simulateQr']
+const CASH_AMOUNT = ['payments', 'tap:pay-cash', 'cash.agent']
 const KEYBOARD_GLYPH = ['\u{100147}']
 
 export const SETUPS = {
@@ -135,4 +136,18 @@ export const SETUPS = {
   '130:1558': { step: 2, actions: [...SCAN_AMOUNT, 'amount:25000', 'fill:comment=For lunch', 'continue'], deviations: CHIPS_HIDDEN, knownFrom: { y: 200, note: 'sheet has the extra Comment row (Scan BR-10), so it starts 58 pt higher' } },
   '130:2154': { step: 2, actions: [...SCAN_AMOUNT, 'amount:25000', 'fill:comment=For lunch', 'continue', 'confirm', 'otp', 'push'] },
   '130:2352': { step: 3, actions: [], homeAfter: true },
+
+  // ── 04 Cash withdrawal (from step 3) ─────────────────────────────
+  '176:1053': { step: 3, actions: ['payments', 'tap:pay-cash'] },
+  '176:2000': { step: 3, actions: [...CASH_AMOUNT, 'amount:50000'], keyboard: true },
+  '176:5718': { step: 3, actions: [...CASH_AMOUNT, 'amount:1000000'], keyboard: true },
+  '176:2233': { step: 3, actions: [...CASH_AMOUNT, 'amount:50000', 'continue'] },
+  // "until HH:MM" is device time + 30 min.
+  '176:2903': {
+    step: 3,
+    actions: [...CASH_AMOUNT, 'amount:50000', 'continue', 'getCode'],
+    mask: [STATUS, [40, 463, 322, 60]],
+    known: { "Show this code to any Wakala agent with your phone number. They'll pay out TZS 50,000. It works once, until 12:34": 'device time ("until HH:MM")' },
+  },
+  '176:4682': { step: 4, actions: [], homeAfter: true },
 }

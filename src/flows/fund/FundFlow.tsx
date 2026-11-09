@@ -31,7 +31,9 @@ type Step =
   | { name: 'waiting' }
   | { name: 'success' | 'declined' | 'not_enough' | 'in_progress' }
 
-const GRADIENT = 'var(--gradient-fund-cash-method-header)'
+// Figma: the method list uses the method gradient, the amount screen the blue flow header.
+const GRADIENT = 'var(--gradient-flow-header-blue)'
+const METHOD_GRADIENT = 'var(--gradient-fund-cash-method-header)'
 const MpesaAvatar = () => <Avatar icon="mobile" />
 
 /** Route entry: Done/Close/Got it return to the screen the flow started from (Fund BR-10). */
@@ -163,7 +165,7 @@ export function FundFlow({ onExit }: { onExit: () => void }) {
 function Methods({ onBack, onMpesa }: { onBack: () => void; onMpesa: () => void }) {
   useBack(onBack)
   return (
-    <Screen testId="fund-methods" gradient={GRADIENT} header={<><NavBar onBack={onBack} /><LargeTitle title={t('payments.fund_account.title')} /></>}>
+    <Screen testId="fund-methods" gradient={METHOD_GRADIENT} gradientFull header={<><NavBar onBack={onBack} /><LargeTitle title={t('payments.fund_account.title')} /></>}>
       <ListRow testId="fund-mpesa" leading={<MpesaAvatar />} title={t('payments.fund_account.mpesa')} subtitle={t('payments.fund_account.mpesa_subtitle')} onClick={onMpesa} />
       {/* Fund OQ-1 a): shown as in Figma, a tap does nothing */}
       <ListRow leading={<Avatar icon="airtelWallet" />} title={t('payments.fund_account.airtel')} subtitle={t('payments.fund_account.airtel_subtitle')} />

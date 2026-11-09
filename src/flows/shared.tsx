@@ -24,6 +24,7 @@ export function AmountStep({ gradient, onBack, header, testId, ...entry }: Amoun
       gradient={gradient}
       scroll={false}
       sheetPadding={false}
+      gradientFull
       header={
         <>
           <NavBar onBack={onBack} />

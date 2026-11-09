@@ -1921,6 +1921,158 @@
      44
     ]
    ]
+  },
+  {
+   "figmaId": "176:2000",
+   "name": "Cash withdrawal - Amount - Filled",
+   "flow": "04-cash-withdrawal",
+   "png": "design/figma-export/screens-1x/04-cash-withdrawal/cash-withdrawal-amount-filled__176-2000.png",
+   "spec": "design/figma-export/specs/04-cash-withdrawal/cash-withdrawal-amount-filled__176-2000.json",
+   "setup": {
+    "step": 3,
+    "actions": [
+     "payments",
+     "tap:pay-cash",
+     "cash.agent",
+     "amount:50000"
+    ]
+   },
+   "mask": [
+    [
+     0,
+     0,
+     402,
+     44
+    ]
+   ],
+   "keyboard": true
+  },
+  {
+   "figmaId": "176:5718",
+   "name": "Cash withdrawal - Amount - Not enough money",
+   "flow": "04-cash-withdrawal",
+   "png": "design/figma-export/screens-1x/04-cash-withdrawal/cash-withdrawal-amount-not-enough-money__176-5718.png",
+   "spec": "design/figma-export/specs/04-cash-withdrawal/cash-withdrawal-amount-not-enough-money__176-5718.json",
+   "setup": {
+    "step": 3,
+    "actions": [
+     "payments",
+     "tap:pay-cash",
+     "cash.agent",
+     "amount:1000000"
+    ]
+   },
+   "mask": [
+    [
+     0,
+     0,
+     402,
+     44
+    ]
+   ],
+   "keyboard": true
+  },
+  {
+   "figmaId": "176:2903",
+   "name": "Cash withdrawal - Code - Active",
+   "flow": "04-cash-withdrawal",
+   "png": "design/figma-export/screens-1x/04-cash-withdrawal/cash-withdrawal-code-active__176-2903.png",
+   "spec": "design/figma-export/specs/04-cash-withdrawal/cash-withdrawal-code-active__176-2903.json",
+   "setup": {
+    "step": 3,
+    "actions": [
+     "payments",
+     "tap:pay-cash",
+     "cash.agent",
+     "amount:50000",
+     "continue",
+     "getCode"
+    ]
+   },
+   "mask": [
+    [
+     0,
+     0,
+     402,
+     44
+    ],
+    [
+     40,
+     463,
+     322,
+     60
+    ]
+   ],
+   "known": {
+    "Show this code to any Wakala agent with your phone number. They'll pay out TZS 50,000. It works once, until 12:34": "device time (\"until HH:MM\")"
+   }
+  },
+  {
+   "figmaId": "176:2233",
+   "name": "Cash withdrawal - Confirm - Default",
+   "flow": "04-cash-withdrawal",
+   "png": "design/figma-export/screens-1x/04-cash-withdrawal/cash-withdrawal-confirm-default__176-2233.png",
+   "spec": "design/figma-export/specs/04-cash-withdrawal/cash-withdrawal-confirm-default__176-2233.json",
+   "setup": {
+    "step": 3,
+    "actions": [
+     "payments",
+     "tap:pay-cash",
+     "cash.agent",
+     "amount:50000",
+     "continue"
+    ]
+   },
+   "mask": [
+    [
+     0,
+     0,
+     402,
+     44
+    ]
+   ]
+  },
+  {
+   "figmaId": "176:1053",
+   "name": "Cash withdrawal - Method - Default",
+   "flow": "04-cash-withdrawal",
+   "png": "design/figma-export/screens-1x/04-cash-withdrawal/cash-withdrawal-method-default__176-1053.png",
+   "spec": "design/figma-export/specs/04-cash-withdrawal/cash-withdrawal-method-default__176-1053.json",
+   "setup": {
+    "step": 3,
+    "actions": [
+     "payments",
+     "tap:pay-cash"
+    ]
+   },
+   "mask": [
+    [
+     0,
+     0,
+     402,
+     44
+    ]
+   ]
+  },
+  {
+   "figmaId": "176:4682",
+   "name": "Home - Main - After withdrawal",
+   "flow": "04-cash-withdrawal",
+   "png": "design/figma-export/screens-1x/04-cash-withdrawal/home-main-after-withdrawal__176-4682.png",
+   "spec": "design/figma-export/specs/04-cash-withdrawal/home-main-after-withdrawal__176-4682.json",
+   "setup": {
+    "step": 4,
+    "actions": []
+   },
+   "mask": [
+    [
+     0,
+     0,
+     402,
+     44
+    ]
+   ],
+   "homeAfter": true
   }
  ]
 }
