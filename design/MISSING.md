@@ -17,9 +17,12 @@ Keep this list current when the export is refreshed.
 
 Hand-drawn on the 24 pt grid in `src/components/icons.tsx`, same stroke weight:
 
-- `share` (receipt nav bar), `close` 24 pt (result screens)
+- `close` 24 pt (result screens)
 - `backspace` on the in-app number pad
-- scanner `gallery` and `flash` glyphs, `copy`
+- `copy`
+
+The receipt `share` icon and the scanner `gallery` and `flash` icons were pulled from the live file through the
+Figma MCP on 10 Nov 2026 (`ic_share_24`, `ic_gallery_24`, `ic_flash_24`).
 - the bank / TIPS name-check tick (now an initials avatar, as drawn in `43:6975`)
 
 `spinner_gradient_20` paints its angular gradient through a `<foreignObject>`; it is redrawn as a CSS conic gradient

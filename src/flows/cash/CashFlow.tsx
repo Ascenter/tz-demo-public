@@ -76,7 +76,7 @@ export function CashFlow() {
           gradient={GRADIENT}
           onBack={nav.pop} // typed amount is not kept
           header={{
-            leading: <Avatar icon="user" />,
+            leading: <Avatar icon="user" color="var(--color-turkish)" />, // Figma 452:10654 (10 Nov)
             title: t('payments.cash_withdrawal.amount_title'),
             subtitle: t('payments.cash_withdrawal.amount_subtitle'),
             compact: true,

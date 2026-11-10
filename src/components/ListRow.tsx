@@ -18,19 +18,21 @@ interface Props {
   dimmed?: boolean
   /** Extra line under the subtitle (e.g. a "Soon" badge). */
   below?: ReactNode
-  /** Gap between the icon and the text: 20 pt in lists, 2 pt in the Home feed (Figma Transaction_list_item). */
+  /** Gap between the icon, the text and the right content (20 pt in every list). */
   gap?: number
+  /** Let the title wrap instead of truncating (Home feed). */
+  wrapTitle?: boolean
 }
 
 /** List row: icon 40, title 16, subtitle 14 (Figma "List_item" / "Transaction_list_item"). */
-export function ListRow({ title, subtitle, icon, iconColor, initials, avatarColor, leading, right, onClick, testId, dimmed, below, gap = 20 }: Props) {
+export function ListRow({ title, subtitle, icon, iconColor, initials, avatarColor, leading, right, onClick, testId, dimmed, below, gap = 20, wrapTitle }: Props) {
   const content = (
     <>
       <span className={`shrink-0 ${dimmed ? 'opacity-40' : ''}`}>
         {leading ?? <Avatar icon={icon} initials={initials} color={avatarColor} iconColor={iconColor} />}
       </span>
       <span className="flex min-w-0 flex-1 flex-col items-start text-left">
-        <span className="w-full truncate t-regular-16 text-on-bg-primary">{title}</span>
+        <span className={`w-full t-regular-16 text-on-bg-primary ${wrapTitle ? '' : 'truncate'}`}>{title}</span>
         {subtitle !== undefined && <span className="w-full t-regular-14 text-on-bg-secondary">{subtitle}</span>}
         {below && <span className="mt-1 flex">{below}</span>}
       </span>

@@ -90,7 +90,7 @@ export function Scanner({ onBack, onScanned }: { onBack: () => void; onScanned: 
             onClick={toggleFlash}
             className="pressable -mr-2 grid size-10 place-items-center"
           >
-            <Icon name="flash" color="var(--color-surface)" style={{ opacity: hasFlash || flashOn ? 1 : 0.9 }} />
+            <Icon name="torch" color="var(--color-surface)" style={{ opacity: hasFlash || flashOn ? 1 : 0.9 }} />
           </button>
         </div>
         <h1 className="px-5 pt-2 text-center t-display-20 text-white">{loaderLabel ?? t('payments.scan_to_pay.scanner_title')}</h1>

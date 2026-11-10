@@ -49,8 +49,10 @@ export function LargeTitle({ title, subtitle, tight }: { title: ReactNode; subti
 
 /**
  * Header item with a rounded icon: avatar + name + badge or subtitle (Figma "Header item with rounded icon").
- * 68 pt tall under the 88 pt nav bar, so the white sheet starts at y = 156 as in the Figma amount screens.
- * The title sits at x = 94 (icon column 54 pt, icon at its right edge); `compact` puts it at x = 80 (Cash, 176:2000).
+ * Default (Send, Scan, Airtime, Bills frames): 68 pt under the 88 pt nav bar, sheet at y = 156, title at x = 94
+ * (icon column 54 pt, icon at its right edge).
+ * `compact` = the rebuilt navBar "icon" component (Fund 454:8525, Cash 452:10654, 10 Nov): avatar at x = 20,
+ * title at x = 80, y = 88, 24 pt down to the sheet at y = 154.
  */
 export function HeaderItem({
   leading,
@@ -66,8 +68,8 @@ export function HeaderItem({
   compact?: boolean
 }) {
   return (
-    <div className="flex h-[68px] items-start gap-5 px-5 pt-[2px]">
-      <span className={`flex shrink-0 justify-end pt-[2px] ${compact ? '' : 'w-[54px]'}`}>{leading}</span>
+    <div className={compact ? 'flex h-[66px] items-start gap-5 px-5' : 'flex h-[68px] items-start gap-5 px-5 pt-[2px]'}>
+      <span className={`flex shrink-0 justify-end ${compact ? '' : 'w-[54px] pt-[2px]'}`}>{leading}</span>
       <div className="flex min-w-0 flex-col items-start">
         <span data-testid="header-title" className="truncate t-semibold-16">{title}</span>
         {badge && <span className="mt-[3px] flex">{badge}</span>}
