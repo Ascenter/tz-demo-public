@@ -29,7 +29,27 @@ body {
   touch-action: manipulation; /* no double-tap zoom */
 }
 html.standalone body {
-  background: #feffd6;
+  background: var(--color-surface);
+}
+
+/* Full-screen app container (iPhone). Phone browser: the dynamic viewport (toolbars come and go).
+   Installed PWA: the whole screen, under the status bar and the home indicator (see bootReset.ts). */
+.app-fullscreen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100vh;
+  height: 100dvh;
+}
+html.installed,
+html.installed body,
+html.installed #root {
+  height: var(--app-height, 100lvh);
+}
+html.installed .app-fullscreen {
+  height: 100vh;
+  height: var(--app-height, 100lvh);
 }
 
 /* UI chrome is not selectable; inputs stay editable. */
