@@ -173,7 +173,10 @@
     "From": "Figma sheet text at x = 36, all other sheets x = 28 (F2)",
     "M-Pesa +255 75• ••• 412": "Figma sheet text at x = 36, all other sheets x = 28 (F2)",
     "Fee": "Figma sheet text at x = 36, all other sheets x = 28 (F2)",
-    "No fee": "Figma sheet text at x = 36, all other sheets x = 28 (F2)"
+    "No fee": "Figma sheet text at x = 36, all other sheets x = 28 (F2)",
+    "+255 75• ••• 412": "behind the sheet: Figma still embeds the old amount screen (F20)",
+    "TZS 50,000": "behind the sheet: Figma still embeds the old amount screen (F20)",
+    "No fee · up to TZS 5,000,000 per top-up": "behind the sheet: Figma still embeds the old amount screen (F20)"
    }
   },
   {
@@ -1990,7 +1993,11 @@
      402,
      44
     ]
-   ]
+   ],
+   "known": {
+    "TZS 50,000": "behind the sheet: Figma still embeds the old amount screen (F20)",
+    "Balance TZS 950,000 · No fee": "behind the sheet: Figma still embeds the old amount screen (F20)"
+   }
   },
   {
    "figmaId": "176:1053",

@@ -67,6 +67,7 @@ Each one is the simplest inert version; change it in the file named.
 | F16 | Comment field size | 13/18 as drawn. iOS would zoom on focus below 16 px, which the viewport (`maximum-scale=1`) prevents. |
 | F17 | Operator badges | Dark badge as drawn (222:1102) instead of operator colours. |
 | F19 | Home feed in the live file (10 Nov) | Every Home frame is now an instance (e.g. 411:1074): feed text at x = 80 (20 pt after the icon), long titles wrap. The app follows. The category icons there are proper library icons but render pale in Figma's export; the app keeps the coloured Figma SVGs. LUKU row subtitle reads "Bills · TANESCO" in Figma; the app keeps the BRD text "Bills · Meter …". |
+| F20 | Confirm sheets over the amount screen | Fund 50:3093 and Cash 176:2233 still embed the pre-10 Nov amount screen behind the sheet (amount at y = 240); the app shows the rebuilt one behind it (y = 260). |
 | F18 | Recent rows | Address-book recipients show name + Simba badge; a number found by search and not saved also shows its phone (12:6295). |
 
 ## Process

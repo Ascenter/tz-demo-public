@@ -46,6 +46,9 @@ const BILLS_HINT = { 'Balance TZS 695,000': 'Balance TZS 695,000 · No fee', 'No
 const BILLS_HINT_KNOWN = { 'Balance TZS 695,000 · No fee': 'one hint line (as Airtime, V5) sits 8 pt under the amount' }
 // LUKU error frames put the amount 7 pt lower than every other amount screen (F4).
 const LUKU_ERROR_Y = 'Figma amount y differs from the other amount frames (F4)'
+// Confirm frames 50:3093 / 176:2233 still embed the pre-10 Nov amount screen behind the sheet; the app shows the
+// rebuilt one (454:8525 / 452:10654), so the dimmed texts behind the sheet sit 20 pt lower (F20).
+const BEHIND_SHEET = 'behind the sheet: Figma still embeds the old amount screen (F20)'
 const KEYBOARD_GLYPH = ['\u{100147}']
 
 export const SETUPS = {
@@ -62,7 +65,10 @@ export const SETUPS = {
     actions: [...FUND_AMOUNT, 'amount:50000', 'continue'],
     deviations: FUND_HEADER,
     // Half of this sheet's texts sit at x = 36, the rest and every other sheet at x = 28 (F2).
-    known: Object.fromEntries(['Top up from M-Pesa', 'Amount', 'From', 'M-Pesa +255 75• ••• 412', 'Fee', 'No fee'].map((k) => [k, 'Figma sheet text at x = 36, all other sheets x = 28 (F2)'])),
+    known: {
+      ...Object.fromEntries(['Top up from M-Pesa', 'Amount', 'From', 'M-Pesa +255 75• ••• 412', 'Fee', 'No fee'].map((k) => [k, 'Figma sheet text at x = 36, all other sheets x = 28 (F2)'])),
+      ...Object.fromEntries(['+255 75• ••• 412', 'TZS 50,000', 'No fee · up to TZS 5,000,000 per top-up'].map((k) => [k, BEHIND_SHEET])),
+    },
   },
   // Figma draws this state without the prompt; the app opens the prompt at once (BRD), so mask it.
   '49:4738': { step: 0, actions: [...FUND_AMOUNT, 'amount:50000', 'continue', 'confirm'], mask: [STATUS, [0, 280, 402, 300]] },
@@ -142,7 +148,7 @@ export const SETUPS = {
   '176:1053': { step: 3, actions: ['payments', 'tap:pay-cash'] },
   '452:10654': { step: 3, actions: [...CASH_AMOUNT, 'amount:50000'], keyboard: true },
   '452:12552': { step: 3, actions: [...CASH_AMOUNT, 'amount:1000000'], keyboard: true },
-  '176:2233': { step: 3, actions: [...CASH_AMOUNT, 'amount:50000', 'continue'] },
+  '176:2233': { step: 3, actions: [...CASH_AMOUNT, 'amount:50000', 'continue'], known: { 'TZS 50,000': BEHIND_SHEET, 'Balance TZS 950,000 · No fee': BEHIND_SHEET } },
   // "until HH:MM" is device time + 30 min.
   '176:2903': {
     step: 3,
