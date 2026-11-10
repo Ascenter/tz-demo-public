@@ -21,6 +21,8 @@ const MONO = [
   'ic_arrowLeft_24', 'ic_arrow_down', 'ic_arrow_right', 'ic_chat_20', 'ic_checkmark_24', 'ic_cross_close_16',
   'ic_diagram_24', 'ic_search', 'ic_search_24', 'tab_home', 'tab_payments', 'tab_credit', 'tab_savings', 'tab_more',
   'plusBlack_52', 'arrowrightBlack_52', 'qrBlack_52', 'statusbar',
+  // added from the live file via the Figma MCP (10 Nov 2026); already normalised to 24 pt
+  'ic_share_24', 'ic_gallery_24', 'ic_flash_24',
 ]
 const ROUND = [
   'category_book', 'category_car', 'category_communal', 'category_electricity', 'category_gov_payments',

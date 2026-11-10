@@ -32,7 +32,7 @@ export function AmountStep({ gradient, onBack, header, testId, ...entry }: Amoun
         </>
       }
     >
-      <AmountEntry {...entry} />
+      <AmountEntry compact={header.compact} {...entry} />
     </Screen>
   )
 }

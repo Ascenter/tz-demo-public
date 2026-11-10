@@ -18,10 +18,15 @@ interface Props {
   button: { label: string; disabled: boolean; onClick: () => void }
   /** Extra space above the amount block (Airtime keeps the hidden Airtime/Data switch's room). */
   offsetTop?: number
+  /**
+   * Rebuilt amount screen (Figma "Screen / Payments / Transfer / Amount", Fund 454:8525, Cash 452:10654):
+   * no comment slot; the amount block is centred between the sheet top + 8 and the button − 18 (amount at y = 260).
+   */
+  compact?: boolean
 }
 
 /** Amount screen body: big amount (Figma "FFTextInputAmount"), comment, button, chips, keypad. */
-export function AmountEntry({ value, onChange, hints, error, comment, chips = [], button, offsetTop = 0 }: Props) {
+export function AmountEntry({ value, onChange, hints, error, comment, chips = [], button, offsetTop = 0, compact }: Props) {
   const amount = parseAmount(value)
   const onDigit = useCallback(
     (d: string) => {
@@ -36,7 +41,7 @@ export function AmountEntry({ value, onChange, hints, error, comment, chips = []
   return (
     <div className="flex min-h-0 flex-1 flex-col">
       {/* Amount block, centred between the header and the comment slot (Figma: centre at y≈277 on 402 × 874). */}
-      <div className="flex min-h-[150px] flex-1 flex-col items-center justify-center px-5" style={{ paddingTop: offsetTop }}>
+      <div className="flex min-h-[150px] flex-1 flex-col items-center justify-center px-5" style={{ paddingTop: offsetTop + (compact ? 8 : 0) }}>
         {/* Currency first, as everywhere else (BR-14, Figma 49:4304), caret after the number. */}
         <div className="flex items-center" data-testid="amount-display">
           <span className={`t-display-40 whitespace-nowrap ${value ? 'text-on-bg-primary' : 'text-on-bg-disabled'}`}>
@@ -60,8 +65,9 @@ export function AmountEntry({ value, onChange, hints, error, comment, chips = []
         </div>
       </div>
 
-      {/* Comment slot: 40 pt field + 12 pt gap above the button; the same space stays empty without a comment. */}
-      <div className="h-[52px] shrink-0 px-5">
+      {/* Comment slot: 40 pt field + 12 pt gap above the button; the same space stays empty without a comment.
+          The rebuilt layout (compact) has no slot: 18 pt (8 gap + 10 button padding) above the button. */}
+      <div className={`${compact ? 'h-[18px]' : 'h-[52px]'} shrink-0 px-5`}>
         {comment && (
           <label className="flex h-10 items-center gap-2 rounded-field bg-field-bg pl-3 pr-5">
             <Icon name="chat" size={20} color="var(--color-icon-30)" />

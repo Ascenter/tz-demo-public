@@ -78,7 +78,8 @@ export function FundFlow({ onExit }: { onExit: () => void }) {
           testId="fund-amount"
           gradient={GRADIENT}
           onBack={nav.pop}
-          header={{ leading: <MpesaAvatar />, title: t('payments.fund_account.amount_title'), subtitle: FUND.mpesaNumberMasked }}
+          // Figma 454:8525 (10 Nov): navBar "icon" header, black M-Pesa avatar.
+          header={{ leading: <Avatar icon="mobile" color="var(--color-on-bg-primary)" />, title: t('payments.fund_account.amount_title'), subtitle: FUND.mpesaNumberMasked, compact: true }}
           value={value}
           onChange={setValue}
           hints={[t('payments.fund_account.amount_hint')]}

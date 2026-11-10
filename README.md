@@ -154,6 +154,10 @@ Open `qa/design/report.html`. One row per screen, worst visual mismatch first: *
 
 ### Refreshing the export
 
+The export can now also be refreshed straight from Figma: in a Claude Code session with the Figma connector and
+`www.figma.com` allowed by the environment's network policy, the Figma MCP reads frames, texts and assets directly
+(on 10 Nov 2026, 17 rebuilt frames were re-read this way: new node ids, live renders, refreshed specs).
+
 1. Replace `design/figma-export/` with the new export.
 2. `npm run design:assets` if icons or illustrations changed; update `src/styles/tokens.css` if `tokens/tokens.json` changed.
 3. Add or adjust setups in `tools/design-check/setups.mjs` for new ★ screens (`npm run design:map` lists those without one).

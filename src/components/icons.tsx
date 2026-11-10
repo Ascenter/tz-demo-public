@@ -37,10 +37,13 @@ import Wallet40 from '../assets/icons/ic_wallet_40.svg?react'
 import UnknownBank40 from '../assets/icons/ic_unknown_bank.svg?react'
 import StoreMarket40 from '../assets/icons/ic_store_market_40.svg?react'
 import VisaWhite from '../assets/icons/logo_visa_white.svg?react'
+import Share24 from '../assets/icons/ic_share_24.svg?react'
+import Gallery24 from '../assets/icons/ic_gallery_24.svg?react'
+import Flash24 from '../assets/icons/ic_flash_24.svg?react'
 
 type Svg = ComponentType<SVGProps<SVGSVGElement>>
 
-// Glyphs the export has no SVG for (share, keypad delete, scanner controls, 24 pt close…) stay hand-drawn
+// Glyphs the Figma file has no separate SVG for (keypad delete, copy, 24 pt close…) stay hand-drawn
 // on the 24 px grid; they are listed in design/MISSING.md.
 const paths = {
   arrowLeft: <path d="M19 12H5m0 0 6-6m-6 6 6 6" />,
@@ -91,7 +94,6 @@ const paths = {
       <path d="M9 20.5h6M9 3l3 3 3-3" />
     </>
   ),
-  share: <path d="M12 15V4m0 0L8 8m4-4 4 4M6 12v6.5A1.5 1.5 0 0 0 7.5 20h9a1.5 1.5 0 0 0 1.5-1.5V12" />,
   chat: <path d="M5 6.5A1.5 1.5 0 0 1 6.5 5h11A1.5 1.5 0 0 1 19 6.5v8a1.5 1.5 0 0 1-1.5 1.5H10l-4 3v-3h0a1 1 0 0 1-1-1v-8.5Z" />,
   copy: (
     <>
@@ -100,13 +102,6 @@ const paths = {
     </>
   ),
   flashlight: <path d="M8 3h8v4l-2 3v10a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1V10L8 7V3Zm0 4h8M12 13v2" strokeLinejoin="round" />,
-  gallery: (
-    <>
-      <rect x="4" y="5" width="16" height="14" rx="2.5" />
-      <circle cx="9" cy="10" r="1.5" />
-      <path d="m20 16-4.5-4.5L7 19" />
-    </>
-  ),
   bank: <path d="M4 10h16M12 4l8 4H4l8-4ZM6.5 10v6.5m3.75-6.5v6.5m3.5-6.5v6.5m3.75-6.5v6.5M4 19.5h16" strokeLinejoin="round" />,
   user: (
     <>
@@ -189,10 +184,14 @@ const FIGMA: Partial<Record<IconName, Svg>> = {
   tabCredit: TabCredit,
   tabSavings: TabSavings,
   tabMore: TabMore,
+  // From the live file via the Figma MCP (10 Nov 2026): receipt share, scanner gallery and flash.
+  share: Share24,
+  gallery: Gallery24,
+  torch: Flash24,
 }
 
 /** Hand-drawn glyphs, Figma-only glyphs, and round-only icons (method rows). */
-export type IconName = keyof typeof paths | keyof typeof filled | 'chevronDown' | 'clear' | 'search24' | 'mobile' | 'airtelWallet'
+export type IconName = keyof typeof paths | keyof typeof filled | 'chevronDown' | 'clear' | 'search24' | 'mobile' | 'airtelWallet' | 'torch' | 'share' | 'gallery'
 
 interface IconProps extends Omit<SVGProps<SVGSVGElement>, 'name'> {
   name: IconName

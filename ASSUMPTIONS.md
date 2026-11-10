@@ -49,10 +49,10 @@ Each one is the simplest inert version; change it in the file named.
 
 | #   | Topic | Decision |
 | --- | ----- | -------- |
-| F1  | Fund amount header x | Frame 55:12543 puts the header text at x = 80, its sibling 49:4304 at x = 94. The app uses 94 on every amount screen (Cash, which has no badge, uses 80 as drawn). |
+| F1  | Amount screen headers | Live file, 10 Nov: Fund (454:8525) and Cash (452:10654) were rebuilt with the navBar "icon" header — title at x = 80, y = 88, sheet at 154 pt, no comment slot, amount at y = 260, black M-Pesa avatar, turquoise Wakala avatar. The app follows them (`compact`). Send, Scan, Airtime and Bills frames still use the older header (title at x = 94, sheet at 156 pt) and keep it. |
 | F2  | Fund confirm sheet x | Half of 50:3093's texts sit at x = 36; every other sheet uses x = 28. The app uses 28. |
 | F3  | Send start screen contacts | Figma also lists phone-book contacts under A/B letter headers; the Send BRD has Recent only, so they are not built. |
-| F4  | Frames that disagree with their siblings | 1:10181 and 12:6295 (list 5–15 pt lower), 321:12104 and 246:2881 (first feed row text at x = 56 / 80), LUKU error frames (amount 7 pt lower). The app follows the majority. |
+| F4  | Frames that disagree with their siblings | 1:10181 and 12:6295 (list 5–15 pt lower), LUKU error frames (amount 7 pt lower). The app follows the majority. |
 | F5  | Send search results | texts.ts has one header, "Results" (Figma: CONTACTS / MO-SIMBA CUSTOMER); a result found by account shows the phone, not "Account •••• 6789". |
 | F6  | Send receipts | TIPS: "Save recipient" hidden (FIGMA_VS_BRD.md), Fee and Total kept as drawn in 42:5875. Internal: Sender and the sender's account as drawn in 12:5552, no fee lines. |
 | F7  | Amount error states | Figma keeps the grey hints and an active button; the app shows the BRD red line in their place and disables the button (parent BR-05). |
@@ -66,6 +66,8 @@ Each one is the simplest inert version; change it in the file named.
 | F15 | Device size | The demo targets the iPhone 15 Plus (430 × 932 pt, @3x; safe areas 59 / 34 in the desktop frame). Layouts are fluid: 20 pt margins, extra height goes to the content. `design:check` gates at the Figma 402 × 874 frame and screenshots every screen at 430 × 932 @3x for review. |
 | F16 | Comment field size | 13/18 as drawn. iOS would zoom on focus below 16 px, which the viewport (`maximum-scale=1`) prevents. |
 | F17 | Operator badges | Dark badge as drawn (222:1102) instead of operator colours. |
+| F19 | Home feed in the live file (10 Nov) | Every Home frame is now an instance (e.g. 411:1074): feed text at x = 80 (20 pt after the icon), long titles wrap. The app follows. The category icons there are proper library icons but render pale in Figma's export; the app keeps the coloured Figma SVGs. LUKU row subtitle reads "Bills · TANESCO" in Figma; the app keeps the BRD text "Bills · Meter …". |
+| F20 | Confirm sheets over the amount screen | Fund 50:3093 and Cash 176:2233 still embed the pre-10 Nov amount screen behind the sheet (amount at y = 240); the app shows the rebuilt one behind it (y = 260). |
 | F18 | Recent rows | Address-book recipients show name + Simba badge; a number found by search and not saved also shows its phone (12:6295). |
 
 ## Process
