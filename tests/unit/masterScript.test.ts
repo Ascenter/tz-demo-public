@@ -27,4 +27,11 @@ describe('Jump to step N reproduces the Master demo script table', () => {
     expect(d.recent[0].name).toBe('BARAKA JOHN MWAKYUSA')
     expect(d.saved['015023456789']).toBe('Baraka Mwakyusa')
   })
+  it('after step 5 Rehema Juma is first in Airtime Recent, in Contacts and on the feed row', () => {
+    const d = dataAfterStep(5)
+    expect(d.airtimeRecent.map((c) => c.name)).toEqual(['Rehema Juma', 'Neema Mushi', 'Joseph Kimaro'])
+    expect(d.airtimeContacts.map((c) => c.name)).toContain('Rehema Juma')
+    expect(d.history[0].title).toBe('Rehema Juma')
+    expect(d.history[0].subtitle).toBe('Airtime · Vodacom')
+  })
 })

@@ -1,6 +1,6 @@
 # Assumptions
 
-Decisions taken where the BRDs (parent v16 + 7 children, as of 7 Nov 2026) and Figma did not settle a detail.
+Decisions taken where the BRDs (parent v16 + 7 children, as of 7 Nov 2026; Airtime child v6, 18 Nov 2026) and Figma did not settle a detail.
 Each one is the simplest inert version; change it in the file named.
 
 ## Data and money
@@ -29,6 +29,9 @@ Each one is the simplest inert version; change it in the file named.
 | B10 | Saving a contact on the receipt                       | Toast "Contact saved"; the "Save contact" button disappears once the account is saved.                                                                                                                         |
 | B11 | Transaction details (Cash v5)                         | Only history entries that carry details open on tap: today only cash withdrawals. The details screen is the Receipt layout pushed over Home; its date is the entry's time. Other flows' entries are unchanged. |
 | B12 | Feed amount for a cash withdrawal                     | Figma feed style `TZS 50,000` (currency first, no minus), the same as every other outgoing row and Figma 176:4682 (FIGMA_VS_BRD.md). The Cash BRD v5 field mapping writes "−TZS 50,000"; product owner to confirm. |
+| B13 | Airtime Recent (v6)                                   | Recent changes only when a typed number is saved (BR-15): it goes first and the list keeps 3. Topping up an existing contact does not reorder it (the BRD does not build Recent from history). Contacts stay under one header, sorted by name, so Rehema Juma follows Bahati Mollel. |
+| B14 | Airtime Enter number screen (v6)                      | In-app keypad, digits only: `0…` takes 10 digits (0XXX XXX XXX), `255…` takes 12 (+255 XXX XXX XXX). Empty field shows only the caret (Figma draws the filled state only). Unknown prefix → red line "Number not found" under the number, Continue disabled (BR-19, not drawn). |
+| B15 | Airtime Save contact (v6)                             | Mobile number is shown prefilled and cannot be edited; no "Contact saved" toast (the BRD names none): the receipt itself switches to Recipient {name} with no chip. Saving renames this number's airtime rows in the feed. |
 
 ## Visual (Figma wins for layout)
 
@@ -42,6 +45,7 @@ Each one is the simplest inert version; change it in the file named.
 | V6  | Bills biller order                                         | Figma order: LUKU, TV, Government payments, Water.                                                                                                                                                                                                                                                    |
 | V7  | Gradients                                                  | As in the Figma layers: Home 460 pt, Payments 260 pt green, list screens 260 pt blue, amount screens blue over the whole screen, Fund and Cash method lists the method gradient over the whole screen. |
 | V8  | OTP screen, loader, push banner, demo menu, result screens | No Figma frame; built in the same visual language (white surfaces, black pill buttons, SF type scale).                                                                                                                                                                                                |
+| V9  | Airtime v6 lists and receipt                               | "Recent" kept over Figma's "Favorite" title (BRD OQ-6 a). Lists show name and number only, no operator (BR-02). The "Save contact" chip reuses Send's mini button without the 🤓 emoji. "Add to existing contact" is hidden (OQ-3 a). The new-number phone icon uses Blue Ocean, as in Figma 518:5292. |
 
 ## Design sync (Figma export of 8 Nov 2026)
 

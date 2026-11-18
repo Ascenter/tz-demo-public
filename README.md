@@ -38,13 +38,15 @@ The first e2e run on a new machine needs the browsers: `npx playwright install w
 | 2    | Send money           | 1 → 3 → 4 → 2 | 975,000   | 315,000   | 238,500      |
 | 3    | Scan to pay          | 2 → 1         | 950,000   | 290,000   | 263,500      |
 | 4    | Cash withdrawal      | 2 → 1         | 900,000   | 240,000   | 313,500      |
-| 5    | Airtime              | 2 → 3 → 1     | 895,000   | 235,000   | 318,500      |
+| 5    | Airtime              | 2 → 3 → 5     | 895,000   | 235,000   | 318,500      |
 | 6    | Government bill      | 2 → 1         | 695,000   | 35,000    | 518,500      |
 | 7    | Bill payments (LUKU) | 2 → 3 → 4 → 1 | 675,000   | 15,000    | 538,500      |
 
-Scripted inputs: OTP **123456** · Send search `0784 552 019` and `Nee` · TIPS account `0152 4876 39100` · Airtime not-found number `0799 000 111` · GePG `9910 8112 3890` (not found: `…3809`) · LUKU meter `0123 4567 890` (not found: `…899`) · M-Pesa: over 500,000 → "Not enough on M-Pesa", exactly 25,000 → "in progress", Cancel in the prompt → declined · Cash: Get code / Done → code 482 913 / debit + Home, first row Juma Shop.
+Scripted inputs: OTP **123456** · Send search `0784 552 019` and `Nee` · TIPS account `0152 4876 39100` · Airtime not-found number `0799 000 111`, new number `0745 210 377` saved as `Rehema Juma` · GePG `9910 8112 3890` (not found: `…3809`) · LUKU meter `0123 4567 890` (not found: `…899`) · M-Pesa: over 500,000 → "Not enough on M-Pesa", exactly 25,000 → "in progress", Cancel in the prompt → declined · Cash: Get code / Done → code 482 913 / debit + Home, first row Juma Shop.
 
 **Step 4, Cash withdrawal (BRD v5):** Payments → Cash withdrawal → At a Wakala agent → 1,000,000 (Not enough money) → 50,000 → Continue → Get code (482 913) → **Done** → lands on Home with "Cash withdrawal · Wakala agent, Juma Shop" first (tap the row to show the details). There is no agent approval step and no presenter action.
+
+**Step 5, Airtime (BRD v6, 18 Nov):** Payments → Airtime & data → type `0799 000 111` in search ("Number not found") → clear it → **Enter phone number** (first row) → 0745 210 377 → Continue → amount screen "+255 745 210 377 · Vodacom" → 600,000 (Over the limit) → 5,000 → Continue → OTP → receipt with the **Save contact** chip → Save contact → Rehema Juma → Save → receipt shows Recipient Rehema Juma → Done → Payments. Airtime & data now lists Rehema Juma first in Recent, and the Home feed row reads "Rehema Juma · Airtime · Vodacom". Spare paths: scenario 1 (tap Neema Mushi) and scenario 4 (type 0745 210 377 in search → row under "New number").
 
 ### Hidden demo menu (presenter only)
 
