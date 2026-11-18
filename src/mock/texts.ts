@@ -3,7 +3,7 @@
 
 export const TEXTS = {
   // ── Shell, tabs, home ────────────────────────────────────────────────
-  'app.name': 'Mo-Simba',
+  'app.name': 'Simba Bank',
   'app.now': 'now',
   'tabs.home': 'Home',
   'tabs.payments': 'Payments',

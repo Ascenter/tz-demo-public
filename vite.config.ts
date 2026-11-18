@@ -22,9 +22,9 @@ export default defineConfig(({ mode }) => {
       injectRegister: 'auto',
       includeAssets: ['apple-touch-icon.png', 'icon.svg'],
       manifest: {
-        name: 'Mo-Simba',
-        short_name: 'Mo-Simba',
-        description: 'Mo-Simba Bank payments demo',
+        name: 'Simba Bank',
+        short_name: 'Simba Bank',
+        description: 'Simba Bank payments demo',
         display: 'standalone',
         orientation: 'portrait',
         start_url: base,
