@@ -254,7 +254,8 @@ function Recipients({ onBack, onPick, onEnterNumber }: { onBack: () => void; onP
       }
     >
       {view.kind === 'lists' && (
-        <>
+        // One block: when the list is taller than the sheet, flex would shrink rows to their min-height.
+        <div className="shrink-0">
           {/* BR-17: "Enter phone number" first, then a divider (Figma 541:6387). */}
           <ListRow
             testId="airtime-enter-number"
@@ -271,7 +272,7 @@ function Recipients({ onBack, onPick, onEnterNumber }: { onBack: () => void; onP
           <div className="h-6 shrink-0" />
           <CapsHeader>{t('payments.airtime.contacts')}</CapsHeader>
           <div data-testid="airtime-contacts">{contacts.map((c) => row(c))}</div>
-        </>
+        </div>
       )}
       {view.kind === 'filter' && <div data-testid="airtime-filter">{view.items.map((c) => row(c))}</div>}
       {view.kind === 'number' &&
@@ -296,8 +297,8 @@ function Recipients({ onBack, onPick, onEnterNumber }: { onBack: () => void; onP
           </>
         ))}
       {view.kind === 'not_found' && (
-        // Figma 243:19982: small mascot, 20/28 title, 13/18 hint.
-        <div data-testid="airtime-not-found" className="flex flex-col items-center px-[54px] pt-2 text-center">
+        // Figma 243:19982 (live, 18 Nov): block at y = 244, 80 pt under the sheet; small mascot, 20/28 title, 13/18 hint.
+        <div data-testid="airtime-not-found" className="flex flex-col items-center px-[54px] pt-[56px] text-center">
           <Illustration kind="notFound" />
           <p className="mt-6 t-display-20">{t('payments.airtime.not_found_title')}</p>
           <p className="mt-[2px] t-regular-13 text-on-bg-secondary">{t('payments.airtime.not_found_hint')}</p>

@@ -23,7 +23,7 @@ export function SearchField({
       />
       {onClear && rest.value ? (
         <button type="button" aria-label="Clear" data-testid="search-clear" onClick={onClear} className="pressable grid size-6 place-items-center">
-          <Icon name="clear" size={16} color="var(--color-on-bg-primary)" />
+          <Icon name="clear" size={16} color="var(--color-border-unselected)" />
         </button>
       ) : null}
     </label>
@@ -88,7 +88,7 @@ export function TextField({
         {chevron && <Icon name="chevronDown" size={16} color="var(--color-on-bg-secondary)" />}
         {focused && !empty && (
           <button type="button" aria-label="Clear" onPointerDown={(e) => e.preventDefault()} onClick={clear} className="grid size-6 place-items-center">
-            <Icon name="clear" size={16} color="var(--color-on-bg-primary)" />
+            <Icon name="clear" size={16} color="var(--color-border-unselected)" />
           </button>
         )}
       </label>
