@@ -203,7 +203,7 @@ test('Master demo script, steps 0 → 7', async ({ page }) => {
   await details.getByTestId('receipt-done').click()
   await expect(page.getByTestId('transaction-details')).toHaveCount(0)
 
-  // ── Step 5: Airtime, scenarios 2 → 3 → 1 ──────────────────────────────
+  // ── Step 5: Airtime, scenarios 2 → 3 → 5 (BRD v6) ─────────────────────
   await goPayments(page)
   await page.getByTestId('pay-airtime').click()
   await page.getByTestId('airtime-search').fill('0799 000 111')
@@ -212,8 +212,16 @@ test('Master demo script, steps 0 → 7', async ({ page }) => {
     'Check the number: it should be a Tanzanian mobile number, like 0754 123 456',
   )
   await page.getByTestId('airtime-search').fill('')
-  await page.getByTestId('airtime-row').filter({ hasText: 'Neema Mushi' }).click()
-  await expect(page.getByTestId('airtime-amount')).toContainText('Vodacom')
+  // S5: "Enter phone number" is the first row, above My number (BR-17).
+  await page.getByTestId('airtime-enter-number').click()
+  await expect(page.getByTestId('airtime-enter-continue')).toBeDisabled()
+  for (const d of '0745210377') await page.getByTestId(`key-${d}`).click()
+  await expect(page.getByTestId('airtime-enter-value')).toHaveText('0745 210 377')
+  await page.getByTestId('airtime-enter-continue').click()
+  const amountScreen = page.getByTestId('airtime-amount')
+  await expect(amountScreen.getByTestId('header-title')).toHaveText('+255 745 210 377')
+  await expect(amountScreen).toContainText('Vodacom')
+  // S3 on the new number's amount screen.
   await typeAmount(page, 600_000)
   await expectRedLine(page, 'Over the limit of TZS 500,000 per top-up')
   await expect(page.getByTestId('amount-primary')).toBeDisabled()
@@ -222,12 +230,25 @@ test('Master demo script, steps 0 → 7', async ({ page }) => {
   await page.getByTestId('amount-primary').click()
   await enterOtp(page) // no confirmation sheet
   await expect(page.getByTestId('receipt-status')).toContainText('Airtime sent')
-  await expect(receipt).toContainText('+255 754 318 902')
+  await expect(receipt).toContainText('+255 745 210 377')
+  await expect(receipt).not.toContainText('Recipient')
   await expect(receipt).toContainText('•••• 7788 | Mo-Simba')
-  await expectPush(page, 'TZS 5,000 airtime sent to +255 754 318 902')
+  await expectPush(page, 'TZS 5,000 airtime sent to +255 745 210 377')
+  // Save contact from the receipt (BR-13–BR-15).
+  await page.getByTestId('airtime-save-contact').click()
+  await expect(page.getByTestId('airtime-contact-phone')).toHaveValue('+255 745 210 377')
+  await expect(page.getByTestId('airtime-save-button')).toBeDisabled()
+  await page.getByTestId('airtime-contact-name').fill('Rehema Juma')
+  await page.getByTestId('airtime-save-button').click()
+  await expect(receipt).toContainText('Rehema Juma')
+  await expect(page.getByTestId('airtime-save-contact')).toHaveCount(0)
   await page.getByTestId('receipt-done').click()
+  await expect(page.getByTestId('payments')).toBeVisible()
+  await page.getByTestId('pay-airtime').click()
+  await expect(page.getByTestId('airtime-recent').getByTestId('airtime-row').first()).toContainText('Rehema Juma')
+  await page.getByTestId('airtime-recipients').getByTestId('nav-back').click()
   await expectStep(page, 5)
-  await expectFirstFeedRow(page, 'Neema Mushi', 'Airtime · Vodacom', 'TZS 5,000')
+  await expectFirstFeedRow(page, 'Rehema Juma', 'Airtime · Vodacom', 'TZS 5,000')
 
   // ── Step 6: Government bill (GePG), scenarios 2 → 1 ───────────────────
   await goPayments(page)

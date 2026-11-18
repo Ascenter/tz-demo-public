@@ -23,3 +23,17 @@ export function operatorOf(phone: string): string | null {
 }
 
 export const toIntl = (local9: string) => formatPhone(`0${local9}`)
+
+/** Enter number screen (Airtime BR-18): the most digits the keypad takes — 0 + 9, or 255 + 9. */
+export function maxTypedDigits(digits: string): number {
+  return digits.startsWith('255') ? 12 : 10
+}
+
+/** Typed keypad digits as 0XXX XXX XXX, or +255 XXX XXX XXX when they start with 255 (Airtime BR-18). */
+export function formatTyped(digits: string): string {
+  if (digits.startsWith('255')) {
+    const local = digits.slice(3)
+    return ['+255', local.slice(0, 3), local.slice(3, 6), local.slice(6)].filter(Boolean).join(' ')
+  }
+  return [digits.slice(0, 4), digits.slice(4, 7), digits.slice(7)].filter(Boolean).join(' ')
+}

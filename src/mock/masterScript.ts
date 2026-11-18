@@ -1,6 +1,6 @@
 import type { OpDraft } from './operations'
 import { fundOp, sendOp, scanOp, cashOp, airtimeOp, govOp, lukuOp } from './operations'
-import { BARAKA_INTERNAL, MO_SIMBA, SEED_RECENT, type SendRecipient } from './recipients'
+import { AIRTIME_NEW_NUMBER, BARAKA_INTERNAL, MO_SIMBA, SEED_RECENT, type AirtimeContact, type SendRecipient } from './recipients'
 import { SEND, BILLS } from './scripted'
 
 // parent "Master demo script": the state after each step. Used by "Jump to step N" and by the e2e test.
@@ -12,6 +12,8 @@ export interface ScriptStep {
   /** Send money side effects: recipients used (in order) and contacts saved. */
   recipients?: SendRecipient[]
   saved?: Record<string, string>
+  /** Airtime side effect: numbers saved as contacts from the receipt (Airtime S5). */
+  airtimeSaved?: AirtimeContact[]
   expected: { available: number; ownFunds: number; today: number }
 }
 
@@ -52,7 +54,9 @@ export const MASTER_SCRIPT: ScriptStep[] = [
   {
     step: 5,
     flow: 'Airtime',
-    ops: [airtimeOp('Neema Mushi', 'Vodacom', 5_000)],
+    // Airtime v6 (18 Nov): scenarios 2 → 3 → 5 — top up +255 745 210 377 via "Enter phone number", save it as Rehema Juma.
+    ops: [airtimeOp(AIRTIME_NEW_NUMBER.phone, 'Vodacom', 5_000)],
+    airtimeSaved: [AIRTIME_NEW_NUMBER],
     expected: { available: 895_000, ownFunds: 235_000, today: 318_500 },
   },
   { step: 6, flow: 'Government bill', ops: [govOp()], expected: { available: 695_000, ownFunds: 35_000, today: 518_500 } },

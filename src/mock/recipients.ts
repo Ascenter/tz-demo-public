@@ -56,3 +56,9 @@ export const AIRTIME_CONTACTS: AirtimeContact[] = [
   { name: 'Asha Mwinyi', phone: '+255 655 903 118' },
   { name: 'Bahati Mollel', phone: '+255 742 610 093' },
 ]
+
+/** Airtime S4/S5: the scripted new number and the name the presenter saves it as (field mapping). */
+export const AIRTIME_NEW_NUMBER: AirtimeContact = { name: 'Rehema Juma', phone: '+255 745 210 377' }
+
+/** Airtime BR-15: Recent keeps the 3 latest. */
+export const AIRTIME_RECENT_MAX = 3

@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test'
-import { launchFresh, typeAmount, enterOtp, expectPush, expectStep, goHome, goPayments, openDemoMenu } from './helpers'
+import { launchFresh, typeAmount, enterOtp, expectPush, expectStep, expectFirstFeedRow, goHome, goPayments, openDemoMenu } from './helpers'
 
 // Rules outside the Master script: OTP limits, scripted M-Pesa failures, idempotent confirm,
 // cash Cancel code and double-tap Done, Bills → Fund my account return, presenter tools.
@@ -120,6 +120,68 @@ test('Bills: "Fund my account" opens Fund and returns to the amount, cleared (Bi
   await expect(page.getByTestId('fund-methods')).toHaveCount(0)
   await expect(page.getByTestId('bills-amount')).toBeVisible()
   await expect(page.getByTestId('amount-value')).toHaveText(/^\s*0$/)
+})
+
+test('Airtime S1 (spare): a Recent contact has the Recipient row and no Save contact chip', async ({ page }) => {
+  await goPayments(page)
+  await page.getByTestId('pay-airtime').click()
+  await expect(page.getByTestId('airtime-recipients')).not.toContainText('Vodacom') // BR-02: no operator in the lists
+  await page.getByTestId('airtime-row').filter({ hasText: 'Neema Mushi' }).click()
+  await expect(page.getByTestId('airtime-amount')).toContainText('Vodacom')
+  await typeAmount(page, 5_000)
+  await page.getByTestId('amount-primary').click()
+  await enterOtp(page)
+  const receipt = page.getByTestId('receipt-rows')
+  await expect(receipt).toContainText('Recipient')
+  await expect(receipt).toContainText('Neema Mushi')
+  await expect(page.getByTestId('airtime-save-contact')).toHaveCount(0)
+  await expectPush(page, 'TZS 5,000 airtime sent to +255 754 318 902')
+  await page.getByTestId('receipt-done').click()
+  await expect(page.getByTestId('payments')).toBeVisible() // Done → Payments
+  await goHome(page)
+  await expectFirstFeedRow(page, 'Neema Mushi', 'Airtime · Vodacom', 'TZS 5,000')
+})
+
+test('Airtime S4 (spare): search a new number, top up; Back from Save contact keeps the chip', async ({ page }) => {
+  await goPayments(page)
+  await page.getByTestId('pay-airtime').click()
+  await page.getByTestId('airtime-search').fill('0745 210')
+  await expect(page.getByTestId('airtime-number-row')).toHaveCount(0) // BR-04: incomplete number
+  await page.getByTestId('airtime-search').fill('0745 210 377')
+  await expect(page.getByTestId('airtime-new-number-title')).toHaveText('New number')
+  await expect(page.getByTestId('airtime-number-row')).toHaveText('+255 745 210 377')
+  await page.getByTestId('airtime-number-row').click()
+  await typeAmount(page, 5_000)
+  await page.getByTestId('amount-primary').click()
+  await enterOtp(page)
+  await expectPush(page, 'TZS 5,000 airtime sent to +255 745 210 377')
+  await page.getByTestId('airtime-save-contact').click()
+  await page.getByTestId('airtime-contact-name').fill('   ')
+  await expect(page.getByTestId('airtime-save-button')).toBeDisabled()
+  await page.getByTestId('airtime-save').getByTestId('nav-back').click()
+  await expect(page.getByTestId('airtime-save-contact')).toBeVisible() // nothing saved
+  await page.getByTestId('receipt-done').click()
+  await expect(page.getByTestId('payments')).toBeVisible() // Done → Payments
+  await goHome(page)
+  await expectFirstFeedRow(page, '+255 745 210 377', 'Airtime · Vodacom', 'TZS 5,000')
+})
+
+test('Airtime S5: unknown prefix on the Enter number screen → red line; Back from the amount keeps the number', async ({ page }) => {
+  await goPayments(page)
+  await page.getByTestId('pay-airtime').click()
+  await page.getByTestId('airtime-enter-number').click()
+  for (const d of '0799000111') await page.getByTestId(`key-${d}`).click()
+  await expect(page.getByTestId('red-line')).toHaveText('Number not found')
+  await expect(page.getByTestId('airtime-enter-continue')).toBeDisabled()
+  for (let i = 0; i < 10; i++) await page.getByTestId('key-del').click()
+  for (const d of '0754318902') await page.getByTestId(`key-${d}`).click()
+  await page.getByTestId('airtime-enter-continue').click()
+  await expect(page.getByTestId('airtime-amount').getByTestId('header-title')).toHaveText('Neema Mushi') // a scripted contact
+  await page.getByTestId('airtime-amount').getByTestId('nav-back').click()
+  await expect(page.getByTestId('airtime-enter-value')).toHaveText('0754 318 902')
+  await page.getByTestId('airtime-enter').getByTestId('nav-back').click()
+  await page.getByTestId('airtime-enter-number').click()
+  await expect(page.getByTestId('airtime-enter-value')).toHaveText('')
 })
 
 test('Demo menu: Jump to step 4, then Reset to seed', async ({ page }) => {

@@ -39,6 +39,12 @@ const CASH_AMOUNT = ['payments', 'tap:pay-cash', 'cash.agent']
 const AIRTIME_AMOUNT = ['payments', 'tap:pay-airtime', 'tap:airtime-row@Neema Mushi']
 // Airtime: one hint line "Balance … · No fee" (ASSUMPTIONS V5) and one "Contacts" header for the letter groups (V4).
 const AIRTIME_HINT = { 'Balance TZS 900,000': 'Balance TZS 900,000 · No fee', 'No fee': null }
+// Airtime v6 lists: "Recent" kept over Figma's "Favorite" (BRD OQ-6 a), one Contacts header (V4).
+const AIRTIME_LISTS = { FAVORITE: 'RECENT', A: 'CONTACTS', B: null }
+// Airtime S5: "Enter phone number" → 0745 210 377 → Continue (Figma 518:5041 → 518:5292).
+const AIRTIME_ENTER = ['payments', 'tap:pay-airtime', 'tap:airtime-enter-number', ...[...'0745210377'].map((d) => `tap:key-${d}`)]
+const AIRTIME_S5_RECEIPT = [...AIRTIME_ENTER, 'tap:airtime-enter-continue', 'amount:5000', 'continue', 'otp', 'push']
+const AIRTIME_SAVE = [...AIRTIME_S5_RECEIPT, 'tap:airtime-save-contact', 'fill:airtime-contact-name=Rehema Juma']
 const GOV_CONTROL = ['payments', 'tap:pay-gov', 'tap:inst-tra']
 const LUKU_METER = ['payments', 'tap:pay-bills', 'tap:biller-luku']
 const LUKU_AMOUNT = [...LUKU_METER, 'fill:meter-input=01234567890', 'blur', 'tap:meter-continue']
@@ -159,12 +165,20 @@ export const SETUPS = {
   '451:11900': { step: 4, actions: [], homeAfter: true },
 
   // ── 05 Airtime (from step 4) ─────────────────────────────────────
-  '222:919': { step: 4, actions: ['payments', 'tap:pay-airtime'], deviations: { A: 'CONTACTS', B: null }, knownFrom: { y: 740, note: 'one Contacts header instead of the A/B letter groups (V4), so the B rows sit 54 pt higher' } },
+  '222:919': { step: 4, actions: ['payments', 'tap:pay-airtime'], deviations: AIRTIME_LISTS, knownFrom: { y: 825, note: 'one Contacts header instead of the A/B letter groups (V4), so the B rows sit 54 pt higher' } },
   '243:19982': { step: 4, actions: ['payments', 'tap:pay-airtime', 'fill:airtime-search=0799 000 111'], keyboard: true, ignore: KEYBOARD_GLYPH },
   '222:1102': { step: 4, actions: [...AIRTIME_AMOUNT, 'amount:5000'], keyboard: true, deviations: AIRTIME_HINT, known: { 'Balance TZS 900,000 · No fee': 'one hint line (V5) sits 8 pt under the amount, Figma\'s two lines 2 pt' } },
   '243:20231': { step: 4, actions: [...AIRTIME_AMOUNT, 'amount:600000'], keyboard: true, known: RED_LINE_KNOWN('TZS 600,000', 'Balance TZS 900,000') },
   '243:20111': { step: 4, actions: [...AIRTIME_AMOUNT, 'amount:950000'], keyboard: true, known: RED_LINE_KNOWN('TZS 950,000', 'Balance TZS 900,000') },
   '222:2075': { step: 4, actions: [...AIRTIME_AMOUNT, 'amount:5000', 'continue', 'otp', 'push'] },
+  // Airtime v6 (18 Nov): scenario 5, new number via "Enter phone number" + Save contact.
+  '541:5904': { step: 4, actions: ['payments', 'tap:pay-airtime'], deviations: AIRTIME_LISTS, knownFrom: { y: 825, note: 'one Contacts header (V4)' } },
+  '518:5041': { step: 4, actions: AIRTIME_ENTER, keyboard: true },
+  '518:5292': { step: 4, actions: [...AIRTIME_ENTER, 'tap:airtime-enter-continue', 'amount:5000'], keyboard: true, deviations: AIRTIME_HINT, known: { 'Balance TZS 900,000 · No fee': 'one hint line (V5)' } },
+  '518:6442': { step: 4, actions: AIRTIME_S5_RECEIPT, deviations: { '🤓 Save contact': 'Save contact', '*7788 | Mo-Simba': '•••• 7788 | Mo-Simba' } },
+  '518:7536': { step: 4, actions: AIRTIME_SAVE, keyboard: true, deviations: { 'Add to existing contact': null }, known: { Save: ABOVE_KEYBOARD } },
+  '524:6844': { step: 4, actions: [...AIRTIME_SAVE, 'tap:airtime-save-button'], deviations: { '*7788 | Mo-Simba': '•••• 7788 | Mo-Simba' } },
+  '518:6836': { step: 5, actions: ['payments', 'tap:pay-airtime'], deviations: { A: 'CONTACTS', B: null }, knownFrom: { y: 825, note: 'one Contacts header (V4); Rehema Juma also listed under Contacts' } },
   '451:18248': { step: 5, actions: [], homeAfter: true },
 
   // ── 06 Government bill, GePG (from step 5) ───────────────────────

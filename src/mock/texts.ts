@@ -234,7 +234,8 @@ export const TEXTS = {
   'payments.airtime.recent': 'Recent',
   'payments.airtime.contacts': 'Contacts',
   'payments.airtime.results': 'Results',
-  'payments.airtime.row_subtitle': '{phone} · {operator}',
+  'payments.airtime.new_number': 'New number',
+  'payments.airtime.enter_number': 'Enter phone number',
   'payments.airtime.not_found_title': 'Number not found',
   'payments.airtime.not_found_hint': 'Check the number: it should be a Tanzanian mobile number, like 0754 123 456',
   'payments.airtime.max_amount': 'Over the limit of TZS 500,000 per top-up',
@@ -247,6 +248,11 @@ export const TEXTS = {
   'payments.airtime.date': 'Date',
   'payments.airtime.history_subtitle': 'Airtime · {operator}',
   'payments.airtime.push': 'TZS {amount} airtime sent to {number}',
+  'payments.airtime.save_contact': 'Save contact',
+  'payments.airtime.contact_name': 'Contact name',
+  'payments.airtime.mobile_number': 'Mobile number',
+  'payments.airtime.save': 'Save',
+  'payments.airtime.add_to_existing': 'Add to existing contact', // hidden in the demo build (Airtime OQ-3 a)
 
   // ── Government bill (GePG) ───────────────────────────────────────────
   'payments.gov.copied': 'Receipt number copied',

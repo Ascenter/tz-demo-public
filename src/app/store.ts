@@ -3,10 +3,18 @@ import { persist, createJSONStorage } from 'zustand/middleware'
 import { available, credit, debit, type Ledger, type Operation } from '../engine/money'
 import { now } from '../engine/clock'
 import { SEED_HISTORY, SEED_LEDGER } from '../mock/seed'
-import { SEED_RECENT, SEED_SAVED, type SendRecipient } from '../mock/recipients'
+import {
+  AIRTIME_CONTACTS,
+  AIRTIME_RECENT,
+  AIRTIME_RECENT_MAX,
+  SEED_RECENT,
+  SEED_SAVED,
+  type AirtimeContact,
+  type SendRecipient,
+} from '../mock/recipients'
 import { DEFAULT_LOADER_MS } from '../mock/scripted'
 import { MASTER_SCRIPT } from '../mock/masterScript'
-import type { OpDraft } from '../mock/operations'
+import { airtimeOp, type OpDraft } from '../mock/operations'
 import { useUi } from './ui'
 
 // parent BR-08: one ledger, one store — balance, feed and history update together.
@@ -19,6 +27,9 @@ interface Data {
   history: Operation[]
   recent: SendRecipient[]
   saved: Record<string, string>
+  /** Airtime recipient screen: Recent (3 latest) and Contacts, scripted at seed (Airtime BR-02, BR-15). */
+  airtimeRecent: AirtimeContact[]
+  airtimeContacts: AirtimeContact[]
 }
 
 interface DemoState extends Data {
@@ -32,6 +43,8 @@ interface DemoState extends Data {
   useRecipient: (r: SendRecipient) => void
   /** Send money: save or rename a contact, one entry per account (Send BR-07). */
   saveContact: (account: string, name: string, phone?: string) => void
+  /** Airtime: save a typed number as a contact in the app's data only (Airtime BR-15, BR-16). */
+  saveAirtimeContact: (c: AirtimeContact) => void
   resetToSeed: () => void
   jumpToStep: (n: number) => void
   setLoaderMs: (ms: number) => void
@@ -47,6 +60,8 @@ function seedData(): Data {
     history: SEED_HISTORY.map((o) => ({ ...o })),
     recent: SEED_RECENT.map((r) => ({ ...r })),
     saved: { ...SEED_SAVED },
+    airtimeRecent: AIRTIME_RECENT.map((c) => ({ ...c })),
+    airtimeContacts: AIRTIME_CONTACTS.map((c) => ({ ...c })),
   }
 }
 
@@ -60,6 +75,20 @@ function applyRecipient(d: Data, r: SendRecipient): Data {
   return { ...d, recent: [r, ...d.recent.filter((x) => x.account !== r.account)] }
 }
 
+/**
+ * Airtime BR-15: the saved number goes first in Recent (3 latest) and into Contacts (by name), and the feed
+ * entries of that number show the name from now on.
+ */
+function applyAirtimeSave(d: Data, c: AirtimeContact): Data {
+  const named = airtimeOp(c.name, '', 0)
+  return {
+    ...d,
+    airtimeRecent: [c, ...d.airtimeRecent.filter((x) => x.phone !== c.phone)].slice(0, AIRTIME_RECENT_MAX),
+    airtimeContacts: [...d.airtimeContacts.filter((x) => x.phone !== c.phone), c].sort((a, b) => a.name.localeCompare(b.name)),
+    history: d.history.map((o) => (o.category === 'airtime' && o.title === c.phone ? { ...o, title: c.name, initials: named.initials } : o)),
+  }
+}
+
 /** State after step N of the Master demo script (seed + every op of steps 1..N, in order). */
 export function dataAfterStep(n: number): Data {
   let d = seedData()
@@ -67,6 +96,7 @@ export function dataAfterStep(n: number): Data {
     for (const op of step.ops) d = op.direction === 'in' ? applyReceive(d, op) : applySpend(d, op)
     for (const r of step.recipients ?? []) d = applyRecipient(d, r)
     d = { ...d, saved: { ...d.saved, ...step.saved } }
+    for (const c of step.airtimeSaved ?? []) d = applyAirtimeSave(d, c)
   }
   return d
 }
@@ -85,6 +115,7 @@ export const useDemo = create<DemoState>()(
           saved: { ...s.saved, [account]: name },
           recent: s.recent.map((r) => (r.account === account && phone ? { ...r, phone } : r)),
         })),
+      saveAirtimeContact: (c) => set((s) => applyAirtimeSave(s, c)),
       resetToSeed: () => set(seedData()),
       jumpToStep: (n) => set(dataAfterStep(n)),
       setLoaderMs: (ms) => {
@@ -102,6 +133,8 @@ export const useDemo = create<DemoState>()(
         history: s.history,
         recent: s.recent,
         saved: s.saved,
+        airtimeRecent: s.airtimeRecent,
+        airtimeContacts: s.airtimeContacts,
         loaderMs: s.loaderMs,
         showFrame: s.showFrame,
       }),
