@@ -40,11 +40,13 @@ const AIRTIME_AMOUNT = ['payments', 'tap:pay-airtime', 'tap:airtime-row@Neema Mu
 // Airtime: one hint line "Balance … · No fee" (ASSUMPTIONS V5) and one "Contacts" header for the letter groups (V4).
 const AIRTIME_HINT = { 'Balance TZS 900,000': 'Balance TZS 900,000 · No fee', 'No fee': null }
 // Airtime v6 lists: "Recent" kept over Figma's "Favorite" (BRD OQ-6 a), one Contacts header (V4).
-const AIRTIME_LISTS = { FAVORITE: 'RECENT', A: 'CONTACTS', B: null }
+const AIRTIME_LISTS = { favorite: 'Recent', A: 'CONTACTS', B: null }
 // Airtime S5: "Enter phone number" → 0745 210 377 → Continue (Figma 518:5041 → 518:5292).
 const AIRTIME_ENTER = ['payments', 'tap:pay-airtime', 'tap:airtime-enter-number', ...[...'0745210377'].map((d) => `tap:key-${d}`)]
 const AIRTIME_S5_RECEIPT = [...AIRTIME_ENTER, 'tap:airtime-enter-continue', 'amount:5000', 'continue', 'otp', 'push']
 const AIRTIME_SAVE = [...AIRTIME_S5_RECEIPT, 'tap:airtime-save-contact', 'fill:airtime-contact-name=Rehema Juma']
+// Live receipts (18 Nov) write "*7788"; the app keeps the parent's masked account "•••• 7788".
+const AIRTIME_PAID_FROM = { '*7788 | Mo-Simba': '•••• 7788 | Mo-Simba' }
 const GOV_CONTROL = ['payments', 'tap:pay-gov', 'tap:inst-tra']
 const LUKU_METER = ['payments', 'tap:pay-bills', 'tap:biller-luku']
 const LUKU_AMOUNT = [...LUKU_METER, 'fill:meter-input=01234567890', 'blur', 'tap:meter-continue']
@@ -170,16 +172,17 @@ export const SETUPS = {
   '222:1102': { step: 4, actions: [...AIRTIME_AMOUNT, 'amount:5000'], keyboard: true, deviations: AIRTIME_HINT, known: { 'Balance TZS 900,000 · No fee': 'one hint line (V5) sits 8 pt under the amount, Figma\'s two lines 2 pt' } },
   '243:20231': { step: 4, actions: [...AIRTIME_AMOUNT, 'amount:600000'], keyboard: true, known: RED_LINE_KNOWN('TZS 600,000', 'Balance TZS 900,000') },
   '243:20111': { step: 4, actions: [...AIRTIME_AMOUNT, 'amount:950000'], keyboard: true, known: RED_LINE_KNOWN('TZS 950,000', 'Balance TZS 900,000') },
-  '222:2075': { step: 4, actions: [...AIRTIME_AMOUNT, 'amount:5000', 'continue', 'otp', 'push'] },
+  '222:2075': { step: 4, actions: [...AIRTIME_AMOUNT, 'amount:5000', 'continue', 'otp', 'push'], deviations: AIRTIME_PAID_FROM },
   // Airtime v6 (18 Nov): scenario 5, new number via "Enter phone number" + Save contact.
   '541:5904': { step: 4, actions: ['payments', 'tap:pay-airtime'], deviations: AIRTIME_LISTS, knownFrom: { y: 825, note: 'one Contacts header (V4)' } },
   '518:5041': { step: 4, actions: AIRTIME_ENTER, keyboard: true },
   '518:5292': { step: 4, actions: [...AIRTIME_ENTER, 'tap:airtime-enter-continue', 'amount:5000'], keyboard: true, deviations: AIRTIME_HINT, known: { 'Balance TZS 900,000 · No fee': 'one hint line (V5)' } },
-  '518:6442': { step: 4, actions: AIRTIME_S5_RECEIPT, deviations: { '🤓 Save contact': 'Save contact', '*7788 | Mo-Simba': '•••• 7788 | Mo-Simba' } },
+  '518:6442': { step: 4, actions: AIRTIME_S5_RECEIPT, deviations: { '🤓 Save contact': 'Save contact', ...AIRTIME_PAID_FROM } },
   '518:7536': { step: 4, actions: AIRTIME_SAVE, keyboard: true, deviations: { 'Add to existing contact': null }, known: { Save: ABOVE_KEYBOARD } },
-  '524:6844': { step: 4, actions: [...AIRTIME_SAVE, 'tap:airtime-save-button'], deviations: { '*7788 | Mo-Simba': '•••• 7788 | Mo-Simba' } },
-  '518:6836': { step: 5, actions: ['payments', 'tap:pay-airtime'], deviations: { A: 'CONTACTS', B: null }, knownFrom: { y: 825, note: 'one Contacts header (V4); Rehema Juma also listed under Contacts' } },
-  '451:18248': { step: 5, actions: [], homeAfter: true },
+  '524:6844': { step: 4, actions: [...AIRTIME_SAVE, 'tap:airtime-save-button'], deviations: AIRTIME_PAID_FROM },
+  '518:6836': { step: 5, actions: ['payments', 'tap:pay-airtime'], deviations: AIRTIME_LISTS, knownFrom: { y: 825, note: 'one Contacts header (V4); Rehema Juma also listed under Contacts' } },
+  // Step 5 is now scenario 5 (Airtime v6): the first feed row is the saved contact Rehema Juma, not Neema Mushi.
+  '451:18248': { step: 5, actions: [], homeAfter: true, deviations: { NM: 'RJ', 'Neema Mushi': 'Rehema Juma' } },
 
   // ── 06 Government bill, GePG (from step 5) ───────────────────────
   '239:4123': { step: 5, actions: ['payments', 'tap:pay-gov'] },

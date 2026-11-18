@@ -11,7 +11,7 @@ Keep this list current when the export is refreshed.
 | Push banner, toast, demo menu | Own design (iOS-like banner, black pill toast, dev-style menu). |
 | Transaction details (Cash v5) | Receipt layout pushed over Home. |
 | Credit / Savings / More tabs | Placeholder screens. |
-| Airtime v6 frames (18 Nov): `541:5904`, `518:5041`, `518:5292`, `518:6442`, `518:7536`, `524:6844`, `518:6836` | Built from the live Figma file; setups are in `tools/design-check/setups.mjs`, but the 8 Nov export has no spec for them, so `design:check` skips them until the export is refreshed. `ic_plusBlack_40` came from the live file (`src/assets/icons/`). |
+| Airtime v6 frames (18 Nov): `541:5904`, `518:5041`, `518:5292`, `518:6442`, `518:7536`, `524:6844`, `518:6836` | Not in the 8 Nov zip. Specs and PNGs for the whole 05-airtime flow were pulled from the live file through the Figma MCP (see README, Design sync), so `design:check --flow 05` covers them on a machine that ran that pull; elsewhere, re-pull or refresh the zip. `ic_plusBlack_40` came from the live file (`src/assets/icons/`). |
 | ★ frames without a spec: `61:10555` Fund Home default, `130:680` and `190:17710` Home default, `176:707`, `222:735`, `239:3789`, `234:755` Payments default | Duplicates of `1:3556` / `1:4211`, which are checked. |
 
 ## Icons not in `assets/icons/`

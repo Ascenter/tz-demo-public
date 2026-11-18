@@ -76,7 +76,7 @@ function applyRecipient(d: Data, r: SendRecipient): Data {
 }
 
 /**
- * Airtime BR-15: the saved number goes first in Recent (3 latest) and into Contacts (by name), and the feed
+ * Airtime BR-15: the saved number goes first in Recent (3 latest) and into Contacts under its first letter, and the feed
  * entries of that number show the name from now on.
  */
 function applyAirtimeSave(d: Data, c: AirtimeContact): Data {
@@ -84,7 +84,7 @@ function applyAirtimeSave(d: Data, c: AirtimeContact): Data {
   return {
     ...d,
     airtimeRecent: [c, ...d.airtimeRecent.filter((x) => x.phone !== c.phone)].slice(0, AIRTIME_RECENT_MAX),
-    airtimeContacts: [...d.airtimeContacts.filter((x) => x.phone !== c.phone), c].sort((a, b) => a.name.localeCompare(b.name)),
+    airtimeContacts: [...d.airtimeContacts.filter((x) => x.phone !== c.phone), c].sort((a, b) => a.name[0].localeCompare(b.name[0])),
     history: d.history.map((o) => (o.category === 'airtime' && o.title === c.phone ? { ...o, title: c.name, initials: named.initials } : o)),
   }
 }
