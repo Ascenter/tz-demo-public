@@ -1,4 +1,4 @@
-# Mo-Simba payments demo (Tanzania)
+# Simba Bank payments demo (Tanzania)
 
 A web demo of the Mo-Simba Bank mobile app's payment flows. It runs fully in the browser on scripted mocks: there is no backend, and nothing goes over the network after the first load. It installs on an iPhone as a full-screen PWA for the mid-December 2026 presentation.
 

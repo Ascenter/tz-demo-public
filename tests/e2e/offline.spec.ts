@@ -44,7 +44,7 @@ test('manifest makes it installable (standalone, portrait, icons)', async ({ req
   const res = await request.get('/manifest.webmanifest')
   expect(res.ok()).toBe(true)
   const m = await res.json()
-  expect(m).toMatchObject({ name: 'Mo-Simba', short_name: 'Mo-Simba', display: 'standalone', orientation: 'portrait' })
+  expect(m).toMatchObject({ name: 'Simba Bank', short_name: 'Simba Bank', display: 'standalone', orientation: 'portrait' })
   expect(m.icons.map((i: { sizes: string }) => i.sizes)).toEqual(expect.arrayContaining(['192x192', '512x512']))
   expect((await request.get('/apple-touch-icon.png')).ok()).toBe(true)
 })
